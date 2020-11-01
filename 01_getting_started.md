@@ -4,16 +4,17 @@ MongoDB is a popular database platform for storing information for web applicati
 
 A database is an organized collection of digital data stored on a computer. In the physical world, a database is like a file cabinet or warehouse, and the information is like the folders, papers, or other things inside. Instead of a file cabinet or a wharehouse building, however, the database is located on a computer.
 
-Like a file cabinet or warehouse needs workers who know how to find and maintain the things stored within, a database needs software for managing. Not only does MongoDB store the data, it also is the software you need to interact with the data. For instance, you can search, reference, compare, change  otherwise manipulate the stored information. You can do so with optimal speed and minimal processing expense.
+Like a file cabinet or warehouse needs workers who know how to find and maintain the things stored within, a database needs software for managing. Not only does MongoDB store the data, it also is the software you need to interact with the data. Like with many databases, with MongoDB you can interact in powerful ways with information stored within. For instance, you can search, reference, compare, change  otherwise manipulate the stored information. You can do so with optimal speed and minimal processing expense.
 
 You can work locally on your computer with MongoDB, but they also offers cloud-based services. Using their cloud services, you can access your database so long as you have internet access. You will focus on using the cloud-based service called [Atlas](#https://docs.atlas.mongodb.com/). From their website, "MongoDB Atlas is a fully-managed cloud database."
 
 '''''''
 MongoDB is cross-platform, meaning you can use MongoDB with many different programming languages, like NodeJS, Python, and others. 
 
-Unlike SQL databases where you store information in tables, MongoDB is known as NoSQL because it doesn't store information in tables. Rather, it stores information in documents. The documents are JSON-like, which makes them flexible to work with and easy to scale.
+Unlike SQL databases where you store information in tables, MongoDB is known as NoSQL because it doesn't store information in tables. Rather, it stores information in documents. In MongoDB, each database can have multiple collections of documents. You can fill each collection with whatever information you want, but typically a collection is made up of documents containing the same or similar information. For instance, a collection for all your users. Or a collection for all the purchases made from your e-commerce store. Or a collection for all comments made on your blog. 
 
-Like with many databases, with MongoDB you can interact in powerful ways with information stored within. 
+The documents are JSON-like, which makes them flexible to work with. One of the main JSON-like features is that the structure of each document in a collection does not have to be identical to the structure of the other documents in that collection. For instance, in your users collection, some users may have a first name, last name, birthday, and user_id. However, not all users are required to have all fields. It's okay of some users are missing one or more of first name, last name, birthday, and user_id
+
  
 ## [Setting up MongoDB Atlas](#setting-up-MongoDB-Atlas)
 https://docs.atlas.mongodb.com/getting-started/
