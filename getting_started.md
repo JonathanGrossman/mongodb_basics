@@ -19,17 +19,17 @@ Like with many databases, with MongoDB you can interact in powerful ways with in
 https://docs.atlas.mongodb.com/getting-started/
 Part 1: Create an Atlas Account.
 
-## [Deploy First Cluster](#Deploy-First-Cluster)
+## [Deploy First Cluster](#deploy-First-Cluster)
 Part 2: Deploy a Free Tier Cluster.
 
-## [Connect IP Addresses](#Connect-IP-Addresses)
+## [Connect IP Addresses](#connect-IP-Addresses)
 Part 3: Add Your Connection IP Address to Your IP Access List.
 
-## [Create Database](#Create-Database)
+## [Create Database](#create-Database)
 Part 4: Create a Database User for Your Cluster.
 
-## [Connect to Cluster](#Connect-to-Cluster)
+## [Connect to Cluster](#connect-to-Cluster)
 Part 5: Connect to Your Cluster.
 
-## [Add Data To Database](#Add-Data-To-Database)
+## [Add Data To Database](#add-Data-To-Database)
 Part 6: Insert and View Data in Your Cluster.
