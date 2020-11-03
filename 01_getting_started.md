@@ -15,26 +15,35 @@ The documents are JSON-like, which makes them flexible to work with. One of the 
 You can use MongoDB with many different programming languages, like NodeJS, Python, and others. In this lesson, you will focus on working with MongoBD and NodeJS. Although this lesson focuses on NodeJS, what you learn here will make it easy to learn how to work with MongoDB generally. 
 
  
-## [Setting up MongoDB Atlas](#setting-up-MongoDB-Atlas)
+## [Setting up MongoDB Atlas](#setting-up-mongoDB-atlas)
 
 Getting started with MongoDB Atlas is easy. Visit the [MongoDB Create Account page](https://account.mongodb.com/account/register) to register your account. You can create a MongoDB account using your Google account or your email. Follow the registration instructions. At some point during the registration process, MongoDB will ask you to choos a path (or plan). Choose the free option. 
 
-In addition, MongoDB will ask for you to choose a cloud provider, region, and other specifications. Choose whichever cloud provider you prefer. Choose M0 Sandbox option. Name your cluster whatever you want. 
+In addition, MongoDB will ask for you to choose a cloud provider, region, and other specifications. Choose whichever cloud provider you prefer. Choose M0 Sandbox option. Name your cluster whatever you want. For the remainder of this lesson, we will assume you named your cluster Project 0.
 
-At the end of registration, MongoDB will prompt you to create a cluster. Do it. A cluster will be home to your databases. It'll take a few minutes for your cluster to build itself. 
+At the end of registration, MongoDB will prompt you to create a cluster. Do it. A cluster will be home to your databases. It'll take a few minutes for your cluster to build itself. Do not navigate away from the page yet.
 
+## [Connect IP Address](#connect-ip-Address)
 
-https://docs.atlas.mongodb.com/getting-started/
+Now that you have a MongDB account and a free-tier cluster, you should configure your MongoDB Atlas settings. First, you should connect your IP address to MongoDB Atlas. You will learn how below.
 
-
-## [Connect IP Addresses](#connect-IP-Addresses)
-
-Now that you have a MongDB account and a free-tier cluster, you should configure your MongoDB Atlas settings. First, you should make sure you connect your IP address to MongoDB Atlas. Each device connected to the internet has an IP address. An IP address is unique for each device. An IP address is used to identify a device on the Internet or a local network, like an address for a house. 
+Each device connected to the internet has an IP address. An IP address is unique for each device. An IP address is used to identify a device on the Internet or a local network, like an address for a house. 
 
 You can only connect to a MongoDB cluster if you are connecting from a device with an IP address that MongoDB Atlas trusts. Add your IP address to the list of trusted IP addresses in your MongoDB account. That way you can connect to your MongoDB account without worry that others can connect without your permission.
 
-Procedure
-You must add your IP address to the IP access list before you can connect to your cluster. To add your IP address to the IP access list:
+Find the IP address for your computer. If your device is connected to a network, it will have a public (external) and private (internal) IP address. The public IP address is the address for the Network. It's how the public will see your address. However, inside the network, your device has its own private IP address.
+
+It's the public IP address that you'll need for MongoDB. To find your public (network) IP address, you can use the website aptly named [What is My IP Address](https://whatismyipaddress.com/).
+
+In case you ever need to know your private IP address, the following should help. Multiple ways exist for finding your IP address. Find your Network settings. On MacOS, you can go to System Preferences, and inside that find the Network icon. On the Network page, you should see something like `Wi-Fi is connected to name-of-your-wifi and has the IP address XXX.XXX.X.XX.` On Windows, open the start menu and right-click the Network option. Choose the properties option and then choose View Status. Then, choose Details and look for the IP address in the new window.
+
+After finding your public IP address, you should add it to your MongoDB IP access list so that you can connect to your MongoDB cluster. On the homepage for your Project 0 cluster, your Sandbox area. Inside the sandbox, you will see three buttons. One of those buttons should say Connect. Click it. 
+
+A prompt should open with an option to Add a connection IP address. The box might be auto-filled with your public IP address. If it is, double check to make sure it's correct. If not, add your public IP address. Be sure to click the button for Add IP Address. 
+
+In that same prompt, MongoDB will ask you to create a database user. This is important for managing and accessing your MongoBD Atlas databases. As the prompt says, remember your username and password because you will need it later. After you add the user, click the button in the prompt that says Choose a connection method.
+
+The next page in the prompt will offer you multiple options for connecting to your MongoDB Atlas cluster. Choose the "connect your application" option. On the following page, choose NodeJS as the driver and the most recent version. Copy the connection string and then click the close button.
 
 ## [Create Database](#create-Database)
 Part 4: Create a Database User for Your Cluster.
