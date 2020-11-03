@@ -2,13 +2,14 @@
 
 MongoDB is a popular database platform for storing information for web applications. According to [its website](#https://www.mongodb.com/), MongoDB "is a general purpose, document-based, distributed database built for modern application developers and for the cloud era."
 
-A database is an organized collection of digital data stored on a computer. In the physical world, a database is like a file cabinet or warehouse, and the information is like the folders, papers, or other things inside. Instead of a file cabinet or a wharehouse building, however, the database is located on a computer.
+A database is an organized collection of digital data stored on a computer. In the physical world, a database is like a file cabinet or warehouse, and the digital information store within is like the folders and papers inside a file cabinet or the boxes and other things stored inside a warehouse. Whereas a file cabinet is located in a building and a warehouse in a neighborhood, a database is located on a computer.
 
-Like a file cabinet or warehouse needs workers who know how to find and maintain the things stored within, a database needs software for managing. Not only does MongoDB store the data, it also is the software you need to interact with the data. Like with many databases, with MongoDB you can interact in powerful ways with information stored within. For instance, you can search, reference, compare, change  otherwise manipulate the stored information. You can do so with optimal speed and minimal processing expense.
+Like a file cabinet or warehouse needs workers who know how to find and maintain the things stored within, a database needs software for managing. Not only does MongoDB store the data, it also is the software you need to interact with the data. Like with many databases, with MongoDB you can interact in powerful ways with information stored within. For instance, you can search, reference, compare, change and otherwise manipulate the stored information. You can do so with optimal speed and minimal processing expense.
 
-You can work locally on your computer with MongoDB, but they also offers cloud-based services. Using their cloud services, you can access your database so long as you have internet access. You will focus on using the cloud-based service called [Atlas](#https://docs.atlas.mongodb.com/). From their website, "MongoDB Atlas is a fully-managed cloud database."
+You can work locally on your computer with MongoDB or you can use MongoDB's cloud-based services. Using the cloud services, you can access your database so long as you have internet access. In this lesson, you will focus on using the cloud-based service called [MongoDB Atlas](#https://docs.atlas.mongodb.com/). From their website, "MongoDB Atlas is a fully-managed cloud database."
 
 '''''''
+
 MongoDB is cross-platform, meaning you can use MongoDB with many different programming languages, like NodeJS, Python, and others. 
 
 Unlike SQL databases where you store information in tables, MongoDB is known as NoSQL because it doesn't store information in tables. Rather, it stores information in documents. In MongoDB, each database can have multiple collections of documents. You can fill each collection with whatever information you want, but typically a collection is made up of documents containing the same or similar information. For instance, a collection for all your users. Or a collection for all the purchases made from your e-commerce store. Or a collection for all comments made on your blog. 
