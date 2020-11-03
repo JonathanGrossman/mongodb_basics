@@ -16,14 +16,25 @@ You can use MongoDB with many different programming languages, like NodeJS, Pyth
 
  
 ## [Setting up MongoDB Atlas](#setting-up-MongoDB-Atlas)
-https://docs.atlas.mongodb.com/getting-started/
-Part 1: Create an Atlas Account.
 
-## [Deploy First Cluster](#deploy-First-Cluster)
-Part 2: Deploy a Free Tier Cluster.
+Getting started with MongoDB Atlas is easy. Visit the [MongoDB Create Account page](#https://account.mongodb.com/account/register) to register your account. You can create a MongoDB account using your Google account or your email. Follow the registration instructions. At some point during the registration process, MongoDB will ask you to choos a path (or plan). Choose the free option. 
+
+In addition, MongoDB will ask for you to choose a cloud provider, region, and other specifications. Choose whichever cloud provider you prefer. Choose M0 Sandbox option. Name your cluster whatever you want. 
+
+At the end of registration, MongoDB will prompt you to create a cluster. Do it. A cluster will be home to your databases. It'll take a few minutes for your cluster to build itself. 
+
+
+https://docs.atlas.mongodb.com/getting-started/
+
 
 ## [Connect IP Addresses](#connect-IP-Addresses)
-Part 3: Add Your Connection IP Address to Your IP Access List.
+
+Now that you have a MongDB account and a free-tier cluster, you should configure your MongoDB Atlas settings. First, you should make sure you connect your IP address to MongoDB Atlas. Each device connected to the internet has an IP address. An IP address is unique for each device. An IP address is used to identify a device on the Internet or a local network, like an address for a house. 
+
+You can only connect to a MongoDB cluster if you are connecting from a device with an IP address that MongoDB Atlas trusts. Add your IP address to the list of trusted IP addresses in your MongoDB account. That way you can connect to your MongoDB account without worry that others can connect without your permission.
+
+Procedure
+You must add your IP address to the IP access list before you can connect to your cluster. To add your IP address to the IP access list:
 
 ## [Create Database](#create-Database)
 Part 4: Create a Database User for Your Cluster.
