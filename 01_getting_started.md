@@ -121,7 +121,9 @@ Finally, you run your application `run().catch(console.dir);`.
 
 The MongoClient() class is easy to use. Basically, you need to know that when you create a new instance of the MongoClient() class, pass your connection string into the class and save the result to a variable. As a result, that variable will have all the functionality of the MongoClient() class. 
 
-Knowing what functionality is available from the MongoClient() is important. One place to look is the [MongoDB documentation](). Another thing you can do is print to the console all the methods of the MongoClient() class. Try it. In your connect.js file below the last line of code, paste the following code, save your file, and run `node connect.js`.
+Knowing what functionality is available from the MongoClient() is important. One place to look is the [MongoDB documentation](https://mongodb.github.io/node-mongodb-native/api-generated/mongoclient.html). 
+
+Another thing you can do is print to the console all the methods of the MongoClient() class. Try it. In your connect.js file below the last line of code, paste the following code, save your file, and run `node connect.js`.
 
 ```node
 function getAllFuncs(toCheck) {
@@ -192,7 +194,6 @@ Try two things on your own. First, replace in your code `console.log(getAllFuncs
 Second, replace in your code `console.log(getAllFuncs(client.connect()));` with `console.log(getAllFuncs(client.close()));`. Then enter `node connect.js` in your terminal. The console should print the functionality available for the `client.close()` function. It prints the same array as above for `client.connect()`.
 
 You don't need to know how to print the functionality of the MongoClient instance; however, it may help you in the future when working with packages new to you.
-
 
 ## [Add Data To Database](#add-data-to-database)
 Part 6: Insert and View Data in Your Cluster.
