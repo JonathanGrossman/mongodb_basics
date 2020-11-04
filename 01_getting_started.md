@@ -196,4 +196,91 @@ Second, replace in your code `console.log(getAllFuncs(client.connect()));` with 
 You don't need to know how to print the functionality of the MongoClient instance; however, it may help you in the future when working with packages new to you.
 
 ## [Add Data To Database](#add-data-to-database)
-Part 6: Insert and View Data in Your Cluster.
+
+Having completed your setup, you now should create a database and add a document to it. In your connect.js file from above, replace the code with the following. Be sure to change the connection string in `const url = ...` to your connection string like in the section above. Don't yet run your file. First, you should understand the code below.
+
+```node
+const { MongoClient } = require("mongodb");
+ 
+// Replace the following with your Atlas connection string                                                                                                                                        
+const url = "mongodb+srv://<username>:<password>@clustername.mongodb.net/test?retryWrites=true&w=majority&useNewUrlParser=true&useUnifiedTopology=true";
+const client = new MongoClient(url);
+ 
+ // The database to use
+ const dbName = "test";
+                      
+ async function run() {
+    try {
+         await client.connect();
+         console.log("Connected correctly to server");
+         const db = client.db(dbName);
+
+         // Use the collection "people"
+         const col = db.collection("people");
+
+         // Construct a document                                                                                                                                                              
+         let personDocument = {
+             "name": { "first": "Alan", "last": "Turing" },
+             "birth": new Date(1912, 5, 23), // June 23, 1912                                                                                                                                 
+             "death": new Date(1954, 5, 7),  // June 7, 1954                                                                                                                                  
+             "contribs": [ "Turing machine", "Turing test", "Turingery" ],
+             "views": 1250000
+         }
+
+         // Insert a single document, wait for promise so we can read it back
+         const p = await col.insertOne(personDocument);
+         // Find one document
+         const myDoc = await col.findOne();
+         // Print to the console
+         console.log(myDoc);
+
+        } catch (err) {
+         console.log(err.stack);
+     }
+ 
+     finally {
+        await client.close();
+    }
+}
+
+run().catch(console.dir);
+```
+
+In the code above, the first three lines are the same as the previous example. You import the MongoClient() class definition, you set a variable equal to your connection string, and then you create an instance of the MongoClient() class using your connection string as the argument. The fourth line, however, is new `const dbName = "test";`. You created a variable named `dbName` and set it equal to a string `"test"`.
+
+Then comes try / catch / finally blocks. Those code blocks are similar to the example above but with some additions. First, focus on the try block. It now has a line of code that creates a database instance inside your cluster. `const db = client.db(dbName);`. You define a variable `db` and set it equal to `client.db(dbName)`. The `client` is your instance of the MongoClient() class, `.db` is a method of the class (see above for db in the list of methods for MongoClient(), and you pass into that method the database name you created.
+
+With a database inside your cluster, next you create a collection inside your database `const col = db.collection("people");`. You create a variable named `col` and set it equal to `db.collection("people")`. The `db` is the variable you made above that represents your database named `test`. The `.collection` is a method from the `db` instance, and `"people"` is the name of the collection.
+
+Phew. Now with a collection inside of your database, you can add a document to the collection. First, you write an object with key:value pairs and save it to a variable named `personDocument`.
+
+```node
+let personDocument = {
+             "name": { "first": "Alan", "last": "Turing" },
+             "birth": new Date(1912, 5, 23), // June 23, 1912                                                                                                                                 
+             "death": new Date(1954, 5, 7),  // June 7, 1954                                                                                                                                  
+             "contribs": [ "Turing machine", "Turing test", "Turingery" ],
+             "views": 1250000
+         }
+```
+
+Next is a line that takes the `personDocument` from your code and sends it to MongoDB `const p = await col.insertOne(personDocument);`. The `await` exists because the `instertOne` method for the collection instance returns a promise. 
+
+One way to test whether you successfully added the `personDocument` to the `people` collection in your `test` database is to retrieve that document. That's what the next line of code does `const myDoc = await col.findOne();`. Using the `findOne` method of your collection instance, you retrieve the document and then print it to the console `console.log(myDoc);`.
+
+Ok, test it out. In your terminal, enter `node connect.js`. This time, in addition to printing to the console `Connected correctly to server`, your console should also print the `personDocument`.
+
+```node
+{
+  _id: 5fa2a070330b7d94c1c69182,
+  name: { first: 'Alan', last: 'Turing' },
+  birth: 1912-06-22T21:39:20.000Z,
+  death: 1954-06-06T22:00:00.000Z,
+  contribs: [ 'Turing machine', 'Turing test', 'Turingery' ],
+  views: 1250000
+}
+```
+
+Notice anything different? Although the `personDocumnet` object that you sent to MongoDB has only 5 key:value pairs, the returned document has 6. The additional key:value pair is `_id: 5fa2a070330b7d94c1c69182`. MongoDB added an `_id` key!
+
+In the next lesson, you will learn more about adding, reading, updating, and deleting documents from your collections.
