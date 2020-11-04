@@ -23,7 +23,7 @@ In addition, MongoDB will ask for you to choose a cloud provider, region, and ot
 
 At the end of registration, MongoDB will prompt you to create a cluster. Do it. A cluster will be home to your databases. It'll take a few minutes for your cluster to build itself. Do not navigate away from the page yet.
 
-## [Connect IP Address](#connect-ip-Address)
+## [Connect IP Address](#connect-ip-address)
 
 Now that you have a MongDB account and a free-tier cluster, you should configure your MongoDB Atlas settings. First, you should connect your IP address to MongoDB Atlas. You will learn how below.
 
@@ -45,11 +45,34 @@ In that same prompt, MongoDB will ask you to create a database user. This is imp
 
 The next page in the prompt will offer you multiple options for connecting to your MongoDB Atlas cluster. Choose the "connect your application" option. On the following page, choose NodeJS as the driver and the most recent version. Copy the connection string and then click the close button.
 
-## [Create Database](#create-Database)
-Part 4: Create a Database User for Your Cluster.
+## [Connect to Cluster](#connect-to-cluster)
 
-## [Connect to Cluster](#connect-to-Cluster)
-Part 5: Connect to Your Cluster.
+Connect your application to the MongoDB cluster you created. You have multiple options for connecting. You can connect using the MongoDB Drivers or the MongoDB Shell. This lesson shows you how to connect using the MongoDB Driver for NodeJS (using the [example from the MongoDB website](https://docs.atlas.mongodb.com/tutorial/connect-to-your-cluster/)).
 
-## [Add Data To Database](#add-Data-To-Database)
+To connect your application to MongoDB, create a project folder. Inside the project folder, add a file named connect.js. In the connect.js file, add the following code.
+
+```node
+const { MongoClient } = require("mongodb");
+ 
+// Replace the following with your Atlas connection string                                                                                                                                        
+const url = "mongodb+srv://<username>:<password>@clustername.mongodb.net/test?retryWrites=true&w=majority&useNewUrlParser=true&useUnifiedTopology=true";
+const client = new MongoClient(url);
+
+async function run() {
+    try {
+        await client.connect();
+        console.log("Connected correctly to server");
+
+    } catch (err) {
+        console.log(err.stack);
+    }
+    finally {
+        await client.close();
+    }
+}
+
+run().catch(console.dir);
+```
+
+## [Add Data To Database](#add-data-to-database)
 Part 6: Insert and View Data in Your Cluster.
