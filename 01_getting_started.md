@@ -49,7 +49,7 @@ The next page in the prompt will offer you multiple options for connecting to yo
 
 Connect your application to the MongoDB cluster you created. You have multiple options for connecting. You can connect using the MongoDB Drivers or the MongoDB Shell. This lesson shows you how to connect using the MongoDB Driver for NodeJS (using the [example from the MongoDB website](https://docs.atlas.mongodb.com/tutorial/connect-to-your-cluster/)).
 
-To connect your application to MongoDB, create a project folder. Inside the project folder, add a file named connect.js. In the connect.js file, add the following code.
+To connect your application to MongoDB, create a project folder. Inside the project folder, add a file named connect.js. In the connect.js file, add the following code. In the line that defines the url (i.e., `const url = ...`), be sure to replace the string with the connection string you copied in the previous section when you connected your IP address to your MongoDB account. If you didn't copy that string, go back to the previous section and copy the string. 
 
 ```node
 const { MongoClient } = require("mongodb");
@@ -73,6 +73,45 @@ async function run() {
 
 run().catch(console.dir);
 ```
+
+If you try running your code now (entering in the terminal `node connect.js`), you'll get an error that looks something like this.
+
+```node
+internal/modules/cjs/loader.js:983
+  throw err;
+  ^
+
+Error: Cannot find module 'mongodb'
+Require stack:
+- /Users/jonathangrossman/Documents/Developer/ITC/Work/mongodb/mongo_example/connect.js
+    at Function.Module._resolveFilename (internal/modules/cjs/loader.js:980:15)
+    at Function.Module._load (internal/modules/cjs/loader.js:862:27)
+    at Module.require (internal/modules/cjs/loader.js:1042:19)
+    at require (internal/modules/cjs/helpers.js:77:18)
+    at Object.<anonymous> (/Users/jonathangrossman/Documents/Developer/ITC/Work/mongodb/mongo_example/connect.js:1:25)
+    at Module._compile (internal/modules/cjs/loader.js:1156:30)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:1176:10)
+    at Module.load (internal/modules/cjs/loader.js:1000:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:899:14)
+    at Function.executeUserEntryPoint [as runMain] (internal/modules/run_main.js:74:12) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/Users/jonathangrossman/Documents/Developer/ITC/Work/mongodb/mongo_example/connect.js'
+  ]
+}
+```
+
+Despite the intimidating look of this error message, the answer to the error is in there. The message includes `Error: Cannot find module 'mongodb'`. This tells you that you need to install the mongodb package. If you look in your root folder, you don't have a node_modules folder, which means you don't have any packages. 
+
+Add the mongodb package to your project by entering the following in your terminal `npm install mongodb`. After entering the installation command, confirm that the message in the terminal says intallation succeeded. Also, look in your project's root folder to make sure a node_modules folder and package-json.lock file each exist.
+
+Enter in the terminal `node connect.js`. If you successfully connected your application, the terminal should print `Connected correctly to server.`
+
+Let's discuss the code above. The first line `const { MongoClient } = require("mongodb")`, imports the the MongoClient() class definition into your `connect.js` file. The next line `const url = . . .` defines the connection string for your MongoDB cluster. You need this connectrion string url because you are going to create an instance of the MongoClient() class, and to create an instance of that class, you need to pass it an argument. That argument needs to be the connection string.
+
+The next line in your code `const client = new MongoClient(url);` creates an instance of the MongoClient() class using the connection string (url) as the argument. The variable `client` is now a MongoClient object customized with the connection string for your MongoDB Atlas cluster.
+
+Following instantiation of the MongoClient() class is a block of asynchronous code with try / catch blocks nested within. In the try block is a line that connects your application to MongoDB Atlas `await client.connect();`. Remember, `client` is your instance of the MongoDB class customized with your MongoDB connection string. That means `.connect()` is a method of the instance of that class. This method does what it name suggests -- it connects your project folder to your MongodDB Atlas cluster.
 
 ## [Add Data To Database](#add-data-to-database)
 Part 6: Insert and View Data in Your Cluster.
