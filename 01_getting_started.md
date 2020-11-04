@@ -119,8 +119,12 @@ Finally, you run your application `run().catch(console.dir);`.
 
 ## [Explore MongoClient Class](#explore-mongoclient-class)
 
+The MongoClient() class is easy to use. Basically, you need to know that when you create a new instance of the MongoClient() class, pass your connection string into the class and save the result to a variable. As a result, that variable will have all the functionality of the MongoClient() class. 
+
+Knowing what functionality is available from the MongoClient() is important. One place to look is the [MongoDB documentation](). Another thing you can do is print to the console all the methods of the MongoClient() class. Try it. In your connect.js file below the last line of code, paste the following code, save your file, and run `node connect.js`.
+
 ```node
-unction getAllFuncs(toCheck) {
+function getAllFuncs(toCheck) {
   var props = [];
   var obj = toCheck;
   do {
@@ -134,6 +138,61 @@ unction getAllFuncs(toCheck) {
 
 console.log(getAllFuncs(client));
 ```
+
+No need to understand how this block of code works. For now, just know that you have a function called `getAllFuncs` that takes in one argument. Below the function definition, you call the `getAllFuncs` function, pass into as the argument the `client` instance of the MongoDB class, and print the results to the console.
+
+In the console, you should see all the functions available in the MongoDB class.
+
+```node
+[
+  '__defineGetter__',     '__defineSetter__',
+  '__lookupGetter__',     '__lookupSetter__',
+  'addListener',          'close',
+  'connect',              'constructor',
+  'db',                   'emit',
+  'eventNames',           'getLogger',
+  'getMaxListeners',      'hasOwnProperty',
+  'isConnected',          'isPrototypeOf',
+  'listenerCount',        'listeners',
+  'logout',               'off',
+  'on',                   'once',
+  'prependListener',      'prependOnceListener',
+  'propertyIsEnumerable', 'rawListeners',
+  'removeAllListeners',   'removeListener',
+  'setMaxListeners',      'startSession',
+  'toLocaleString',       'toString',
+  'valueOf',              'watch',
+  'withSession'
+]
+```
+
+In the list of functions above, notice that `connect` and `close` -- the same functions you used in the connect code sample above -- are listed as MongoDB class functions, just like you should expect.
+
+Try two things on your own. First, replace in your code `console.log(getAllFuncs(client));` with `console.log(getAllFuncs(client.connect()));`. Then enter `node connect.js` in your terminal. The console should print the functionality available for the `client.connect()` function.
+
+```node
+[
+  '__defineGetter__',
+  '__defineSetter__',
+  '__lookupGetter__',
+  '__lookupSetter__',
+  'catch',
+  'constructor',
+  'finally',
+  'hasOwnProperty',
+  'isPrototypeOf',
+  'propertyIsEnumerable',
+  'then',
+  'toLocaleString',
+  'toString',
+  'valueOf'
+]
+```
+
+Second, replace in your code `console.log(getAllFuncs(client.connect()));` with `console.log(getAllFuncs(client.close()));`. Then enter `node connect.js` in your terminal. The console should print the functionality available for the `client.close()` function. It prints the same array as above for `client.connect()`.
+
+You don't need to know how to print the functionality of the MongoClient instance; however, it may help you in the future when working with packages new to you.
+
 
 ## [Add Data To Database](#add-data-to-database)
 Part 6: Insert and View Data in Your Cluster.
