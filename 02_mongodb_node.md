@@ -8,7 +8,11 @@ The syntax for the CRUD operations is fairly simple and is explained below. Desp
 
 ## [MongoDB Documents](#mongodb-documents)
 
-Each entry in a MongoDB database is called a document. A document is a JSON-like object called a BSON. The BSON format generally looks and acts like JSON. For instance, like the JSON format has comma-separated key:value pairs wrapped in curly braces, the BSON format has comma-separated field:value pairs wrapped in curly braces. One difference, however, is that BSON objects can store more data types than JSON. For instance, in a MongoDB document, you can store other documents and arrays of other documents. Here is an example from the [MongoDB documentation](https://docs.mongodb.com/manual/core/document/):
+Each entry in a MongoDB database is called a document. A document is a JSON-like object called a BSON. The BSON format generally looks and acts like JSON.
+
+One of the main JSON-like features of a MongoDB document is that the structure of each document in a collection does not have to be identical to the structure of the other documents in that collection. For instance, if you have a users collection, some users may have a first name, last name, birthday, and user_id. However, not all users are required to have all the same fields. It's okay if some users are missing one or more of first name, last name, birthday, and user_id. This is different from SQL, which requires each entry (the SQL-equivalent of a document) in a table (the SQL-equivalent of a collection) to have all the same fields as the other entries in that same table.
+
+Like the JSON format is comma-separated key:value pairs wrapped in curly braces, the BSON format has comma-separated field:value pairs wrapped in curly braces. One difference, however, is that BSON objects can store more data types than JSON. For instance, in a MongoDB document, you can store other documents and arrays of other documents. Here is an example from the [MongoDB documentation](https://docs.mongodb.com/manual/core/document/):
 
 ```
 var mydoc = {
@@ -23,15 +27,15 @@ var mydoc = {
 
 Here is the data type for each field in the `mydoc` object: 
 
-- _id holds an ObjectId.
-- name holds an embedded document that contains the fields first and last.
-- birth and death hold values of the Date type.
-- contribs holds an array of strings.
-- views holds a value of the NumberLong type.
+- `_id` holds an ObjectId.
+- `name` holds an embedded document that contains the fields first and last.
+- `birth` and death hold values of the Date type.
+- `contribs` holds an array of strings.
+- `views` holds a value of the NumberLong type.
 
-The _id field is a reserved field. Unless you add it yourself, MondgoDB automatically adds a unique _id value to each document created. It is a common practice to not add your own _id field but rather to let MongoDB add it for you.
+The `_id` field is a reserved field. Unless you add it yourself, MondgoDB automatically adds a unique `_id` value to each document created. It is a common practice to not add your own `_id` field but rather to let MongoDB add it for you.
 
-The _id field will always be the first field in your document. Once it's set, you cannot change the _id value -- it's immutable. Although the _id value can be any data type other than an array, MongoDB defaults to an ObjectId data type when creating the _id for you. The _id is used as a primary key.
+The `_id` field will always be the first field in your document. Once it's set, you cannot change the `_id` value -- it's immutable. Although the `_id` value can be any data type other than an array, MongoDB defaults to an ObjectId data type when creating the `_id` for you. The `_id` is used as a primary key.
 
 A few more tips about field names. Document field names are strings, cannot be or contain null, and top-level field names cannot start with a dollar sign ($).
 
@@ -85,7 +89,7 @@ db.users_collection.insertMany(multipleUsersObject)
 
 When using either insert method, if the collection that you're inserting into does not yet exist, MongoDB will create the collection and also add the document(s) to it. If the collection already exists in the database, MongoDB will just add the document to it.
 
-The insert methods each return a promise. Inside of the promise, you can access the _id using either the `insertedId` (for `insertOne()`) or `insertedIds` (for `insertMany()`). To see the code above in action, you can run the following script. It's the same as above but it also console logs the results of each insert method.
+The insert methods each return a promise. Inside of the promise, you can access the `_id` using either the `insertedId` (for `insertOne()`) or `insertedIds` (for `insertMany()`). To see the code above in action, you can run the following script. It's the same as above but it also console logs the results of each insert method.
 
 ```node
 const { MongoClient } = require("mongodb");
@@ -149,7 +153,7 @@ run().catch(console.dir);
 
 The console prints for each result a large connection object. Look through it to see what information is available to you. 
 
-One field available in the result is the `_id` for the objects you insert. In the result objects, you should see for insertOne the insertedId and for insertMany the insertedIds. If instead of console logging the result like above, you instead console log the result's insertedIds, then the console prints the id for `insertOne()` and an array of ids for `insertMany()`.
+One field available in the result is the `_id` for the objects you insert. In the result objects, you should see for `insertOne()` the `insertedId` and for `insertMany()` the `insertedIds`. If instead of console logging the result like above, you instead console log the `insertOne()` result's `insertedId` and the `insertMany()` result's `insertedIds`, then the console prints the `_id` for `insertOne()` and an object containing `_ids` for `insertMany()`.
 
 ```node
 console.log("one id-->", newUserDB.insertedId);
@@ -164,7 +168,7 @@ multiple ids--> {
 }
 ```
 
-Another field available in the result is the `ops` field, which is the inserted document. In the result objects, you should see for both insertOne and insertMany an ops field. If instead of console logging the result or insertedIds like above, you instead console log the result's ops, then the console prints an array of documents. Notice that the printed documents are the same as what you inserted except the inserted copies have an `_id` field, whereas the object in your code doesn't. That's because MongoDB insererted the `_id` for you.
+Another field available in the result is the `ops` field, which is the inserted document. In the result objects, you should see for both `insertOne()` and `insertMany()` an `ops` field. If instead of console logging the result or `insertedIds` like above, you instead console log the result's `ops` field, then the console prints an array of documents. Notice that the printed documents are the same as what you inserted except the inserted copies have an `_id` field, whereas the object in your code doesn't. That's because MongoDB insererted the `_id` for you.
 
 ```node
 console.log("one id-->", newUserDB.ops);
