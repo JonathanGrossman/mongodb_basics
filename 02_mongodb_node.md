@@ -85,7 +85,7 @@ db.users_collection.insertMany(multipleUsersObject)
 
 When using either insert method, if the collection that you're inserting into does not yet exist, MongoDB will create the collection and also add the document(s) to it. If the collection already exists in the database, MongoDB will just add the document to it.
 
-The insert methods each return a promise. Inside of the promise, you can access the _id using either the `insertedId` (for `insertOne()`) or `insertedIds` (for `insertMany()`). To see the code above in action, you can run the following script. It's the same as above but it also console logs the results of each instert method and also the inserted ids.
+The insert methods each return a promise. Inside of the promise, you can access the _id using either the `insertedId` (for `insertOne()`) or `insertedIds` (for `insertMany()`). To see the code above in action, you can run the following script. It's the same as above but it also console logs the results of each insert method.
 
 ```node
 const { MongoClient } = require("mongodb");
@@ -135,9 +135,7 @@ async function run() {
 
     console.log("one result", newUserDB);
     console.log("multiple result", multiplUsersDB);
-    
-    console.log("one id", newUserDB.insertedId);
-    console.log("multiple ids",multiplUsersDB.insertedIds);
+
     
   } catch (err) {
     console.log(err.stack);
@@ -149,16 +147,36 @@ async function run() {
 run().catch(console.dir);
 ```
 
-The console prints for each result a large connection object. Look through it to see what information is available to you. You should see in insertedId and insertedIds. The console prints the following for those:
+The console prints for each result a large connection object. Look through it to see what information is available to you. 
+
+One field available in the result is the `_id` for the objects you insert. In the result objects, you should see for insertOne the insertedId and for insertMany the insertedIds. If instead of console logging the result like above, you instead console log the result's insertedIds, then the console prints the id for `insertOne()` and an array of ids for `insertMany()`.
 
 ```node
-one id 5fa406ec3f4b71a70ae05dab
-multiple ids {
+console.log("one id-->", newUserDB.insertedId);
+console.log("multiple ids-->",multiplUsersDB.insertedIds);
+
+one id--> 5fa406ec3f4b71a70ae05dab
+multiple ids--> {
   '0': 5fa406ec3f4b71a70ae05dac,
   '1': 5fa406ec3f4b71a70ae05dad,
   '2': 5fa406ec3f4b71a70ae05dae,
   '3': 5fa406ec3f4b71a70ae05daf
 }
+```
+
+Another field available in the result is the `ops` field, which is the inserted document. In the result objects, you should see for both insertOne and insertMany an ops field. If instead of console logging the result or insertedIds like above, you instead console log the result's ops, then the console prints an array of documents. Notice that the printed documents are the same as what you inserted except the inserted copies have an `_id` field, whereas the object in your code doesn't. That's because MongoDB insererted the `_id` for you.
+
+```node
+console.log("one id-->", newUserDB.ops);
+console.log("multiple ids-->",multiplUsersDB.ops);
+
+one id--> [ { first: 'Jane', last: 'Doe', _id: 5fa406ec3f4b71a70ae05dab } ]
+multiple ids--> [
+    { first: 'Jane', last: 'Doe', _id: 5fa406ec3f4b71a70ae05dac },
+    { first: 'John', last: 'Doe', _id: 5fa406ec3f4b71a70ae05dad },
+    { first: 'Jack', last: 'Hill', _id: 5fa406ec3f4b71a70ae05dae },
+    { first: 'Jill', last: 'Hill', _id: 5fa406ec3f4b71a70ae05daf }
+  ]
 ```
 
 ## [Read](#read)
