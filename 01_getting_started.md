@@ -10,8 +10,6 @@ You can work locally on your computer with MongoDB or you can use MongoDB's clou
 
 Unlike SQL databases where you store information in tables, MongoDB is known as NoSQL because it doesn't store information in tables. Rather, it stores information in documents. In MongoDB, each database can have multiple collections of documents. You can fill each collection with whatever information you want, but typically a collection is made up of documents containing the same or similar information. For instance, a collection for all your users. Or a collection for all the purchases made from your e-commerce store. Or a collection for all comments made on your blog. But probably not a collection that contains a mixture of users, purchases and comments.
 
-The documents are JSON-like, which makes them flexible to work with. One of the main JSON-like features is that the structure of each document in a collection does not have to be identical to the structure of the other documents in that collection. For instance, in your users collection, some users may have a first name, last name, birthday, and user_id. However, not all users are required to have all fields. It's okay if some users are missing one or more of first name, last name, birthday, and user_id. This is different crom SQL, which requires each entry (the SQL-equivalent of a document) in a table (the SQL-equivalent of a collection) to have all the same fields as the other entries in that same table.
-
 You can use MongoDB with many different programming languages, like NodeJS, Python, and others. In this lesson, you will focus on working with MongoBD and NodeJS. Although this lesson focuses on NodeJS, what you learn here will make it easy to learn how to work with MongoDB generally. 
 
  
@@ -39,9 +37,9 @@ In case you ever need to know your private IP address, the following should help
 
 After finding your public IP address, you should add it to your MongoDB IP access list so that you can connect to your MongoDB cluster. On the homepage for your Project 0 cluster, your Sandbox area. Inside the sandbox, you will see three buttons. One of those buttons should say Connect. Click it. 
 
-A prompt should open with an option to Add a connection IP address. The box might be auto-filled with your public IP address. If it is, double check to make sure it's correct. If not, add your public IP address. Be sure to click the button for Add IP Address. 
+A prompt should open with an option to Add a connection IP address. The box might be auto-filled with your public IP address. If it is, double check to make sure it's correct. If not, add your public IP address. Be sure to click the button for Add IP Address. You may need to add multiple IP addresses. For instance, if you work on your project from your home and at school, you should add your home IP address and also your school's IP address. If you don't have all the IP addressess now, you can add them later.
 
-In that same prompt, MongoDB will ask you to create a database user. This is important for managing and accessing your MongoBD Atlas databases. As the prompt says, remember your username and password because you will need it later. After you add the user, click the button in the prompt that says Choose a connection method.
+In the same prompt that asks for your IP address, MongoDB asks you to create a database user. This is important for managing and accessing your MongoBD Atlas databases. As the prompt says, remember your username and password because you will need it later. After you add the user, click the button in the prompt that says 'Choose a connection method'.
 
 The next page in the prompt will offer you multiple options for connecting to your MongoDB Atlas cluster. Choose the "connect your application" option. On the following page, choose NodeJS as the driver and the most recent version. Copy the connection string and then click the close button.
 
