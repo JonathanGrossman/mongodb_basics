@@ -1,6 +1,6 @@
 # MongoDB with NodeJS
 
-At this stage of the process, you should have created a MongoDB Atlas account, created a cluster within your account, and added a database to your cluster. With this setup complete, you may now start interacting with your database. 
+At this stage of the process, you should have created a MongoDB Atlas account, created a cluster within your account, added a database to your cluster. With this setup complete, you may now start interacting with your database. 
 
 The main ways to interact with your database are using the CRUD operations. CRUD stands for create, read, update, and delete. To create is to put one or more new entries in your database. To read is to retrieve one or more entries from your database. To update is to edit one or more entries from your database. To delete is to delete one or more entries from your database. Each entry is called a document.
 
@@ -42,6 +42,48 @@ Similar to embedded documents, for arrays use dot notation to access values. For
 Using dot notation with embedded documents and arrays becomes relevant when you start writing query strings to read, update, and delete documents. For now, you should just know that this exists.
 
 ## [Create](#create)
+
+Two main options exist for adding entries to your database. You can call a method that adds one document `.insertOne()` to a collection or you can call a method that adds multiple documents to a collection `insertMany()`. For example, if you have a collection named `users_collection`, you can use `.insertOne()` and `insertMany()` to add `userObject` and `multipleUsersObject` to it, where `userObject` is one object and `multipleUsersObject` is an array of objects:
+
+```node
+const { MongoClient } = require("mongodb");
+const url = "connection_string"; // Replace with your Atlas connection string
+const client = new MongoClient(url);
+const db = client.db("my_website");
+
+// Use the collection "users"
+const users_collection = db.collection("users");
+
+const userObject = {
+    first: "Jane",
+    last: "Doe",
+  }
+  
+const multipleUsersObject = [
+    {
+      first: "Jane",
+      last: "Doe",
+    },
+    {
+      first: "John",
+      last: "Doe",
+    },
+    {
+      first: "Jack",
+      last: "Hill",
+    },
+    {
+      first: "Jill",
+      last: "Hill",
+    }
+  ]
+
+
+db.users_collection.insertOne(userObject)
+db.users_collection.insertMany(multipleUsersObject)
+```
+
+https://docs.mongodb.com/manual/tutorial/insert-documents/
 
 ## [Read](#read)
 
