@@ -43,7 +43,7 @@ Using dot notation with embedded documents and arrays becomes relevant when you 
 
 ## [Create](#create)
 
-Two main options exist for adding entries to your database. You can call a method that adds one document `.insertOne()` to a collection or you can call a method that adds multiple documents to a collection `insertMany()`. For example, if you have a collection named `users_collection`, you can use `.insertOne()` and `insertMany()` to add `userObject` and `multipleUsersObject` to it, where `userObject` is one object and `multipleUsersObject` is an array of objects:
+Two main options exist for adding entries to your database. You can call a method that adds one document to a collection `.insertOne()` or you can call a method that adds multiple documents to a collection `insertMany()`. For example, if you have a collection named `users_collection`, you can use `.insertOne()` to add `userObject` to it, where `userObject` is one object. You can use `insertMany()` to add `multipleUsersObject` to it, where `multipleUsersObject` is an array of objects:
 
 ```node
 const { MongoClient } = require("mongodb");
@@ -51,7 +51,7 @@ const url = "connection_string"; // Replace with your Atlas connection string
 const client = new MongoClient(url);
 const db = client.db("my_website");
 
-// Use the collection "users"
+// Use the collection named "users"
 const users_collection = db.collection("users");
 
 const userObject = {
@@ -82,6 +82,8 @@ const multipleUsersObject = [
 db.users_collection.insertOne(userObject)
 db.users_collection.insertMany(multipleUsersObject)
 ```
+
+When using either insert method, if the collection that you're inserting into does not yet exist, MongoDB will create the collection and also add the document(s) to it. If the collection already exists in the database, MongoDB will just add the document to it.
 
 https://docs.mongodb.com/manual/tutorial/insert-documents/
 
