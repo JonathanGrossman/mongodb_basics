@@ -85,7 +85,81 @@ db.users_collection.insertMany(multipleUsersObject)
 
 When using either insert method, if the collection that you're inserting into does not yet exist, MongoDB will create the collection and also add the document(s) to it. If the collection already exists in the database, MongoDB will just add the document to it.
 
-https://docs.mongodb.com/manual/tutorial/insert-documents/
+The insert methods each return a promise. Inside of the promise, you can access the _id using either the `insertedId` (for `insertOne()`) or `insertedIds` (for `insertMany()`). To see the code above in action, you can run the following script. It's the same as above but it also console logs the results of each instert method and also the inserted ids.
+
+```node
+const { MongoClient } = require("mongodb");
+
+// Replace the following with your Atlas connection string
+const url = "connection_string";
+const client = new MongoClient(url);
+
+// The database to use
+const dbName = "test";
+
+async function run() {
+  try {
+    await client.connect();
+    console.log("Connected correctly to server");
+    const db = client.db(dbName);
+
+    // Use the collection named "users"
+    const users_collection = db.collection("users");
+
+    const userObject = {
+      first: "Jane",
+      last: "Doe",
+    };
+
+    const multipleUsersObject = [
+      {
+        first: "Jane",
+        last: "Doe",
+      },
+      {
+        first: "John",
+        last: "Doe",
+      },
+      {
+        first: "Jack",
+        last: "Hill",
+      },
+      {
+        first: "Jill",
+        last: "Hill",
+      },
+    ];
+
+    newUserDB = await users_collection.insertOne(userObject);
+    multiplUsersDB = await users_collection.insertMany(multipleUsersObject);
+
+    console.log("one result", newUserDB);
+    console.log("multiple result", multiplUsersDB);
+    
+    console.log("one id", newUserDB.insertedId);
+    console.log("multiple ids",multiplUsersDB.insertedIds);
+    
+  } catch (err) {
+    console.log(err.stack);
+  } finally {
+    await client.close();
+  }
+}
+
+run().catch(console.dir);
+```
+
+The console prints for each result a large connection object. Look through it to see what information is available to you. You should see in insertedId and insertedIds. The console prints the following for those:
+
+```node
+one id 5fa406ec3f4b71a70ae05dab
+multiple ids {
+  '0': 5fa406ec3f4b71a70ae05dac,
+  '1': 5fa406ec3f4b71a70ae05dad,
+  '2': 5fa406ec3f4b71a70ae05dae,
+  '3': 5fa406ec3f4b71a70ae05daf
+}
+```
 
 ## [Read](#read)
 
