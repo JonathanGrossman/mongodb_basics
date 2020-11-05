@@ -1,4 +1,4 @@
-# MondoDB with NodeJS
+# MongoDB with NodeJS
 
 At this stage of the process, you should have created a MongoDB Atlas account, created a cluster within your account, and added a database to your cluster. With this setup complete, you may now start interacting with your database. 
 
