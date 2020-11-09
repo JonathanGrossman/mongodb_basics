@@ -185,18 +185,21 @@ multiple ids--> [
 
 ## [Read](#read)
 
-Two main options exist for reading entries from your database. You can call a method that retrieves one document from a collection `.findOne()` or you can call a method that retrieves more than one document `find()`. For example, from your collection named `users_collection`, you can use `.findOne()` to get a specific document by passing into the method details about the document you want to get. In contrast, you can use `.find()` get multiple documents that match the details that you pass into the method when calling it.
+Two main options exist for reading entries from your database. You can call a method that retrieves one document from a collection `.findOne()` or you can call a method that retrieves more than one document `find()`. For example, from your collection named `users_collection`, you can use `.findOne()` to get a specific document by passing into the method details about the document you want to get. In contrast, you can use `.find()` to get multiple documents that match the details that you pass into the method when calling it.
 
-Starting with the `.find()` method. This method accepts two optional arguments. The first argument is a query. The query is the filter you can use to specify which documents you want to retrieve. To return all documents in a collection, you can pass an empty document `.find({})` or leave the argument blank.  The second argument is the projection. The projection declares the fields to return for each document that matches the query. If you want all the fields for each document, leave this argument blank.
+### find
 
-Here is an example of retrieving all the documents from a collection. The code is the very similar to the code you've seen above. The lines in the code below that you should focus on are `all_db_users = await users_collection.find();` and ` all_db_users.forEach((user) => console.log(user));`.
+Starting with the `.find()` method to get all documents from the collection. The `.find()` method accepts two optional arguments. The first argument is a query. The query is the filter you can use to specify which documents you want to retrieve. To return all documents in a collection, you can pass an empty document `.find({})` or leave the argument blank.  The second argument is the projection. The projection declares the fields to return for each document that matches the query. If you want all the fields for each document, leave this argument blank.
+
+In the next chapter, you will practice using the query and projection parameters. For now, however, you should focus on using `.find()` with no arguments. 
+
+Here is an example of using `find()` with no arguments for retrieving all the documents from your `users_collection`. The code example below is very similar to the code you've seen above. The lines in the code below that you should focus on are `all_db_users = await users_collection.find();` and ` all_db_users.forEach((user) => console.log(user));`.
 
 ```node
 const { MongoClient } = require("mongodb");
 
 // Replace the following with your Atlas connection string
-const url =
-  "mongodb+srv://User1:test@cluster0.n5f5h.mongodb.net/<dbname>?retryWrites=true&w=majority";
+const url = "connection_string"; // Replace with your Atlas connection string
 const client = new MongoClient(url);
 
 // The database to use
@@ -227,9 +230,11 @@ async function run() {
 run().catch(console.dir);
 ```
 
-The line `all_db_users = await users_collection.find();` retrieves all users. Notice that you pass no arguments into the `.find()` method. You would get the same result if you passed an empty object into the method `all_db_users = await users_collection.find({});`. 
+The line `all_db_users = await users_collection.find();` retrieves all the documents from your `users_collection`. Notice that you pass no arguments into the `.find()` method. You would get the same result if you passed an empty object into the method `all_db_users = await users_collection.find({});`. 
  
-The find method returns a cursor, which is a collection of documents. You can iterate through the cursor to access each document in the cursor collection. Here's how to: ` all_db_users.forEach((user) => console.log(user));`. This line of code should output the following in your console:
+The find method returns a cursor, which is a collection of documents. Console log the cursor (here it is named `all_db_users`) and look at the output, which a long object that won't be of much use to you now. 
+
+Instead, what is of use to you now, you can iterate through the cursor to access each document in the cursor collection. Here's how to: `all_db_users.forEach((user) => console.log(user));`. This line of code should output the following in your console:
 
 ```node
 { _id: 5fa406ec3f4b71a70ae05dab, first: 'Jane', last: 'Doe' }
@@ -239,7 +244,8 @@ The find method returns a cursor, which is a collection of documents. You can it
 { _id: 5fa406ec3f4b71a70ae05daf, first: 'Jill', last: 'Hill' }
 ```
 
-Try something else. Instead of console logging each user, try console logging just their first names `all_db_users.forEach((user) => console.log(user.first));`. You should see the console print the following: 
+Try something else. Instead of console logging each user, try console logging just their first names `all_db_users.forEach((user) => console.log(user.first));`. 
+You should see the console print the following: 
 
 ```node
 Jane
@@ -249,7 +255,7 @@ Jack
 Jill
 ```
 
-Finally, to learn more about what MongoDB returns to you, check the data type of the each document in the cursor `all_db_users.forEach((user) => console.log(typeof user));`. The console should print
+This dot notation should be familiar to you. You use it to access values inside an object. What data type is the `user`? Check the data type of the each document in the cursor `all_db_users.forEach((user) => console.log(typeof user));`. The console should print:
 
 ```node
 object
@@ -258,6 +264,111 @@ object
 object
 object
 ```
+### findOne
+
+Now to the `.findOne()` method to get only one document from the collection. Like the `.find()` method, the `.findOne()` method accepts two optional arguments -- a query and a projection. If more than one document matches the query, the `.findOne()` method returns the first document that matches the query, which is usually the most recently inserted document that matches the query.
+
+Although the `.find()` and `.findOne()` methods have the same parameters (optional query and optional projection), they return different things. As you saw above, the `.find()` method returns a cursor, which is a collection of documents. In contrast, the `findOne()` method returns a single document (not a collection of them). 
+
+Here is an example of using `findOne()` with no arguments for retriecing one document from your `users_collection`. The code example below is the same as the previous example. The lines in the code below that you should focus on are `one_db_user = await users_collection.findOne();` and `console.log(one_db_user);`.
+
+```node
+const { MongoClient } = require("mongodb");
+
+// Replace the following with your Atlas connection string
+const url = "connection_string"; // Replace with your Atlas connection string
+const client = new MongoClient(url);
+
+// The database to use
+const dbName = "test";
+
+async function run() {
+  try {
+    await client.connect();
+    console.log("Connected correctly to server");
+    const db = client.db(dbName);
+
+    // Use the collection named "users"
+    const users_collection = db.collection("users");
+
+    one_db_user = await users_collection.findOne();
+
+    console.log(one_db_user);
+  } catch (err) {
+    console.log(err.stack);
+  } finally {
+    await client.close();
+  }
+}
+
+run().catch(console.dir);
+```
+
+The variable `one_db_user` stores a single document. Because you didn't pass a query argument into the `findOne()` method, the method returns the most recently inserted document. The line `console.log(one_db_user);` prints that document to the console, like so below.
+
+```node
+{ _id: 5fa406ec3f4b71a70ae05dab, first: 'Jane', last: 'Doe' }
+```
+
+Like you did for the `.find()` method above, you can console log a specific value in the returned document using dot notation `console.log(one_db_user.first);` and also console log the `typeof` the document returned `console.log(typeof one_db_user);`.
+
+Although you may at times want to get only the most recently inserted document, it is just as (if not more) likely that you will want to get a document based on other criteria. Although later you will learn about this in more detail, here is an example of using the query argument to get a document that has a specific `_id`.
+
+A very common occurrence in web applications is to get from your databse a user (or other specific item) by it's unique id. Using the `.findOne()` method is a great way to do this. However, you need to pay attention to a at least one nuance to avoid confusing errors for what seems to be a simple action. 
+
+In MongoDB, the data type for `_id` is ObjectID (notice that `ID` has both letters capitalized; it's not `Id`). NodeJS, however, doesn't have the Mongo ObjectID data type built into it. You therefore need to import it from MongoDB and pass as a string into the ObjectID class to conver the string to an ObjectID. Here is an exmample. 
+
+```node
+const { MongoClient, ObjectID } = require("mongodb");
+
+// Replace the following with your Atlas connection string
+const url = "connection_string"; // Replace with your Atlas connection string
+const client = new MongoClient(url);
+
+// The database to use
+const dbName = "test";
+
+async function run() {
+  try {
+    await client.connect();
+    console.log("Connected correctly to server");
+    const db = client.db(dbName);
+
+    // Use the collection named "users"
+    const users_collection = db.collection("users");
+
+    one_db_user = await users_collection.findOne({
+      _id: ObjectID("5fa406ec3f4b71a70ae05dab"),
+    });
+
+    console.log(one_db_user);
+  } catch (err) {
+    console.log(err.stack);
+  } finally {
+    await client.close();
+  }
+}
+
+run().catch(console.dir);
+```
+
+The code above is similar to the previous examples. One difference in this example is the very first line, which is now `const { MongoClient, ObjectID } = require("mongodb");`. This line now imports `ObjectID` from the mongodb package you installed. 
+
+Another difference is in the `try` block. It's this line.
+
+```node 
+one_db_user = await users_collection.findOne({
+      _id: ObjectID("5fa406ec3f4b71a70ae05dab"),
+    });   
+```
+
+This is the same line as the previous example `one_db_user = await users_collection.findOne();`, except this time you pass into the `.findOne()` method an object that specifies a key `_id` and value `ObjectID("5fa406ec3f4b71a70ae05dab")` by which the `.findOne()` method will filter. In other words, the method will look for the document that has an `_id` of `ObjectID("5fa406ec3f4b71a70ae05dab")`. Notice that it is a string string passed into the `ObjectID` class. The code example above logs the following to the console.
+
+```node 
+{ _id: 5fa406ec3f4b71a70ae05dab, first: 'Jane', last: 'Doe' }
+```
+
+If the method doesn't find a document matching the query filter, the method returns `null`.
 
 ## [Update](#update)
 
