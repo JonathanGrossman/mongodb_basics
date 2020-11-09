@@ -185,6 +185,80 @@ multiple ids--> [
 
 ## [Read](#read)
 
+Two main options exist for reading entries from your database. You can call a method that retrieves one document from a collection `.findOne()` or you can call a method that retrieves more than one document `find()`. For example, from your collection named `users_collection`, you can use `.findOne()` to get a specific document by passing into the method details about the document you want to get. In contrast, you can use `.find()` get multiple documents that match the details that you pass into the method when calling it.
+
+Starting with the `.find()` method. This method accepts two optional arguments. The first argument is a query. The query is the filter you can use to specify which documents you want to retrieve. To return all documents in a collection, you can pass an empty document `.find({})` or leave the argument blank.  The second argument is the projection. The projection declares the fields to return for each document that matches the query. If you want all the fields for each document, leave this argument blank.
+
+Here is an example of retrieving all the documents from a collection. The code is the very similar to the code you've seen above. The lines in the code below that you should focus on are `all_db_users = await users_collection.find();` and ` all_db_users.forEach((user) => console.log(user));`.
+
+```node
+const { MongoClient } = require("mongodb");
+
+// Replace the following with your Atlas connection string
+const url =
+  "mongodb+srv://User1:test@cluster0.n5f5h.mongodb.net/<dbname>?retryWrites=true&w=majority";
+const client = new MongoClient(url);
+
+// The database to use
+const dbName = "test";
+
+async function run() {
+  try {
+    await client.connect();
+    console.log("Connected correctly to server");
+    const db = client.db(dbName);
+
+    // Use the collection named "users"
+    const users_collection = db.collection("users");
+
+    // Get all users
+    all_db_users = await users_collection.find();
+
+    // Print each user to the console
+    all_db_users.forEach((user) => console.log(user));
+    
+  } catch (err) {
+    console.log(err.stack);
+  } finally {
+    await client.close();
+  }
+}
+
+run().catch(console.dir);
+```
+
+The line `all_db_users = await users_collection.find();` retrieves all users. Notice that you pass no arguments into the `.find()` method. You would get the same result if you passed an empty object into the method `all_db_users = await users_collection.find({});`. 
+ 
+The find method returns a cursor, which is a collection of documents. You can iterate through the cursor to access each document in the cursor collection. Here's how to: ` all_db_users.forEach((user) => console.log(user));`. This line of code should output the following in your console:
+
+```node
+{ _id: 5fa406ec3f4b71a70ae05dab, first: 'Jane', last: 'Doe' }
+{ _id: 5fa406ec3f4b71a70ae05dac, first: 'Jane', last: 'Doe' }
+{ _id: 5fa406ec3f4b71a70ae05dad, first: 'John', last: 'Doe' }
+{ _id: 5fa406ec3f4b71a70ae05dae, first: 'Jack', last: 'Hill' }
+{ _id: 5fa406ec3f4b71a70ae05daf, first: 'Jill', last: 'Hill' }
+```
+
+Try something else. Instead of console logging each user, try console logging just their first names `all_db_users.forEach((user) => console.log(user.first));`. You should see the console print the following: 
+
+```node
+Jane
+Jane
+John
+Jack
+Jill
+```
+
+Finally, to learn more about what MongoDB returns to you, check the data type of the each document in the cursor `all_db_users.forEach((user) => console.log(typeof user));`. The console should print
+
+```node
+object
+object
+object
+object
+object
+```
+
 ## [Update](#update)
 
 ## [Delete](#delete)
