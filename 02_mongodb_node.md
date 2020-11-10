@@ -378,11 +378,70 @@ Three main options exist for updating entries in your database. You can call a m
 
 Starting with the `.updateOne()` method to update values in one document. The `.updateOne()` method accepts two required arguments (filter and update) and one optional (options) `.updateOne(filter, update, options)`. The first argument is a filter. The filter is like the query argument used for the `find` methods. You use filter to specify which document to update. For instance, you can specify an empty object `.updateOne({})` to update the first document in the collection. Or you can specify specific criteria, like the `_id` of a document `.updateOne({_id: ObjectID("5fa406ec3f4b71a70ae05dab")})`, to target a specific document.
 
-The second argument is the projection. The projection declares the fields to return for each document that matches the query. If you want all the fields for each document, leave this argument blank.
+The second argument is the update. The update declares the updates that you want to make in the document. Use the [update operator expressions](https://docs.mongodb.com/manual/reference/operator/update/#id1) to update the document. While all of the update operators might help you, pay special attention to the `$set` operator. It is the one you will likely use most.
 
-In the next chapter, you will practice using the query and projection parameters. For now, however, you should focus on using `.find()` with no arguments. 
+```node
+Name	Description
+$currentDate	Sets the value of a field to current date, either as a Date or a Timestamp.
+$inc	Increments the value of the field by the specified amount.
+$min	Only updates the field if the specified value is less than the existing field value.
+$max	Only updates the field if the specified value is greater than the existing field value.
+$mul	Multiplies the value of the field by the specified amount.
+$rename	Renames a field.
+$set	Sets the value of a field in a document.
+$setOnInsert	Sets the value of a field if an update results in an insert of a document. Has no effect on update operations that modify existing documents.
+$unset	Removes the specified field from a document.
+```
 
-Here is an example of using `.find()` with no arguments for retrieving all the documents from your `users_collection`. The code example below is very similar to the code you've seen above. The lines in the code below that you should focus on are `all_db_users = await users_collection.find();` and ` all_db_users.forEach((user) => console.log(user));`.
+For now, don't worry about the options argument. It is optional, so you can simply just omit it when calling the method.
+
+Here is an example of using `.updateOne()` with arguments for filter and updates. The options argument is omitted. The code example below is very similar to the code you've seen above. The lines in the code below that you should focus on are `updated_user = await users_collection.updateOne({_id: ObjectID("5fa406ec3f4b71a70ae05dab"),}, { $set: { first: "enaJ" } });.` 
+
+```node
+const { MongoClient, ObjectID } = require("mongodb");
+
+// Replace the following with your Atlas connection string
+const url =
+  "mongodb+srv://User1:test@cluster0.n5f5h.mongodb.net/<dbname>?retryWrites=true&w=majority";
+const client = new MongoClient(url);
+
+// The database to use
+const dbName = "test";
+
+async function run() {
+  try {
+    await client.connect();
+    console.log("Connected correctly to server");
+    const db = client.db(dbName);
+
+    // Use the collection named "users"
+    const users_collection = db.collection("users");
+
+    updated_user = await users_collection.updateOne(
+      {
+        _id: ObjectID("5fa406ec3f4b71a70ae05dab"),
+      },
+      { $set: { first: "enaJ" } }
+    );
+    console.log(updated_user);
+
+    one_db_user = await users_collection.findOne({
+      _id: ObjectID("5fa406ec3f4b71a70ae05dab"),
+    });
+    console.log(one_db_user);
+  } catch (err) {
+    console.log(err.stack);
+  } finally {
+    await client.close();
+  }
+}
+
+run().catch(console.dir);
+```
+
+The example above uses the .`updateOne()` method to update the document having an `_id` of `ObjectID("5fa406ec3f4b71a70ae05dab")` by changing the value of `first` from `Jane` to `enaJ`. The code then console logs the return value `updated_user`. Look through that return value in your console. It has a lot of information about the update, some of which you may want to use to help make your application more robust. 
+
+After console logging the returned update object, the example then uses the `.findOne()` method to get the same document so that you can console log it and see that the update did in fact occur.
 
 ### .updateMany()
 
