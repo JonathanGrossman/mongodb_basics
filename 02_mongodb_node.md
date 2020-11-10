@@ -187,13 +187,13 @@ multiple ids--> [
 
 Two main options exist for reading entries from your database. You can call a method that retrieves one document from a collection `.findOne()` or you can call a method that retrieves more than one document `find()`. For example, from your collection named `users_collection`, you can use `.findOne()` to get a specific document by passing into the method details about the document you want to get. In contrast, you can use `.find()` to get multiple documents that match the details that you pass into the method when calling it.
 
-### find
+### .find()
 
-Starting with the `.find()` method to get all documents from the collection. The `.find()` method accepts two optional arguments. The first argument is a query. The query is the filter you can use to specify which documents you want to retrieve. To return all documents in a collection, you can pass an empty document `.find({})` or leave the argument blank.  The second argument is the projection. The projection declares the fields to return for each document that matches the query. If you want all the fields for each document, leave this argument blank.
+Starting with the `.find()` method to get all documents from the collection. The `.find()` method accepts two optional arguments `.find(query, projection)`. The first argument is a query. The query is the filter you can use to specify which documents you want to retrieve. To return all documents in a collection, you can pass an empty document `.find({})` or leave the argument blank.  The second argument is the projection. The projection declares the fields to return for each document that matches the query. If you want all the fields for each document, leave this argument blank.
 
 In the next chapter, you will practice using the query and projection parameters. For now, however, you should focus on using `.find()` with no arguments. 
 
-Here is an example of using `find()` with no arguments for retrieving all the documents from your `users_collection`. The code example below is very similar to the code you've seen above. The lines in the code below that you should focus on are `all_db_users = await users_collection.find();` and ` all_db_users.forEach((user) => console.log(user));`.
+Here is an example of using `.find()` with no arguments for retrieving all the documents from your `users_collection`. The code example below is very similar to the code you've seen above. The lines in the code below that you should focus on are `all_db_users = await users_collection.find();` and ` all_db_users.forEach((user) => console.log(user));`.
 
 ```node
 const { MongoClient } = require("mongodb");
@@ -264,9 +264,9 @@ object
 object
 object
 ```
-### findOne
+### .findOne()
 
-Now to the `.findOne()` method to get only one document from the collection. Like the `.find()` method, the `.findOne()` method accepts two optional arguments -- a query and a projection. If more than one document matches the query, the `.findOne()` method returns the first document that matches the query, which is usually the most recently inserted document that matches the query.
+The `.findOne()` method finds only one document from the collection. Like the `.find()` method, the `.findOne()` method accepts two optional arguments -- a query and a projection `.findOne(query, projection)`. If more than one document matches the query, the `.findOne()` method returns the first document that matches the query, which is usually the most recently inserted document that matches the query.
 
 Although the `.find()` and `.findOne()` methods have the same parameters (optional query and optional projection), they return different things. As you saw above, the `.find()` method returns a cursor, which is a collection of documents. In contrast, the `findOne()` method returns a single document (not a collection of them). 
 
@@ -371,5 +371,13 @@ This is the same line as the previous example `one_db_user = await users_collect
 If the method doesn't find a document matching the query filter, the method returns `null`.
 
 ## [Update](#update)
+
+Three main options exist for updating entries in your database. You can call a method that updates one document from a collection `.updateOne()`, you can call a method that updates more than one document `.updateMany()`, or you can call a method that replaces one document `.replaceOne()` except the `_id` field. You typically should use `.updateOne()` and `.updateMany()` when updating less than all of the values in the document. In contrast, you should use .`replaceOne()` when updating all the values (except the `_id`).
+
+### .updateOne()
+
+### .updateMany()
+
+### .replaceOne()
 
 ## [Delete](#delete)
