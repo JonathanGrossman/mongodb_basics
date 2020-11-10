@@ -452,7 +452,7 @@ The second argument is the update. This is essentially the same for `.updateMany
 
 For now, don't worry about the options argument. It is optional, so you can simply just omit it when calling the method.
 
-Here is an example of using `.updateMany()` with arguments for filter and updates. The options argument is omitted. The code example below is very similar to the code you've seen above. The lines in the code below that you should focus on are `updated_users = await users_collection.updateMany({last: "Doe",}, { $set: { first: "Joe" } });` 
+Here is an example of using `.updateMany()` with arguments for filter and updates. The options argument is omitted. The code example below is very similar to the code you've seen above. The lines in the code below that you should focus on are `updated_users = await users_collection.updateMany({last: "Doe",}, { $set: { first: "Joe" } });`.
 
 ```node
 const { MongoClient } = require("mongodb");
@@ -495,7 +495,9 @@ async function run() {
 run().catch(console.dir);
 ```
 
-The example above uses the .`updateMany()` method to update all documents having an `last` field with a value of `Doe` by changing the value of `first` to `Joe`. The code then console logs the return value `updated_users`. Look through that return value in your console. It has a lot of information about the update, some of which you may want to use to help make your application more robust. 
+The example above uses the `.updateMany()` method to update all documents having an `last` field with a value of `Doe` by changing the value of `first` to `Joe`. The code then console logs the return value `updated_users`. Look through that return value in your console. It has a lot of information about the update, some of which you may want to use to help make your application more robust. 
+
+Notice that the code filters using the `last` field. This is a non-unique field, so it's possible that more than one document has the same value for `last`. In contrast, using `.updateMany()` and filtering by `_id` does not make the most of the method because the `_id` values are unique. In theory, no documents will share the same `_id` value and therefore you cannot update more than one document when filtering by `_id` in the `.updateMany()` method.
 
 After console logging the returned update object, the example then uses the `.find()` method to get all the documents from the collection so that you can console log them and see that the updates did in fact occur. Remember that `.find()` returns a cursor, which is a collection of documents. You therefore need to loop through it to console log each individual document in the returned collection. The block of code `all_db_users.forEach((user) => {console.log(user);});` prints the following 
 
@@ -510,5 +512,72 @@ After console logging the returned update object, the example then uses the `.fi
 Only those documents with a `last` of "Doe" were updated with a `first` of "Joe." Update successful!
 
 ### .replaceOne()
+
+Next is the `.replaceOne()` method, which replaces one document that matches the filter criteria. Like the `update` methods, the `.replaceOne()` method accepts two required arguments (filter and replacement) and one optional (options) `.replaceOne(filter, replacement, options)`. 
+
+The first argument is a filter. This is essentially the same for `.replaceOne()` as it is for the `update` methods. You use filter to specify which document to replace. The `.replaceOne()` method is like the `.updateOne` method in the sense that it operates on the first document returned. Instead of updating it, the `.replaceOne()` method replaces the document. 
+
+If you can specify an empty object `.replaceOne({})`, the method replaces the first document returned in the collection. If instead of usng an empty object you use specific criteria, like the `first` field of a document in your `users_collection`, you will replace the first document that matches that criteria. For instance,  `.replaceOne({"_id": ObjectID("5fa406ec3f4b71a70ae05dab"))}, replacement)` filters for the document that has an `_id` field with a value of `ObjectID("5fa406ec3f4b71a70ae05dab")`. 
+
+The second argument is the replacement document. This is similar to the updates argument for the `update` methods, but instead of specifying a subset of fields the replace, you specify the entire new document (like you do for the `insert` methods). 
+
+MongoDB will keep the same `_id` field for the revised document as for the document before it was replaced. If you include an `_id` field in the object for replacement, it needs to be the same `_id` already assigned to that document. This preservation of the `_id` value is what makes this a replacement. Aside from the `_id` field, the revised document can have different fields and values as the document before it was replaced.
+
+Also note that the `.replaceOne()` method doesn't use the operator expressions. Rather, it's an object of field:value pairs, just like what you do for the `insert` methods. For now, don't worry about the options argument. It is optional, so you can simply just omit it when calling the method.
+
+Here is an example of using `.replaceOne()` with arguments for filter and replacement. The options argument is omitted. The code example below is very similar to the code you've seen above. The lines in the code below that you should focus on are `replacement_doc = {middle: "Margaret", country: "Guatemala",};` and `replaced_user = await users_collection.replaceOne({ first: "Jill" }, replacement_doc);`
+
+```node
+const { MongoClient } = require("mongodb");
+
+// Replace the following with your Atlas connection string
+const url = "connection_string"; // Replace with your Atlas connection string
+const client = new MongoClient(url);
+
+// The database to use
+const dbName = "test";
+
+async function run() {
+  try {
+    await client.connect();
+    console.log("Connected correctly to server");
+    const db = client.db(dbName);
+
+    // Use the collection named "users"
+    const users_collection = db.collection("users");
+
+    replacement_doc = {
+      middle: "Margaret",
+      country: "Guatemala",
+    };
+
+    replaced_user = await users_collection.replaceOne(
+      { first: "Jill" },
+      replacement_doc
+    );
+    console.log(replaced_user);
+  } catch (err) {
+    console.log(err.stack);
+  } finally {
+    await client.close();
+  }
+}
+
+run().catch(console.dir);
+```
+
+The example above uses the `.replaceOne()` method to filter for the first returned document having a `first` field with a value of `Jill`. The code replaces that document with `replacement_doc`, which is an object containing the field `middle` with a value of `Margaret` and the field `country` with a value of `Guatemala`. The code then console logs the return value `replaced_user`. Look through that return value in your console. It has a lot of information about the replacement similar to what you've seen in other return values, some of which you may want to use to help make your application more robust. 
+
+After console logging the returned update object, the example then uses the `.find()` method to get all the documents from the collection so that you can console log them and see that the replacement did in fact occur. Remember that `.find()` returns a cursor, which is a collection of documents. You therefore need to loop through it to console log each individual document in the returned collection. The block of code `all_db_users.forEach((user) => {console.log(user);});` prints the following 
+
+```node
+{ _id: 5fa406ec3f4b71a70ae05dab, first: 'Joe', last: 'Doe' }
+{ _id: 5fa406ec3f4b71a70ae05dac, first: 'Joe', last: 'Doe' }
+{ _id: 5fa406ec3f4b71a70ae05dad, first: 'Joe', last: 'Doe' }
+{ _id: 5fa406ec3f4b71a70ae05dae, first: 'Jack', last: 'Hill' }
+{ _id: 5fa406ec3f4b71a70ae05daf, middle: 'Margaret', country: 'Guatemala'}
+```
+
+You successfully replaced the "Jill Hill" document with a document that has the `middle` and `country` fields and corresponding values. Notice that the `_id` of `5fa406ec3f4b71a70ae05daf` is the same value that the document had before being replaced.  Replacement successful!
 
 ## [Delete](#delete)
