@@ -372,9 +372,17 @@ If the method doesn't find a document matching the query filter, the method retu
 
 ## [Update](#update)
 
-Three main options exist for updating entries in your database. You can call a method that updates one document from a collection `.updateOne()`, you can call a method that updates more than one document `.updateMany()`, or you can call a method that replaces one document `.replaceOne()` except the `_id` field. You typically should use `.updateOne()` and `.updateMany()` when updating less than all of the values in the document. In contrast, you should use .`replaceOne()` when updating all the values (except the `_id`).
+Three main options exist for updating entries in your database. You can call a method that updates one document from a collection `.updateOne()`, you can call a method that updates more than one document `.updateMany()`, or you can call a method that replaces one document `.replaceOne()` except the `_id` field. You typically should use `.updateOne()` and `.updateMany()` when updating less than all of the values in the document(s). In contrast, you should use .`replaceOne()` when updating all the values (except the `_id`).
 
 ### .updateOne()
+
+Starting with the `.updateOne()` method to update values in one document. The `.updateOne()` method accepts two required arguments (filter and update) and one optional (options) `.updateOne(filter, update, options)`. The first argument is a filter. The filter is like the query argument used for the `find` methods. You use filter to specify which document to update. For instance, you can specify an empty object `.updateOne({})` to update the first document in the collection. Or you can specify specific criteria, like the `_id` of a document `.updateOne({_id: ObjectID("5fa406ec3f4b71a70ae05dab")})`, to target a specific document.
+
+The second argument is the projection. The projection declares the fields to return for each document that matches the query. If you want all the fields for each document, leave this argument blank.
+
+In the next chapter, you will practice using the query and projection parameters. For now, however, you should focus on using `.find()` with no arguments. 
+
+Here is an example of using `.find()` with no arguments for retrieving all the documents from your `users_collection`. The code example below is very similar to the code you've seen above. The lines in the code below that you should focus on are `all_db_users = await users_collection.find();` and ` all_db_users.forEach((user) => console.log(user));`.
 
 ### .updateMany()
 
