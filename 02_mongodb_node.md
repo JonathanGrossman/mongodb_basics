@@ -100,7 +100,6 @@ async function run() {
     ];
 
     multiplUsersDB = await users_collection.insertMany(multipleUsersObject);
-
     console.log(multiplUsersDB);    
   } catch (err) {
     console.log(err.stack);
@@ -127,7 +126,7 @@ The `.insertMany()` method returns a large connection object. In the example abo
 Another field available in the returned connection object is the `ops` field. The `ops` field has a value of an array of objects. Each object in the array is one of the inserted documents. That array looks something like this:
 
 ```node
-multiple ids--> [
+[
     { first: 'Jane', last: 'Doe', _id: 5fa406ec3f4b71a70ae05dac },
     { first: 'John', last: 'Doe', _id: 5fa406ec3f4b71a70ae05dad },
     { first: 'Jack', last: 'Hill', _id: 5fa406ec3f4b71a70ae05dae },
@@ -139,6 +138,15 @@ Notice that the printed documents are the same as what you inserted except the i
 
 
 ## .insertOne()
+
+Next is the the `.insertOne()` method to create one document in a single operation. Like `.insertMany()`, the `.insertOne()` method accepts one required argument and one optional argument `.insertOne(document, options)`. 
+
+The first argument -- document -- is an object. That object should contain key:value pairs. Like for the objects in the array for `.insertMany()`, it is recommended you not include an `_id` key and value in the object you pass into `.insertOne()`. MongoDB will create that `_id` for you. If, however, you do include an `_id` key and value, each should be unique. No other document in your database should have that same `_id` value.
+
+The second argument is an object of options about the insert operation. You will omit that argument for now when calling the method. Instead, you will only pass the document argument.
+
+To see the `.insertOne()` method in action, you can run the following script. The lines to pay special attention to are the line that defines the object `userObject` and `newUserDB = await users_collection.insertOne(userObject);
+`.
 
 ```node
 const { MongoClient } = require("mongodb");
@@ -164,32 +172,8 @@ async function run() {
       last: "Doe",
     };
 
-    const multipleUsersObject = [
-      {
-        first: "Jane",
-        last: "Doe",
-      },
-      {
-        first: "John",
-        last: "Doe",
-      },
-      {
-        first: "Jack",
-        last: "Hill",
-      },
-      {
-        first: "Jill",
-        last: "Hill",
-      },
-    ];
-
     newUserDB = await users_collection.insertOne(userObject);
-    multiplUsersDB = await users_collection.insertMany(multipleUsersObject);
-
-    console.log("one result", newUserDB);
-    console.log("multiple result", multiplUsersDB);
-
-    
+    console.log(newUserDB);    
   } catch (err) {
     console.log(err.stack);
   } finally {
@@ -199,19 +183,21 @@ async function run() {
 
 run().catch(console.dir);
 ```
+In the example above, `newUserDB` is an object containing a key for `first` and one for `last`. The line `newUserDB = await users_collection.insertOne(userObject);` performs the actual insert operation. In the example, you pass into it only one argument -- the document.
+
+The `.insertOne()` method returns a large connection object. In the example above, you print that object to the console. Look through it to see what information is available to you. One field available in the connection object is the `insertedId` field. The value for the `insertedId` is a string containing `_id` for the new inserted document. That string looks something like this:
 
 ```node
-console.log("one id-->", newUserDB.insertedId);
-console.log("multiple ids-->",multiplUsersDB.insertedIds);
-
-one id--> 5fa406ec3f4b71a70ae05dab
-multiple ids--> {
-  '0': 5fa406ec3f4b71a70ae05dac,
-  '1': 5fa406ec3f4b71a70ae05dad,
-  '2': 5fa406ec3f4b71a70ae05dae,
-  '3': 5fa406ec3f4b71a70ae05daf
-}
+5fa406ec3f4b71a70ae05dab
 ```
+
+Another field available in the returned connection object is the `ops` field. The `ops` field has a value of an array containing one object, which is the document insterted into the database. Even though the data type is an array, it contains only one object because you inserted only one document. That array looks something like this:
+
+```node
+[{ first: 'Jane', last: 'Doe', _id: 5fa406ec3f4b71a70ae05dab }]
+```
+
+Notice that the printed document is the same as what you inserted except the inserted copy has an `_id` field, whereas the object in your code doesn't. That's because MongoDB insererted the `_id` for you.
 
 ## [Read](#read)
 
