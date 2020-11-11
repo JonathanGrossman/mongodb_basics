@@ -270,7 +270,7 @@ The `.findOne()` method finds only one document from the collection. Like the `.
 
 Although the `.find()` and `.findOne()` methods have the same parameters (optional query and optional projection), they return different things. As you saw above, the `.find()` method returns a cursor, which is a collection of documents. In contrast, the `findOne()` method returns a single document (not a collection of them). 
 
-Here is an example of using `findOne()` with no arguments for retriecing one document from your `users_collection`. The code example below is the same as the previous example. The lines in the code below that you should focus on are `one_db_user = await users_collection.findOne();` and `console.log(one_db_user);`.
+Here is an example of using `findOne()` with no arguments for retrieving one document from your `users_collection`. The code example below is the same as the previous example. The lines in the code below that you should focus on are `one_db_user = await users_collection.findOne();` and `console.log(one_db_user);`.
 
 ```node
 const { MongoClient } = require("mongodb");
@@ -588,9 +588,9 @@ Two main options exist for deleting entries in your database. You can call a met
 
 Starting with the `.deleteMany()` method to delete multiple documents from the collection. The `.deleteMany()` method accepts one required argument and one optional argument `.deleteMany(query, options)`. The first argument is a query. The query is the filter you use to specify which documents to delete. To delete all documents in a collection, you can pass an empty document `.deleteMany({})` or leave the argument blank.  
 
-The second argument are options about the delete operation. You will omit that argument for now when calling the method. Instead, you will only pass the query argument.
+The second argument is an object of options about the delete operation. You will omit that argument for now when calling the method. Instead, you will only pass the query argument or no argument at all.
 
-Here is an example of using `.deleteMany()` with no arguments for deleting all the documents from your `users_collection`. The code example below is very similar to the code you've seen above. The lines in the code below that you should focus on are `all_db_users = await users_collection.find();` and ` all_db_users.forEach((user) => console.log(user));`.
+Here is an example of using `.deleteMany()` for deleting all the documents from your `users_collection`. The code example below is very similar to the code you've seen above. The lines in the code below that you should focus on are `deleted_from_db = await users_collection.deleteMany();` and `console.log(deleted_from_db);`.
 
 ```node
 const { MongoClient } = require("mongodb");
@@ -611,12 +611,8 @@ async function run() {
     // Use the collection named "users"
     const users_collection = db.collection("users");
 
-    // Get all users
-    all_db_users = await users_collection.find();
-
-    // Print each user to the console
-    all_db_users.forEach((user) => console.log(user));
-    
+    deleted_from_db = await users_collection.deleteMany();
+    console.log(deleted_from_db);
   } catch (err) {
     console.log(err.stack);
   } finally {
@@ -627,41 +623,11 @@ async function run() {
 run().catch(console.dir);
 ```
 
-The line `all_db_users = await users_collection.find();` retrieves all the documents from your `users_collection`. Notice that you pass no arguments into the `.find()` method. You would get the same result if you passed an empty object into the method `all_db_users = await users_collection.find({});`. 
- 
-The find method returns a cursor, which is a collection of documents. Console log the cursor (here it is named `all_db_users`) and look at the output, which a long object that won't be of much use to you now. 
+The line `deleted_from_db = await users_collection.deleteMany();` deletes all the documents from your `users_collection`. Notice that you pass no arguments into the `.deleteMany()` method. You would get the same result if you passed an empty object into the method `deleted_from_db = await users_collection.deleteMany({});`. 
 
-Instead, what is of use to you now, you can iterate through the cursor to access each document in the cursor collection. Here's how to: `all_db_users.forEach((user) => console.log(user));`. This line of code should output the following in your console:
+The `.deleteMany()` method returns a connection object. You console log it `console.log(deleted_from_db);`. Look through that connection object to see what information is available to you. The `deletedCount` may be a field you use in your work.
 
-```node
-{ _id: 5fa406ec3f4b71a70ae05dab, first: 'Jane', last: 'Doe' }
-{ _id: 5fa406ec3f4b71a70ae05dac, first: 'Jane', last: 'Doe' }
-{ _id: 5fa406ec3f4b71a70ae05dad, first: 'John', last: 'Doe' }
-{ _id: 5fa406ec3f4b71a70ae05dae, first: 'Jack', last: 'Hill' }
-{ _id: 5fa406ec3f4b71a70ae05daf, first: 'Jill', last: 'Hill' }
-```
-
-Try something else. Instead of console logging each user, try console logging just their first names `all_db_users.forEach((user) => console.log(user.first));`. 
-You should see the console print the following: 
-
-```node
-Jane
-Jane
-John
-Jack
-Jill
-```
-
-This dot notation should be familiar to you. You use it to access values inside an object. What data type is the `user`? Check the data type of the each document in the cursor `all_db_users.forEach((user) => console.log(typeof user));`. The console should print:
-
-```node
-object
-object
-object
-object
-object
-```
-### .findOne()
+### .deleteOne()
 
 The `.findOne()` method finds only one document from the collection. Like the `.find()` method, the `.findOne()` method accepts two optional arguments -- a query and a projection `.findOne(query, projection)`. If more than one document matches the query, the `.findOne()` method returns the first document that matches the query, which is usually the most recently inserted document that matches the query.
 
