@@ -581,3 +581,5 @@ After console logging the returned update object, the example then uses the `.fi
 You successfully replaced the "Jill Hill" document with a document that has the `middle` and `country` fields and corresponding values. Notice that the `_id` of `5fa406ec3f4b71a70ae05daf` is the same value that the document had before being replaced.  Replacement successful!
 
 ## [Delete](#delete)
+
+Two main options exist for deleting entries in your database. You can call a method that deletes one document from a collection `.deleteOne()` or you can call a method that deletes more than one document `.deleteMany()`. For example, from your collection named `users_collection`, you can use `.deleteOne()` to delete a specific document by passing into the method details about the document you want to delete. In contrast, you can use `.deleteMany()` to delete multiple documents that match the details that you pass into the method when calling it.
