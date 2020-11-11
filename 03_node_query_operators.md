@@ -24,7 +24,7 @@ This chapter discusses advanced techniques for writing queries. Specifically, yo
 
 For comparison of different BSON type values, see the specified BSON comparison order.
 
-Name	      Description. 
+Name	      Description  
 $eq   	Matches values that are equal to a specified value.  
 $gt	      Matches values that are greater than a specified value.  
 $gte	      Matches values that are greater than or equal to a specified value.  
@@ -36,7 +36,7 @@ $nin	      Matches none of the values specified in an array.
 
 ## [Logical](#logical)
 
-Name	      Description. 
+Name	      Description  
 $and	      Joins query clauses with a logical AND returns all documents that match the conditions of both clauses.  
 $not	      Inverts the effect of a query expression and returns documents that do not match the query expression.  
 $nor	      Joins query clauses with a logical NOR returns all documents that fail to match both clauses.  
