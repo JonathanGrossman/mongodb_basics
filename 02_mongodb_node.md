@@ -627,59 +627,15 @@ The line `deleted_from_db = await users_collection.deleteMany();` deletes all th
 
 The `.deleteMany()` method returns a connection object. You console log it `console.log(deleted_from_db);`. Look through that connection object to see what information is available to you. The `deletedCount` may be a field you use in your work.
 
+In the next lesson, you will learn more about using the query argument when calling the method.
+
 ### .deleteOne()
 
-The `.findOne()` method finds only one document from the collection. Like the `.find()` method, the `.findOne()` method accepts two optional arguments -- a query and a projection `.findOne(query, projection)`. If more than one document matches the query, the `.findOne()` method returns the first document that matches the query, which is usually the most recently inserted document that matches the query.
+The `.deleteOne()` method deletes only one document from the collection. Like the `.deleteMany()` method, the `.findOne()` method accepts two optional arguments -- a query and an object of objects about the delete operation `.deleteOne(query, options)`. If more than one document matches the query, the `.deleteOne()` method deletes the first document that matches the query, which is usually the most recently inserted document that matches the query.
 
-Although the `.find()` and `.findOne()` methods have the same parameters (optional query and optional projection), they return different things. As you saw above, the `.find()` method returns a cursor, which is a collection of documents. In contrast, the `findOne()` method returns a single document (not a collection of them). 
+Like for the `.deleteOne()` method, the second argument in the `.deleteOne()` method is an object of options about the delete operation. You will omit that argument for now when calling the method. Instead, you will only pass the query argument.
 
-Here is an example of using `findOne()` with no arguments for retriecing one document from your `users_collection`. The code example below is the same as the previous example. The lines in the code below that you should focus on are `one_db_user = await users_collection.findOne();` and `console.log(one_db_user);`.
-
-```node
-const { MongoClient } = require("mongodb");
-
-// Replace the following with your Atlas connection string
-const url = "connection_string"; // Replace with your Atlas connection string
-const client = new MongoClient(url);
-
-// The database to use
-const dbName = "test";
-
-async function run() {
-  try {
-    await client.connect();
-    console.log("Connected correctly to server");
-    const db = client.db(dbName);
-
-    // Use the collection named "users"
-    const users_collection = db.collection("users");
-
-    one_db_user = await users_collection.findOne();
-
-    console.log(one_db_user);
-  } catch (err) {
-    console.log(err.stack);
-  } finally {
-    await client.close();
-  }
-}
-
-run().catch(console.dir);
-```
-
-The variable `one_db_user` stores a single document. Because you didn't pass a query argument into the `findOne()` method, the method returns the most recently inserted document. The line `console.log(one_db_user);` prints that document to the console, like so below.
-
-```node
-{ _id: 5fa406ec3f4b71a70ae05dab, first: 'Jane', last: 'Doe' }
-```
-
-Like you did for the `.find()` method above, you can console log a specific value in the returned document using dot notation `console.log(one_db_user.first);` and also console log the `typeof` the document returned `console.log(typeof one_db_user);`.
-
-Although you may at times want to get only the most recently inserted document, it is just as (if not more) likely that you will want to get a document based on other criteria. Although later you will learn about this in more detail, here is an example of using the query argument to get a document that has a specific `_id`.
-
-A very common occurrence in web applications is to get from your databse a user (or other specific item) by it's unique id. Using the `.findOne()` method is a great way to do this. However, you need to pay attention to a at least one nuance to avoid confusing errors for what seems to be a simple action. 
-
-In MongoDB, the data type for `_id` is ObjectID (notice that `ID` has both letters capitalized; it's not `Id`). NodeJS, however, doesn't have the Mongo ObjectID data type built into it. You therefore need to import it from MongoDB and pass as a string into the ObjectID class to conver the string to an ObjectID. Here is an exmample. 
+Here is an example of using `.deleteOne()` for deleting a sinlge document from your `users_collection`. The code example below is very similar to the code you've seen above. The lines in the code below that you should focus on are `deleted_from_db = await users_collection.deleteOne({_id: ObjectID("5fabaef2ae39d0dca7488936"),});` and `console.log(deleted_from_db);`.
 
 ```node
 const { MongoClient, ObjectID } = require("mongodb");
@@ -700,11 +656,10 @@ async function run() {
     // Use the collection named "users"
     const users_collection = db.collection("users");
 
-    one_db_user = await users_collection.findOne({
-      _id: ObjectID("5fa406ec3f4b71a70ae05dab"),
+    deleted_from_db = await users_collection.deleteOne({
+      _id: ObjectID("5fabaef2ae39d0dca7488936"),
     });
-
-    console.log(one_db_user);
+    console.log(deleted_from_db);
   } catch (err) {
     console.log(err.stack);
   } finally {
@@ -715,20 +670,8 @@ async function run() {
 run().catch(console.dir);
 ```
 
-The code above is similar to the previous examples. One difference in this example is the very first line, which is now `const { MongoClient, ObjectID } = require("mongodb");`. This line now imports `ObjectID` from the mongodb package you installed. 
+The line `deleted_from_db = await users_collection.deleteOne({_id: ObjectID("5fabaef2ae39d0dca7488936"),});` deletes the document from your `users_collection` that has an `_id` of `ObjectID("5fabaef2ae39d0dca7488936")`. Notice that you pass an argument into the `.deleteOne()` method similar to what you did for `.findOne()`. It's an object containing a field:value pair. Because the `_id` field has a unique value, using it as the filter ensures you will delete the document you wanted to delete instead of some other document on accident. 
 
-Another difference is in the `try` block. It's this line.
+Like the `.deleteMany()` method, the `.deleteOne()` method returns a connection object. You console log it `console.log(deleted_from_db);`. Look through that connection object to see what information is available to you. The `deletedCount` may be a field you use in your work.
 
-```node 
-one_db_user = await users_collection.findOne({
-      _id: ObjectID("5fa406ec3f4b71a70ae05dab"),
-    });   
-```
-
-This is the same line as the previous example `one_db_user = await users_collection.findOne();`, except this time you pass into the `.findOne()` method an object that specifies a key `_id` and value `ObjectID("5fa406ec3f4b71a70ae05dab")` by which the `.findOne()` method will filter. In other words, the method will look for the document that has an `_id` of `ObjectID("5fa406ec3f4b71a70ae05dab")`. Notice that it is a string string passed into the `ObjectID` class. The code example above logs the following to the console.
-
-```node 
-{ _id: 5fa406ec3f4b71a70ae05dab, first: 'Jane', last: 'Doe' }
-```
-
-If the method doesn't find a document matching the query filter, the method returns `null`.
+In the next lesson, you will learn more about using the query argument when calling the method.
