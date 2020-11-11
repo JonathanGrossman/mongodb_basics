@@ -20,7 +20,7 @@ But what if you want to write more powerful search queries that allow you to do 
 
 This chapter discusses advanced techniques for writing queries. Specifically, you will learn how to pass objects as arguments that use comparison and logical operators so that you can receive a subset of documents from your collection that match the criteria.
 
-## [Comparison](#comparison)
+## [List of comparison operators](#list-of-comparison-operators)
 
 For comparison of different BSON type values, see the specified BSON comparison order.
 
@@ -33,9 +33,14 @@ For comparison of different BSON type values, see the specified BSON comparison 
 `$ne`  Matches all values that are not equal to a specified value.  
 `$nin`  Matches none of the values specified in an array.  
 
-## [Logical](#logical)
+## [Examples of comparison operators](#examples-of-comparison-operators)
+
+## [List of logical operators](#list-of-logical-operators)
 
 `$and`  Joins query clauses with a logical AND returns all documents that match the conditions of both clauses.  
 `$not`  Inverts the effect of a query expression and returns documents that do not match the query expression.  
 `$nor`  Joins query clauses with a logical NOR returns all documents that fail to match both clauses.  
 `$or`  Joins query clauses with a logical OR returns all documents that match the conditions of either clause.  
+
+## [Examples of logical operators](#examples-of-logical-operators)
+
