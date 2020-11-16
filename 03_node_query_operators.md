@@ -28,13 +28,13 @@ The follow sections explain how to use comparison operators and logical operator
 
 Comparison operators compare two or more values. Examples of comparison operators are greater than, less than, greater than or equal to, and less than or equal to. You should be familiar with comparison operators from other programming languages. 
 
-MongoDB comparison operators allow you to get a subset of documents based on a comparison. For instance, instead of getting one document by its `_id` or all documents from a collection, you can get only the documents that have a field with a value to meets the condition of your comparison operator. For instance, you can retrieve only the documents that have a field named `score` with a value greater than `10`. Or you can get documents that have a field named `first_name` with a value of `'Jane'`. 
+MongoDB comparison operators allow you to get a subset of documents based on a comparison. For instance, instead of getting one document by its `_id` or all documents from a collection, you can get only the documents that have a field with a value that meets the condition of your comparison operator. For instance, you can retrieve only the documents that have a field named `score` with a value greater than `10`. Or you can get documents that have a field named `first_name` with a value of `'Jane'`. 
 
-Using comparison operators in MongoDB is similar to but different from using comparison operators in other programming languages. The similarities are conceptual. For instance, greater than is greater than. Less than is less than. However, some key differences are syntax and order of operations. MongoDB uses syntax like `$gt` and `$lt`, whereas languages like JavaScript use mathematical symbols like `>` and `<`. Plus, you use comparison operators generally through your code in other languages, whereas in MongoDB they belong inside an object that serves as an argument inside a function call. 
+Using comparison operators in MongoDB is similar to but different from using comparison operators in other programming languages. The similarities are conceptual. For instance, greater than is greater than. Less than is less than. However, some key differences are syntax and order of operations. MongoDB uses syntax like `$gt` and `$lt`, whereas languages like JavaScript use mathematical symbols like `>` and `<`. Plus, you use comparison operators generally through your code in other languages, whereas in MongoDB they belong inside an object that serves as an argument inside a function call (e.g., `find({ score: { $eq: 10 } })`). 
 
-Unfortunately, the order of operations in MongoDB is not exactly the same as for algebra. To understand the comparison order, visit [MongoDB's page about comparison/sort order](#https://docs.mongodb.com/manual/reference/bson-type-comparison-order/#bson-types-comparison-order).
+In addition to syntax differences, another difference between comparison operators in MongoDB and other languages is the order of operations in MongoDB is not the same as for algebra. To understand the MongoDB comparison order, visit [MongoDB's page about comparison/sort order](#https://docs.mongodb.com/manual/reference/bson-type-comparison-order/#bson-types-comparison-order). Before worrying too much about order of operations, try practicing with simple examples.
 
-Here is a list of MongoDB comparison operators:
+Here is a list of MongoDB comparison operators.
 
 `$eq`  Equal to: Matches values that are equal to a specified value.  
 `$gt`  Greater than: Matches values that are greater than a specified value.  
@@ -51,10 +51,22 @@ Seeing some examples below will demonstrate.
 
 ## [List of logical operators](#list-of-logical-operators)
 
+Logical operators allow you to use simple logic to craft searches. The MongoDB logical operators are `and`, `not`, `or`, and `nor`. You should be familiar with logical operators from other programming languages. 
+
+Like comparison operators, MongoDB logical operators allow you to get a subset of documents from a collection. Intead of using comparisons, you use logic. For instance, you can get from a collection a subset of documents that meet one condition `and` another condition. For instance, you can retrieve only the documents that have both a field named `score` with a value greater than `10` and also a field named `first_name` with a value of `'Jane'`.  
+
+Or you can get a subset of documents that meet one condition `or` a different condition. For instance, you can retrieve only the documents that have either a field named `score` with a value greater than `10` or a field named `first_name` with a value of `'Jane'`.  
+
+Using logical operators in MongoDB is similar to using logical operators in other programming languages. The main difference is syntax. Like for comparison operators, MongoDB uses syntax like `$and` and `$not`, whereas languages like JavaScript use other syntax like `&&` or `||`. 
+
+Here is a list of MongoDB logical operators. 
+
 `$and`  Joins query clauses with a logical AND returns all documents that match the conditions of both clauses.  
 `$not`  Inverts the effect of a query expression and returns documents that do not match the query expression.  
 `$nor`  Joins query clauses with a logical NOR returns all documents that fail to match both clauses.  
 `$or`  Joins query clauses with a logical OR returns all documents that match the conditions of either clause.  
+
+You can combine logical operators with comparison operators to make some powerful queries. You can also use logical operators without comparisons. Regardless, seeing some examples below will demonstrate.
 
 ## [Examples of logical operators](#examples-of-logical-operators)
 
