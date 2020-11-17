@@ -18,9 +18,9 @@ all_db_users = await users_collection.find({});
 
 But what if you want to write more powerful search queries that allow you to do more than get a single document by its `_id` or get less than all documents? 
 
-This chapter discusses advanced techniques for writing queries. Specifically, you will learn how to pass objects as arguments that use comparison and logical operators so that you can receive a subset of documents from your collection that match the criteria.
+This chapter discusses slighlty more advanced techniques for writing queries. Specifically, you will learn how to pass objects as arguments that use comparison and logical operators so that you can receive a subset of documents from your collection that match the criteria.
 
-When working with databases, it may be tempting to retrieve all documents from a collection and then filter the results in your server-side or client-side code. Although that may be an appropriate solution for some situations, you wil need in other situations to filter what you get back from the database instead of filtering after. 
+When working with databases, it may be tempting to retrieve all documents from a collection and then filter the results in your server-side or client-side code. Although that may be an appropriate solution for some situations, you will need in other situations to filter what you get back from the database instead of filtering after. 
 
 The follow sections explain how to use comparison operators and logical operators to craft targeted database queries.
 
@@ -30,7 +30,9 @@ Comparison operators compare two or more values. Examples of comparison operator
 
 MongoDB comparison operators allow you to get a subset of documents based on a comparison. For instance, instead of getting one document by its `_id` or all documents from a collection, you can get only the documents that have a field with a value that meets the condition of your comparison operator. For instance, you can retrieve only the documents that have a field named `score` with a value greater than `10`. Or you can get documents that have a field named `first_name` with a value of `'Jane'`. 
 
-Using comparison operators in MongoDB is similar to but different from using comparison operators in other programming languages. The similarities are conceptual. For instance, greater than is greater than. Less than is less than. However, some key differences are syntax and order of operations. MongoDB uses syntax like `$gt` and `$lt`, whereas languages like JavaScript use mathematical symbols like `>` and `<`. Plus, you use comparison operators generally through your code in other languages, whereas in MongoDB they belong inside an object that serves as an argument inside a function call (e.g., `find({ score: { $eq: 10 } })`). 
+Using comparison operators in MongoDB is similar to but different from using comparison operators in other programming languages. The similarities are conceptual. For instance, greater than is greater than. Less than is less than. 
+
+Some key differences are syntax and order of operations. MongoDB uses syntax like `$gt` and `$lt`, whereas languages like JavaScript use mathematical symbols like `>` and `<`. Plus, you use comparison operators generally through your code in other languages, whereas in MongoDB they belong inside an object that serves as an argument inside a function call (e.g., `find({ score: { $eq: 10 } })`). 
 
 In addition to syntax differences, another difference between comparison operators in MongoDB and other languages is the order of operations in MongoDB is not the same as for algebra. To understand the MongoDB comparison order, visit [MongoDB's page about comparison/sort order](#https://docs.mongodb.com/manual/reference/bson-type-comparison-order/#bson-types-comparison-order). Before worrying too much about order of operations, try practicing with simple examples.
 
@@ -39,7 +41,7 @@ Here is a list of MongoDB comparison operators.
 `$eq`  Equal to: Matches values that are equal to a specified value.  
 `$gt`  Greater than: Matches values that are greater than a specified value.  
 `$gte`  Greater than or equal to: Matches values that are greater than or equal to a specified value.  
-`$in`  In an arrayL Matches any of the values specified in an array.  
+`$in`  In an array: Matches any of the values specified in an array.  
 `$lt`  Less than: Matches values that are less than a specified value.  
 `$lte`  Less than or equal to: Matches values that are less than or equal to a specified value.  
 `$ne`  Not equal to: Matches all values that are not equal to a specified value.  
@@ -48,6 +50,77 @@ Here is a list of MongoDB comparison operators.
 Seeing some examples below will demonstrate.
 
 ## [Examples of comparison operators](#examples-of-comparison-operators)
+
+Seeing a few examples of MongoDB comparison operators will demonstrate how they work. Starting with a simple 'equal to' comparison, the following script uses the `.find()` method to retrieve only the documents that have a `score` field with a value of greater than `5`. The example is simialr to examples you've seen in previous sections. The line to pay special attention to is `filtered_db_users = await users_collection.find({ score: { $gt: 5 } });`.
+
+```node
+const { MongoClient } = require("mongodb");
+
+// Replace the following with your Atlas connection string
+const url = "connection_string";
+const client = new MongoClient(url);
+
+// The database to use
+const dbName = "test";
+
+async function run() {
+  try {
+    await client.connect();
+    console.log("Connected correctly to server");
+    const db = client.db(dbName);
+
+    // Use the collection named "users"
+    const users_collection = db.collection("users");
+
+    filtered_db_users = await users_collection.find({ score: { $gt: 5 } });
+
+    filtered_db_users.forEach((user) => {
+      console.log(user);
+    });
+  } catch (err) {
+    console.log(err.stack);
+  } finally {
+    await client.close();
+  }
+}
+
+run().catch(console.dir);
+```
+
+In the example above, the line `filtered_db_users = await users_collection.find({ score: { $gt: 5 } });` searches for documents that have a score greater than 5. Inside of the `.find()` method, the example passes an object as an argument. That object is `{ score: { $gt: 5 } }`. The object's key is `score`. This is the field that the `.find()` method looks for to do the comparison. The value for the `score` field in the object is another object `{ $gt: 5 }`. This object has the comparison operator of `$gt` as it's key and the number `5` as its value. 
+
+If you console log `filtered_db_users`, you see in the console a large Cursor object. Review it to see if anything useful exists there for you. If, however, you loop through `filtered_db_users` and console log each item as you loop through, you see each document returned from your query. 
+
+```node 
+{
+  _id: 5fb3865234d40445e378b680,
+  first: 'Jane',
+  last: 'Doe',
+  languages: [ 'javascript' ],
+  score: 9
+}
+{
+  _id: 5fb3865234d40445e378b681,
+  first: 'John',
+  last: 'Doe',
+  languages: [ 'python', 'java' ],
+  score: 10
+}
+{
+  _id: 5fb3865234d40445e378b682,
+  first: 'Jack',
+  last: 'Hill',
+  languages: [ 'java', 'ruby', 'javascript' ],
+  score: 6
+}
+{
+  _id: 5fb3865234d40445e378b683,
+  first: 'Jill',
+  last: 'Hill',
+  languages: [ 'ruby' ],
+  score: 8
+}
+```
 
 ## [List of logical operators](#list-of-logical-operators)
 
