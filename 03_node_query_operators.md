@@ -166,7 +166,7 @@ If you console log `filtered_db_users`, you see in the console a large Cursor ob
 }
 ```
 
-Notice that the users collection of documents as a whole has 5 documents (see the documents at the top of this section). The `.find()` comparison query in the example above, however, returns only 4 documents. That's because 1 of the 5 documents in the users collection has a `score` of `3`. Because `3` is not greater than `5`, that document is not included in the return of the `.find()` method in the example above. Cool.
+Notice that the users collection of documents as a whole has 5 documents (see the documents at the top of this section). The `.find()` comparison query in the example above, however, returns only 4 documents. That's because 1 of the 5 documents in the users collection has a `score` of `3`. Because `3` is not greater than `5`, that document is not included in the return of the `.find()` method in the example above.
 
 ### in
 
@@ -240,7 +240,9 @@ If you console log `filtered_db_users`, you see in the console a large Cursor ob
 }
 ```
 
-Notice that the users collection of documents as a whole has 5 documents (see the documents at the top of this section). The `.find()` comparison query in the example above, however, returns only 3 documents. That's because 2 of the 5 documents in the users collection have a `langauges` field that does not contain 'javascript'. Also cool. Now try adding more items to the array in your comparison object `{ $in: ["javascript"] }`. For instance, what happens when you add 'python' `{ $in: ["javascript", "python"] }`
+Notice that the users collection of documents as a whole has 5 documents (see the documents at the top of this section). The `.find()` comparison query in the example above, however, returns only 3 documents. That's because 2 of the 5 documents in the users collection have a `langauges` field that does not contain 'javascript'.
+
+Now try adding more items to the array in your comparison object `{ $in: ["javascript"] }`. For instance, what happens when you add 'python' `{ $in: ["javascript", "python"] }`
 
 ## [List of logical operators](#list-of-logical-operators)
 
