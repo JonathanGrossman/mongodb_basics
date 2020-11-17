@@ -51,7 +51,48 @@ Seeing some examples below will demonstrate.
 
 ## [Examples of comparison operators](#examples-of-comparison-operators)
 
-Seeing a few examples of MongoDB comparison operators will demonstrate how they work. Starting with a simple 'equal to' comparison, the following script uses the `.find()` method to retrieve only the documents that have a `score` field with a value of greater than `5`. The example is simialr to examples you've seen in previous sections. The line to pay special attention to is `filtered_db_users = await users_collection.find({ score: { $gt: 5 } });`.
+Seeing a few examples of MongoDB comparison operators will demonstrate how they work. For the examples in this section, assume your database has the following documents in the users collection:
+
+```node
+{
+  _id: 5fb3865234d40445e378b67f,
+  first: 'Jane',
+  last: 'Doe',
+  languages: [ 'javascript', 'python' ],
+  score: 3
+}
+{
+  _id: 5fb3865234d40445e378b680,
+  first: 'Jane',
+  last: 'Doe',
+  languages: [ 'javascript' ],
+  score: 9
+}
+{
+  _id: 5fb3865234d40445e378b681,
+  first: 'John',
+  last: 'Doe',
+  languages: [ 'python', 'java' ],
+  score: 10
+}
+{
+  _id: 5fb3865234d40445e378b682,
+  first: 'Jack',
+  last: 'Hill',
+  languages: [ 'java', 'ruby', 'javascript' ],
+  score: 6
+}
+{
+  _id: 5fb3865234d40445e378b683,
+  first: 'Jill',
+  last: 'Hill',
+  languages: [ 'ruby' ],
+  score: 8
+}
+```
+
+
+Starting with a simple 'equal to' comparison, the following script uses the `.find()` method to retrieve only the documents that have a `score` field with a value greater than `5`. The example script below is simialr to examples you've seen in previous sections. The line to pay special attention to is `filtered_db_users = await users_collection.find({ score: { $gt: 5 } });`.
 
 ```node
 const { MongoClient } = require("mongodb");
@@ -87,9 +128,11 @@ async function run() {
 run().catch(console.dir);
 ```
 
-In the example above, the line `filtered_db_users = await users_collection.find({ score: { $gt: 5 } });` searches for documents that have a score greater than 5. Inside of the `.find()` method, the example passes an object as an argument. That object is `{ score: { $gt: 5 } }`. The object's key is `score`. This is the field that the `.find()` method looks for to do the comparison. The value for the `score` field in the object is another object `{ $gt: 5 }`. This object has the comparison operator of `$gt` as it's key and the number `5` as its value. 
+In the example above, the line `filtered_db_users = await users_collection.find({ score: { $gt: 5 } });` searches for documents that have a score greater than 5. Inside of the `.find()` method, the example passes an object as an argument. That object is `{ score: { $gt: 5 } }`. The object's key is `score`. This is the field that the `.find()` method looks for to do the comparison. 
 
-If you console log `filtered_db_users`, you see in the console a large Cursor object. Review it to see if anything useful exists there for you. If, however, you loop through `filtered_db_users` and console log each item as you loop through, you see each document returned from your query. 
+The value for the `score` field in the object is another object `{ $gt: 5 }`. This object has the comparison operator of `$gt` as it's key and the number `5` as its value. 
+
+If you console log `filtered_db_users`, you see in the console a large Cursor object. Review it to see if anything useful exists there for you. If, however, you loop through `filtered_db_users` and console log each item as you loop through (e.g., the forEach loop in the example above), you see each document returned from your query. 
 
 ```node 
 {
@@ -121,6 +164,8 @@ If you console log `filtered_db_users`, you see in the console a large Cursor ob
   score: 8
 }
 ```
+
+Notice that the users collection of documents as a whole has 5 documents (see the documents at the top of this section). The `.find()` comparison query in the example above, however, returns only 4 documents. That's because 1 of the 5 documents in the users collection has a `score` of `3`. Because `3` is not greater than `5`, that document is not included in the return of the `.find()` method in the example above. Cool.
 
 ## [List of logical operators](#list-of-logical-operators)
 
