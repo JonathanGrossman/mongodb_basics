@@ -170,9 +170,9 @@ Notice that the users collection of documents as a whole has 5 documents (see th
 
 ### in
 
-Next, you'll use the `$in` operator to filter for documents that have a field containing a value that is an array. If the field's value is an array, then `$in` selects only the documents whose field holds an array that contains at least one element that matches a value in the specified array. 
+Next, use the `$in` operator to filter for documents that have a field containing a value that is an array. If the field's value is an array, then `$in` selects only the documents whose field holds an array that contains at least one element that matches a value in the specified array. 
 
-The following script uses the `.find()` method to retrieve only the documents that have a `languages` field with a value of `'javascript`. The example script below is simialr to examples you've seen in previous sections. The line to pay special attention to is `filtered_db_users = await users_collection.find({languages: { $in: ["javascript"] },});`.
+The following script uses the `.find()` method to retrieve only the documents that have a `languages` field with a value of `'javascript'`. The example script below is simialr to examples you've seen in previous sections. The line to pay special attention to is `filtered_db_users = await users_collection.find({languages: { $in: ["javascript"] },});`.
 
 ```node
 const { MongoClient } = require("mongodb");
@@ -243,6 +243,81 @@ If you console log `filtered_db_users`, you see in the console a large Cursor ob
 Notice that the users collection of documents as a whole has 5 documents (see the documents at the top of this section). The `.find()` comparison query in the example above, however, returns only 3 documents. That's because 2 of the 5 documents in the users collection have a `langauges` field that does not contain 'javascript'.
 
 Now try adding more items to the array in your comparison object `{ $in: ["javascript"] }`. For instance, what happens when you add 'python' `{ $in: ["javascript", "python"] }`
+
+### not equal to
+
+Next, use the `$ne` operator to filter for documents that do not have a field containing a value equal to the specified value. This operator returns documents that do not contain the field and also documents that contain the field but with a value not equal to the specified value. 
+
+The following script uses the `.find()` method to retrieve only the documents that have a `first` field with a value not equal to `'Jane'`. The example script below is simialr to examples you've seen in previous sections. The line to pay special attention to is `filtered_db_users = await users_collection.find({first: { $ne: "Jane" }});`.
+
+```node
+const { MongoClient } = require("mongodb");
+
+// Replace the following with your Atlas connection string
+const url = "connection_string";
+const client = new MongoClient(url);
+
+// The database to use
+const dbName = "test";
+
+async function run() {
+  try {
+    await client.connect();
+    console.log("Connected correctly to server");
+    const db = client.db(dbName);
+
+    // Use the collection named "users"
+    const users_collection = db.collection("users");
+
+    filtered_db_users = await users_collection.find({
+      first: { $ne: "Jane" },
+    });
+
+    filtered_db_users.forEach((user) => {
+      console.log(user);
+    });
+  } catch (err) {
+    console.log(err.stack);
+  } finally {
+    await client.close();
+  }
+}
+
+run().catch(console.dir);
+
+```
+
+In the example above, the line `filtered_db_users = await users_collection.find({first: { $ne: "Jane" }});` searches for documents that have a first field not equal to 'Jane'. Inside of the `.find()` method, the example passes an object as an argument. That object is `{ first: { $ne: "Jane" } }`. The object's key is `first`. This is the field that the `.find()` method looks for to do the comparison. 
+
+The value for the `first` field in the object is another object `{ $ne: "Jane" }`. This object has the comparison operator of `$ne` as it's key and the string`'Jane'` as its value. 
+
+If you console log `filtered_db_users`, you see in the console a large Cursor object. Review it to see if anything useful exists there for you. If, however, you loop through `filtered_db_users` and console log each item as you loop through (e.g., the forEach loop in the example above), you see each document returned from your query. 
+
+```node 
+{
+  _id: 5fb3865234d40445e378b681,
+  first: 'John',
+  last: 'Doe',
+  languages: [ 'python', 'java' ],
+  score: 10
+}
+{
+  _id: 5fb3865234d40445e378b682,
+  first: 'Jack',
+  last: 'Hill',
+  languages: [ 'java', 'ruby', 'javascript' ],
+  score: 6
+}
+{
+  _id: 5fb3865234d40445e378b683,
+  first: 'Jill',
+  last: 'Hill',
+  languages: [ 'ruby' ],
+  score: 8
+}
+```
+
+Notice that the users collection of documents as a whole has 5 documents (see the documents at the top of this section). The `.find()` comparison query in the example above, however, returns only 3 documents. That's because 2 of the 5 documents in the users collection each have a `first` of `'Jane`. 
 
 ## [List of logical operators](#list-of-logical-operators)
 
