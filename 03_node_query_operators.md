@@ -91,8 +91,9 @@ Seeing a few examples of MongoDB comparison operators will demonstrate how they 
 }
 ```
 
+### greater than
 
-Starting with a simple 'equal to' comparison, the following script uses the `.find()` method to retrieve only the documents that have a `score` field with a value greater than `5`. The example script below is simialr to examples you've seen in previous sections. The line to pay special attention to is `filtered_db_users = await users_collection.find({ score: { $gt: 5 } });`.
+Starting with a simple 'greter than' comparison using the `$gt` operator. This operator matches documents where the value of a field is greater than the specified value. The following script uses the `.find()` method to retrieve only the documents that have a `score` field with a value greater than `5`. The example script below is simialr to examples you've seen in previous sections. The line to pay special attention to is `filtered_db_users = await users_collection.find({ score: { $gt: 5 } });`.
 
 ```node
 const { MongoClient } = require("mongodb");
@@ -166,6 +167,80 @@ If you console log `filtered_db_users`, you see in the console a large Cursor ob
 ```
 
 Notice that the users collection of documents as a whole has 5 documents (see the documents at the top of this section). The `.find()` comparison query in the example above, however, returns only 4 documents. That's because 1 of the 5 documents in the users collection has a `score` of `3`. Because `3` is not greater than `5`, that document is not included in the return of the `.find()` method in the example above. Cool.
+
+### in
+
+Next, you'll use the `$in` operator to filter for documents that have a field containing a value that is an array. If the field's value is an array, then `$in` selects only the documents whose field holds an array that contains at least one element that matches a value in the specified array. 
+
+The following script uses the `.find()` method to retrieve only the documents that have a `languages` field with a value of `'javascript`. The example script below is simialr to examples you've seen in previous sections. The line to pay special attention to is `filtered_db_users = await users_collection.find({languages: { $in: ["javascript"] },});`.
+
+```node
+const { MongoClient } = require("mongodb");
+
+// Replace the following with your Atlas connection string
+const url = "connection_string";
+const client = new MongoClient(url);
+
+// The database to use
+const dbName = "test";
+
+async function run() {
+  try {
+    await client.connect();
+    console.log("Connected correctly to server");
+    const db = client.db(dbName);
+
+    // Use the collection named "users"
+    const users_collection = db.collection("users");
+
+    filtered_db_users = await users_collection.find({
+      languages: { $in: ["javascript"] },
+    });
+
+    filtered_db_users.forEach((user) => {
+      console.log(user);
+    });
+  } catch (err) {
+    console.log(err.stack);
+  } finally {
+    await client.close();
+  }
+}
+
+run().catch(console.dir);
+```
+
+In the example above, the line `filtered_db_users = await users_collection.find({languages: { $in: ["javascript"] }});` searches for documents that have a languages array containing 'javascript'. Inside of the `.find()` method, the example passes an object as an argument. That object is `{languages: { $in: ["javascript"] }`. The object's key is `languages`. This is the field that the `.find()` method looks for to do the comparison. 
+
+The value for the `languages` field in the object is another object `{ $in: ["javascript"] }`. This object has the comparison operator of `$in` as it's key and an array `["javascript"]` as its value. Although the array contains only one item, you still need to need to include it within the array because otherwise you receive an error message.
+
+If you console log `filtered_db_users`, you see in the console a large Cursor object. Review it to see if anything useful exists there for you. If, however, you loop through `filtered_db_users` and console log each item as you loop through (e.g., the forEach loop in the example above), you see each document returned from your query. 
+
+```node 
+{
+  _id: 5fb3865234d40445e378b67f,
+  first: 'Jane',
+  last: 'Doe',
+  languages: [ 'javascript', 'python' ],
+  score: 3
+}
+{
+  _id: 5fb3865234d40445e378b680,
+  first: 'Jane',
+  last: 'Doe',
+  languages: [ 'javascript' ],
+  score: 9
+}
+{
+  _id: 5fb3865234d40445e378b682,
+  first: 'Jack',
+  last: 'Hill',
+  languages: [ 'java', 'ruby', 'javascript' ],
+  score: 6
+}
+```
+
+Notice that the users collection of documents as a whole has 5 documents (see the documents at the top of this section). The `.find()` comparison query in the example above, however, returns only 3 documents. That's because 2 of the 5 documents in the users collection have a `langauges` field that does not contain 'javascript'. Also cool. Now try adding more items to the array in your comparison object `{ $in: ["javascript"] }`. For instance, what happens when you add 'python' `{ $in: ["javascript", "python"] }`
 
 ## [List of logical operators](#list-of-logical-operators)
 
