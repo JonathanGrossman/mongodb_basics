@@ -172,7 +172,7 @@ Notice that the users collection of documents as a whole has 5 documents (see th
 
 Next, use the `$in` operator to filter for documents that have a field containing a value that is an array. If the field's value is an array, then `$in` selects only the documents whose field holds an array that contains at least one element that matches a value in the specified array. 
 
-The following script uses the `.find()` method to retrieve only the documents that have a `languages` field with a value of `'javascript'`. The example script below is simialr to examples you've seen in previous sections. The line to pay special attention to is `filtered_db_users = await users_collection.find({languages: { $in: ["javascript"] },});`.
+The following script uses the `.find()` method to retrieve only the documents that have a `languages` field with a value of `'javascript'`. The example script below is simialr to examples you've seen in previous sections. The line to pay special attention to is `filtered_db_users = await users_collection.find({languages: { $in: ["javascript"] }});`.
 
 ```node
 const { MongoClient } = require("mongodb");
@@ -210,9 +210,9 @@ async function run() {
 run().catch(console.dir);
 ```
 
-In the example above, the line `filtered_db_users = await users_collection.find({languages: { $in: ["javascript"] }});` searches for documents that have a languages array containing 'javascript'. Inside of the `.find()` method, the example passes an object as an argument. That object is `{languages: { $in: ["javascript"] }`. The object's key is `languages`. This is the field that the `.find()` method looks for to do the comparison. 
+In the example above, the line `filtered_db_users = await users_collection.find({languages: { $in: ["javascript"] }});` searches for documents that have a languages array containing `'javascript'`. Inside of the `.find()` method, the example passes an object as an argument. That object is `{languages: { $in: ["javascript"] }`. 
 
-The value for the `languages` field in the object is another object `{ $in: ["javascript"] }`. This object has the comparison operator of `$in` as it's key and an array `["javascript"]` as its value. Although the array contains only one item, you still need to need to include it within the array because otherwise you receive an error message.
+The object's key is `languages`. This is the field that the `.find()` method looks for to do the comparison. The value for the `languages` field in the object is another object `{ $in: ["javascript"] }`. This object has the comparison operator of `$in` as it's key and an array `["javascript"]` as its value. Although the array contains only one item, you still need to include it within an array (as opposed to just a string) because otherwise you receive an error message.
 
 If you console log `filtered_db_users`, you see in the console a large Cursor object. Review it to see if anything useful exists there for you. If, however, you loop through `filtered_db_users` and console log each item as you loop through (e.g., the forEach loop in the example above), you see each document returned from your query. 
 
@@ -240,9 +240,9 @@ If you console log `filtered_db_users`, you see in the console a large Cursor ob
 }
 ```
 
-Notice that the users collection of documents as a whole has 5 documents (see the documents at the top of this section). The `.find()` comparison query in the example above, however, returns only 3 documents. That's because 2 of the 5 documents in the users collection have a `langauges` field that does not contain 'javascript'.
+Notice that the users collection of documents as a whole has 5 documents (see the documents at the top of this section). The `.find()` comparison query in the example above, however, returns only 3 documents. That's because 2 of the 5 documents in the users collection have a `langauges` field that does not contain `'javascript'`.
 
-Now try adding more items to the array in your comparison object `{ $in: ["javascript"] }`. For instance, what happens when you add 'python' `{ $in: ["javascript", "python"] }`
+Now try adding more items to the array in your comparison object `{ $in: ["javascript"] }`. For instance, what happens when you add `'python'` to the filter `{ $in: ["javascript", "python"] }`
 
 ### not equal to
 
@@ -287,11 +287,12 @@ run().catch(console.dir);
 
 ```
 
-In the example above, the line `filtered_db_users = await users_collection.find({first: { $ne: "Jane" }});` searches for documents that have a first field not equal to 'Jane'. Inside of the `.find()` method, the example passes an object as an argument. That object is `{ first: { $ne: "Jane" } }`. The object's key is `first`. This is the field that the `.find()` method looks for to do the comparison. 
+In the example above, the line `filtered_db_users = await users_collection.find({first: { $ne: "Jane" }});` searches for documents that have a `first` field not equal to `'Jane'`. Inside of the `.find()` method, the example passes an object as an argument. That object is `{ first: { $ne: "Jane" } }`. 
 
-The value for the `first` field in the object is another object `{ $ne: "Jane" }`. This object has the comparison operator of `$ne` as it's key and the string`'Jane'` as its value. 
+The object's key is `first`. This is the field that the `.find()` method looks for to do the comparison. The value for the `first` field in the object is another object `{ $ne: "Jane" }`. This object has the comparison operator of `$ne` as it's key and the string `'Jane'` as its value. 
 
 If you console log `filtered_db_users`, you see in the console a large Cursor object. Review it to see if anything useful exists there for you. If, however, you loop through `filtered_db_users` and console log each item as you loop through (e.g., the forEach loop in the example above), you see each document returned from your query. 
+
 
 ```node 
 {
@@ -321,13 +322,13 @@ Notice that the users collection of documents as a whole has 5 documents (see th
 
 ## [List of logical operators](#list-of-logical-operators)
 
-Logical operators allow you to use simple logic to craft searches. The MongoDB logical operators are `and`, `not`, `or`, and `nor`. You should be familiar with logical operators from other programming languages. 
+Logical operators allow you to use simple logic to craft powerful searches. The MongoDB logical operators are `and`, `not`, `or`, and `nor`. You should be familiar with logical operators from other programming languages. 
 
-Like comparison operators, MongoDB logical operators allow you to get a subset of documents from a collection. Intead of using comparisons, you use logic. For instance, you can get from a collection a subset of documents that meet one condition `and` another condition. For instance, you can retrieve only the documents that have both a field named `score` with a value greater than `10` and also a field named `first_name` with a value of `'Jane'`.  
+Like comparison operators, MongoDB logical operators allow you to get a subset of documents from a collection. Intead of using comparisons, you use logic. For instance, you can get from a collection a subset of documents that meet one condition `and` another condition. To give a specific example, you can retrieve only the documents that have both a field named `score` with a value greater than `10` and also a field named `first_name` with a value of `'Jane'`.  
 
 Or you can get a subset of documents that meet one condition `or` a different condition. For instance, you can retrieve only the documents that have either a field named `score` with a value greater than `10` or a field named `first_name` with a value of `'Jane'`.  
 
-Using logical operators in MongoDB is similar to using logical operators in other programming languages. The main difference is syntax. Like for comparison operators, MongoDB uses syntax like `$and` and `$not`, whereas languages like JavaScript use other syntax like `&&` or `||`. 
+Using logical operators in MongoDB is similar to using logical operators in other programming languages. The main difference is syntax. Like for comparison operators, MongoDB uses syntax like `$and` and `$not`, whereas languages like JavaScript use other syntax like `&&` or `||`.  In other languages, comparison operators are generally used throughout your code, whereas in MongoDB they belong inside an object that serves as an argument inside a function call (e.g., `find({ score: { $not: 10 } })`). Pay close attention to the syntax for each logical operator because each has its own subtle nuances.
 
 Here is a list of MongoDB logical operators. 
 
@@ -339,4 +340,75 @@ Here is a list of MongoDB logical operators.
 You can combine logical operators with comparison operators to make some powerful queries. You can also use logical operators without comparisons. Regardless, seeing some examples below will demonstrate.
 
 ## [Examples of logical operators](#examples-of-logical-operators)
+
+For the examples in this section, assume your database has the the same documents in the users collection as for the comparison operators examples above.
+
+### and
+
+The `$and` operator operates on an array of one or more expressions. The documents that satisfy all the expressions in the array are the documents that the `$and` operator returns in the Cursor object. If the first expression in the array evaluates to false, MongoDB does not evaluate the remaining expressions.
+
+At first, the syntax might be a little tricky. If, however, you take the time to study it, it's not so bad. 
+
+Into the `.find()` method, you pass an object. That object's key is the `$and` operator and its value is an array of objects. Each object in the array has a key that corresponds to a field in your MongoDB documents and a value that either is an expression (like `$gt`, `$lte`, etc.) or just a value (like `10`, `'Jane'`, etc.).
+
+Starting simple, the example below uses the `$and` operator with an array of two objects. Each of the two objects have a value of a string. Specifically, the example looks for documents that have a `first` key with a value of `'Jane'` and a `last` key with a value of `'Doe'`. The example script below is simialr to examples you've seen in previous sections. The line to pay special attention to is `filtered_db_users = await users_collection.find({$and: [{ first: "Jane" }, { last: "Doe" }]});`.
+
+```node
+const { MongoClient } = require("mongodb");
+
+// Replace the following with your Atlas connection string
+const url = "connection_string";
+const client = new MongoClient(url);
+
+// The database to use
+const dbName = "test";
+
+async function run() {
+  try {
+    await client.connect();
+    console.log("Connected correctly to server");
+    const db = client.db(dbName);
+
+    // Use the collection named "users"
+    const users_collection = db.collection("users");
+
+    filtered_db_users = await users_collection.find({
+      $and: [{ first: "Jane" }, { last: "Doe" }],
+    });
+
+    filtered_db_users.forEach((user) => {
+      console.log(user);
+    });
+  } catch (err) {
+    console.log(err.stack);
+  } finally {
+    await client.close();
+  }
+}
+
+run().catch(console.dir);
+```
+
+In the example above, the line `filtered_db_users = await users_collection.find({$and: [{ first: "Jane" }, { last: "Doe" }]});` searches for documents that have a `first` field equal to `'Jane'` and a `last` field eual to `'Doe'`. Inside of the `.find()` method, the example passes an object as an argument. That object is `{ $and: [{ first: "Jane" }, { last: "Doe" }] }`. The key is `$and` and the value is `[{ first: "Jane" }, { last: "Doe" }]`. Inside the value are two objects. Each object has as a key one of the fields expected in your documents. Each have a string as a value.
+
+If you console log `filtered_db_users`, you see in the console a large Cursor object. Review it to see if anything useful exists there for you. If, however, you loop through `filtered_db_users` and console log each item as you loop through (e.g., the forEach loop in the example above), you see each document returned from your query. 
+
+```node
+{
+  _id: 5fb3865234d40445e378b67f,
+  first: 'Jane',
+  last: 'Doe',
+  languages: [ 'javascript', 'python' ],
+  score: 3
+}
+{
+  _id: 5fb3865234d40445e378b680,
+  first: 'Jane',
+  last: 'Doe',
+  languages: [ 'javascript' ],
+  score: 9
+}
+```
+
+Notice that the users collection of documents as a whole has 5 documents (see the documents at the top of this section). The `.find()` comparison query in the example above, however, returns only 2 documents. That's because only 2 of the 5 documents in the users collection have a `first` of `'Jane` and `last` of `'Doe'`. Also notice that the two documents returned are in fact different documents. They have different `_id`, `languages`, and `score` values. 
 
