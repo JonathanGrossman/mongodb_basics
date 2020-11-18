@@ -412,3 +412,15 @@ If you console log `filtered_db_users`, you see in the console a large Cursor ob
 
 Notice that the users collection of documents as a whole has 5 documents (see the documents at the top of this section). The `.find()` comparison query in the example above, however, returns only 2 documents. That's because only 2 of the 5 documents in the users collection have a `first` of `'Jane` and `last` of `'Doe'`. Also notice that the two documents returned are in fact different documents. They have different `_id`, `languages`, and `score` values. 
 
+### not
+
+Unlike the `$and` logical operator that operatores on an array of objects, the `$not` operator operates on a single object. This operator returns only the documents that do not match the object on which it operates. Not only does this operator return only the documents that contain the field but with a value that does not match the query object, it also returns documents that do not contain the field. In other words, not having the field entirely is treated the same as having the field but with a value that doesn't fit the query criteria.
+
+Like for the `$and` logical operator, at first the syntax might be a little tricky. If, however, you take the time to study it, it's not so bad. Pay close attention because some subtle but imporatnt syntactical differences exist between the `$and` and `$not` operators.
+
+Into the `.find()` method, you pass an object with two other objects nested inside where one of those nested objects is nested inside the other `{ field: { $not: { <operator-expression> } } }`. 
+
+Unlike the `$and` operator that has `$and` as the key of this outmost object, when using the `$not` operator, use a field from your documents as the key. As the value for that key, use an object. That object should have a key of `$not` and a value. That value is another object. That object should contain as its key another operator, like `$eq`, `$gt`, `$lte`, or others. The value of this innermost object is just a value (like `10`, `'Jane'`, etc.).
+
+Starting simple, the example below uses the `$not` operator to find all the documents that do not have a field `first` containing a value of `'Jane'`. The example script below is simialr to examples you've seen in previous sections. The line to pay special attention to is `filtered_db_users = await users_collection.find({first: { $not: { $eq: "Jane" } }});`.
+
