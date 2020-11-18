@@ -422,5 +422,76 @@ Into the `.find()` method, you pass an object with two other objects nested insi
 
 Unlike the `$and` operator that has `$and` as the key of this outmost object, when using the `$not` operator, use a field from your documents as the key. As the value for that key, use an object. That object should have a key of `$not` and a value. That value is another object. That object should contain as its key another operator, like `$eq`, `$gt`, `$lte`, or others. The value of this innermost object is just a value (like `10`, `'Jane'`, etc.).
 
-Starting simple, the example below uses the `$not` operator to find all the documents that do not have a field `first` containing a value of `'Jane'`. The example script below is simialr to examples you've seen in previous sections. The line to pay special attention to is `filtered_db_users = await users_collection.find({first: { $not: { $eq: "Jane" } }});`.
+Starting simple, the example below uses the `$not` operator to find all the documents that do not have a field `first` containing a value equal to `'Jane'`. The example script below is simialr to examples you've seen in previous sections. The line to pay special attention to is `filtered_db_users = await users_collection.find({first: { $not: { $eq: "Jane" } }});`.
 
+```node
+const { MongoClient } = require("mongodb");
+
+// Replace the following with your Atlas connection string
+const url = "connection_string";
+const client = new MongoClient(url);
+
+// The database to use
+const dbName = "test";
+
+async function run() {
+  try {
+    await client.connect();
+    console.log("Connected correctly to server");
+    const db = client.db(dbName);
+
+    // Use the collection named "users"
+    const users_collection = db.collection("users");
+
+    filtered_db_users = await users_collection.find({
+      first: { $not: { $eq: "Jane" } },
+    });
+
+    filtered_db_users.forEach((user) => {
+      console.log(user);
+    });
+  } catch (err) {
+    console.log(err.stack);
+  } finally {
+    await client.close();
+  }
+}
+
+run().catch(console.dir);
+```
+
+In the example above, the line `filtered_db_users = await users_collection.find({first: { $not: { $eq: "Jane" } }});` searches for documents that have a `first` field. For documents that have a `first` field, MongoDB checks whether those documents have a `first` value equal to `$eq` the value `'Jane'`.
+
+Inside of the `.find()` method, the example passes an object as an argument. That object is `{first: { $not: { $eq: "Jane" } }}`. The key is `first` and the value is an object `{ $not: { $eq: "Jane" } }`. Inside that object is the key of `$not` and the value of another object `{ $eq: "Jane" }`. Inside this innermost object is a key of `$eq` and the value of `'Jane'`.  
+
+If you console log `filtered_db_users`, you see in the console a large Cursor object. Review it to see if anything useful exists there for you. If, however, you loop through `filtered_db_users` and console log each item as you loop through (e.g., the forEach loop in the example above), you see each document returned from your query. 
+
+```node
+{
+  _id: 5fb3865234d40445e378b681,
+  first: 'John',
+  last: 'Doe',
+  languages: [ 'python', 'java' ],
+  score: 10
+}
+{
+  _id: 5fb3865234d40445e378b682,
+  first: 'Jack',
+  last: 'Hill',
+  languages: [ 'java', 'ruby', 'javascript' ],
+  score: 6
+}
+{
+  _id: 5fb3865234d40445e378b683,
+  first: 'Jill',
+  last: 'Hill',
+  languages: [ 'ruby' ],
+  score: 8
+}
+```
+
+Notice that the users collection of documents as a whole has 5 documents (see the documents at the top of the previous section). The `.find()` comparison query in the example above, however, returns only 3 documents. That's because only 3 of the 5 documents in the users collection do not have a `first` of `'Jane`.
+
+### the other logical operators
+
+Look at the documentation for the logical operators to understand their syntax. For the logical operators that do not have examples in this chapter, compare their syntax to those operators that do have examples. Is the syntax more like `$and` or `$not`?
