@@ -2,28 +2,35 @@
 
 MongoDB is a popular database platform for storing information for web applications. According to the [MongoDB website](https://www.mongodb.com/), MongoDB "is a general purpose, document-based, distributed database built for modern application developers and for the cloud era."
 
-A database is an organized collection of digital data stored on a computer. In the physical world, a database is like a file cabinet or warehouse, and the digital information store within is like the folders and papers inside a file cabinet or the boxes and other things stored inside a warehouse. Whereas a file cabinet is located in a building and a warehouse in a neighborhood, a database is located on a computer.
+## [Understanding databases](#understanding-databases)
 
-Like a file cabinet or warehouse needs workers who know how to find and maintain the things stored within, a database needs software for managing. Not only does MongoDB store the data, it also is the software you need to interact with the data. Like with many databases, with MongoDB you can interact in powerful ways with information stored within. For instance, you can search, reference, compare, change and otherwise manipulate the stored information. You can do so with optimal speed and minimal processing expense.
+A database is an organized collection of digital data stored on a computer. In the physical world, a database is like a file cabinet or warehouse. The digital information stored within is like the papers in a file cabinet or boxes in a warehouse. Whereas a file cabinet is located in a building and a warehouse in a neighborhood, a database is located on a computer.
+
+Like a file cabinet or warehouse needs workers who know how to find and maintain the things stored within, a database needs software for managing. Not only does MongoDB store the data, it also is the software you need to interact with the data. 
+
+Like with many databases, with MongoDB you can interact in powerful ways with information stored within. For instance, you can search, reference, compare, change and otherwise manipulate the stored information. You can do so with optimal speed and minimal processing expense.
+
+## [Working in the cloud with documents](#working-in-the-cloud-with-documents)
 
 You can work locally on your computer with MongoDB or you can use MongoDB's cloud-based services. Using the cloud services, you can access your database so long as you have internet access. In this lesson, you will focus on using the cloud-based service called [MongoDB Atlas](https://docs.atlas.mongodb.com/). From their website, "MongoDB Atlas is a fully-managed cloud database."
 
-Unlike SQL databases where you store information in tables, MongoDB is known as NoSQL because it doesn't store information in tables. Rather, it stores information in documents. In MongoDB, each database can have multiple collections of documents. You can fill each collection with whatever information you want, but typically a collection is made up of documents containing the same or similar information. For instance, a collection for all your users. Or a collection for all the purchases made from your e-commerce store. Or a collection for all comments made on your blog. But probably not a collection that contains a mixture of users, purchases and comments.
+Unlike SQL databases where you store information in tables, MongoDB is known as NoSQL because it doesn't store information in tables. Rather, it stores information in documents. 
 
-You can use MongoDB with many different programming languages, like NodeJS, Python, and others. In this lesson, you will focus on working with MongoBD and NodeJS. Although this lesson focuses on NodeJS, what you learn here will make it easy to learn how to work with MongoDB generally. 
+In MongoDB, each database can have multiple collections of documents. You can fill each collection with whatever information you want, but typically a collection is made up of documents containing the same or similar information. For instance, a collection for all your users. Or a collection for all the purchases made from your e-commerce store. Or a collection for all comments made on your blog. But probably not a collection that contains a mixture of users, purchases and comments.
 
+You can use MongoDB with many different programming languages, like NodeJS, Python, and others. In this lesson, you will focus on working with MongoBD and NodeJS. Although this lesson focuses on NodeJS, what you learn here will make it easy to learn how to work with MongoDB generally.
  
 ## [Setting up MongoDB Atlas](#setting-up-mongoDB-atlas)
 
-Getting started with MongoDB Atlas is easy. Visit the [MongoDB Create Account page](https://account.mongodb.com/account/register) to register your account. You can create a MongoDB account using your Google account or your email. Follow the registration instructions. At some point during the registration process, MongoDB will ask you to choos a path (or plan). Choose the free option. 
+Getting started with MongoDB Atlas is easy. Visit the [MongoDB Create Account page](https://account.mongodb.com/account/register) to register your account. You can create a MongoDB account using your Google account or your email. Follow the registration instructions. At some point during the registration process, MongoDB will ask you to choose a path (or plan). Choose the free option. 
 
-In addition, MongoDB will ask for you to choose a cloud provider, region, and other specifications. Choose whichever cloud provider you prefer. Choose M0 Sandbox option. Name your cluster whatever you want. For the remainder of this lesson, we will assume you named your cluster Project 0.
+In addition, MongoDB will ask for you to choose a cloud provider, region, and other specifications. Choose whichever cloud provider you prefer. Choose M0 Sandbox option. Name your cluster whatever you want. For the remainder of this lesson, we will assume you named your cluster *Project 0*.
 
 At the end of registration, MongoDB will prompt you to create a cluster. Do it. A cluster will be home to your databases. It'll take a few minutes for your cluster to build itself. Do not navigate away from the page yet.
 
 ## [Connect IP Address](#connect-ip-address)
 
-Now that you have a MongDB account and a free-tier cluster, you should configure your MongoDB Atlas settings. First, you should connect your IP address to MongoDB Atlas. You will learn how below.
+Now that you have a MongoDB account and a free-tier cluster, you should configure your MongoDB Atlas settings. First, you should connect your IP address to MongoDB Atlas. You will learn how below.
 
 Each device connected to the internet has an IP address. An IP address is unique for each device. An IP address is used to identify a device on the Internet or a local network, like an address for a house. 
 
@@ -33,21 +40,23 @@ Find the IP address for your computer. If your device is connected to a network,
 
 It's the public IP address that you'll need for MongoDB. To find your public (network) IP address, you can use the website aptly named [What is My IP Address](https://whatismyipaddress.com/).
 
-In case you ever need to know your private IP address, the following should help. Multiple ways exist for finding your IP address. Find your Network settings. On MacOS, you can go to System Preferences, and inside that find the Network icon. On the Network page, you should see something like `Wi-Fi is connected to name-of-your-wifi and has the IP address XXX.XXX.X.XX.` On Windows, open the start menu and right-click the Network option. Choose the properties option and then choose View Status. Then, choose Details and look for the IP address in the new window.
+In case you ever need to know your private IP address, know that multiple ways exist for finding your IP address. The following should help. Find your Network settings. On MacOS, you can go to System Preferences, and inside that find the Network icon. On the Network page, you should see something like `Wi-Fi is connected to name-of-your-wifi and has the IP address XXX.XXX.X.XX.` On Windows, open the start menu and right-click the Network option. Choose the properties option and then choose View Status. Then, choose Details and look for the IP address in the new window.
 
 After finding your public IP address, you should add it to your MongoDB IP access list so that you can connect to your MongoDB cluster. On the homepage for your Project 0 cluster, your Sandbox area. Inside the sandbox, you will see three buttons. One of those buttons should say Connect. Click it. 
 
-A prompt should open with an option to Add a connection IP address. The box might be auto-filled with your public IP address. If it is, double check to make sure it's correct. If not, add your public IP address. Be sure to click the button for Add IP Address. You may need to add multiple IP addresses. For instance, if you work on your project from your home and at school, you should add your home IP address and also your school's IP address. If you don't have all the IP addressess now, you can add them later.
+A prompt should open with an option to add a connection IP address. The box might be auto-filled with your public IP address. If it is, double check to make sure it's correct. If not, add your public IP address. 
 
-In the same prompt that asks for your IP address, MongoDB asks you to create a database user. This is important for managing and accessing your MongoBD Atlas databases. As the prompt says, remember your username and password because you will need it later. After you add the user, click the button in the prompt that says 'Choose a connection method'.
+Be sure to click the button for Add IP Address. You may need to add multiple IP addresses. For instance, if you work on your project from your home and at school, you should add your home IP address and also your school's IP address. If you don't have all the IP addressess now, you can add them later.
+
+In the same prompt that asks for your IP address, MongoDB asks you to create a database user. This is important for managing and accessing your MongoBD Atlas databases. As the prompt says, remember your username and password because you will need it later. After you add the user, click the button in the prompt that says "Choose a connection method".
 
 The next page in the prompt will offer you multiple options for connecting to your MongoDB Atlas cluster. Choose the "connect your application" option. On the following page, choose NodeJS as the driver and the most recent version. Copy the connection string and then click the close button.
 
-## [Connect to Cluster](#connect-to-cluster)
+## [Connecting to Cluster](#connecting-to-cluster)
 
 Connect your application to the MongoDB cluster you created. You have multiple options for connecting. You can connect using the MongoDB Drivers or the MongoDB Shell. This lesson shows you how to connect using the MongoDB Driver for NodeJS (using the [example from the MongoDB website](https://docs.atlas.mongodb.com/tutorial/connect-to-your-cluster/)).
 
-To connect your application to MongoDB, create a project folder. Inside the project folder, add a file named connect.js. In the connect.js file, add the following code. In the line that defines the url (i.e., `const url = ...`), be sure to replace the string with the connection string you copied in the previous section when you connected your IP address to your MongoDB account. If you didn't copy that string, go back to the previous section and copy the string. 
+To connect your application to MongoDB, create a project folder. Inside the project folder, add a file named `connect.js`. In the `connect.js` file, add the following code. In the line that defines the url (i.e., `const url = ...`), be sure to replace the string with the connection string you copied in the previous section when you connected your IP address to your MongoDB account. If you didn't copy that string, go back to the previous section and copy the string. 
 
 ```node
 const { MongoClient } = require("mongodb");
@@ -72,7 +81,7 @@ async function run() {
 run().catch(console.dir);
 ```
 
-If you try running your code now (entering in the terminal `node connect.js`), you'll get an error that looks something like this.
+We'll discuss the code above down below. If you try running your code now (entering in the terminal `node connect.js`), you'll get an error that looks something like this.
 
 ```node
 internal/modules/cjs/loader.js:983
@@ -99,23 +108,23 @@ Require stack:
 }
 ```
 
-Despite the intimidating look of this error message, the answer to the error is in there. The message includes `Error: Cannot find module 'mongodb'`. This tells you that you need to install the mongodb package. If you look in your root folder, you don't have a node_modules folder, which means you don't have any packages. 
+Despite the intimidating look of this error message, the answer to the error is in there. The message includes `Error: Cannot find module 'mongodb'`. This tells you that you need to install the `mongodb` package. If you look in your root folder, you don't have a `node_modules` folder, which means you don't have any packages. 
 
-Add the mongodb package to your project by entering the following in your terminal `npm install mongodb`. After entering the installation command, confirm that the message in the terminal says intallation succeeded. Also, look in your project's root folder to make sure a node_modules folder and package-json.lock file each exist.
+Add the `mongodb` package to your project by entering the following in your terminal `npm install mongodb`. After entering the installation command, confirm that the message in the terminal says `intallation succeeded`. Also, look in your project's root folder to make sure a `node_modules` folder and `package-json.lock` file each exist.
 
 Enter in the terminal `node connect.js`. If you successfully connected your application, the terminal should print `Connected correctly to server.`
 
-Let's discuss the code above. The first line `const { MongoClient } = require("mongodb")`, imports the the MongoClient() class definition into your `connect.js` file. The next line `const url = . . .` defines the connection string for your MongoDB cluster. You need this connectrion string url because you are going to create an instance of the MongoClient() class, and to create an instance of that class, you need to pass it an argument. That argument needs to be the connection string.
+Let's discuss the code above. The first line `const { MongoClient } = require("mongodb")`, imports the the `MongoClient()` class definition into your `connect.js` file. The next line `const url = . . .` defines the connection string for your MongoDB cluster. You need this connection string url because you are going to create an instance of the `MongoClient()` class, and to create an instance of that class, you need to pass it an argument. That argument needs to be the connection string.
 
-The next line in your code `const client = new MongoClient(url);` creates an instance of the MongoClient() class using the connection string (url) as the argument. The variable `client` is now a MongoClient object customized with the connection string for your MongoDB Atlas cluster.
+The next line in your code `const client = new MongoClient(url);` creates an instance of the `MongoClient()` class using the connection string (`url`) as the argument. The variable `client` is now a MongoClient object customized with the connection string for your MongoDB Atlas cluster.
 
-Following instantiation of the MongoClient() class is a block of asynchronous code with try / catch / finally blocks nested within. In the try block is a line that connects your application to MongoDB Atlas `await client.connect();`. Remember, `client` is your instance of the MongoDB class customized with your MongoDB connection string. That means `.connect()` is a method of the instance of that class. This method does what its name suggests -- it connects your project folder to your MongodDB Atlas cluster.
+Following instantiation of the `MongoClient()` class is a block of asynchronous code with `try / catch / finally` blocks nested within. In the try block is a line that connects your application to MongoDB Atlas `await client.connect();`. Remember, `client` is your instance of the MongoDB class customized with your MongoDB connection string. That means `.connect()` is a method of the instance of that class. This method does what its name suggests -- it connects your project folder to your MongodDB Atlas cluster.
 
 Inside the `catch` block, you print to the console any errors `console.log(err.stack)`, and then inside the `finally` block, you call the close the connection between your application and MongoDB Atlas `await client.close();`. Like the `.connect()` method of the MongoClient() class instance, the `.close()` method comes from the `client` instance of the MongoClient() class.
 
 Finally, you run your application `run().catch(console.dir);`.
 
-## [Explore MongoClient Class](#explore-mongoclient-class)
+## [Exploring MongoClient Class](#exploring-mongoclient-class)
 
 The MongoClient() class is easy to use. Basically, you need to know that when you create a new instance of the MongoClient() class, pass your connection string into the class and save the result to a variable. As a result, that variable will have all the functionality of the MongoClient() class. 
 
@@ -193,7 +202,7 @@ Second, replace in your code `console.log(getAllFuncs(client.connect()));` with 
 
 You don't need to know how to print the functionality of the MongoClient instance; however, it may help you in the future when working with packages new to you.
 
-## [Add Data To Database](#add-data-to-database)
+## [Adding Data To Database](#adding-data-to-database)
 
 Having completed your setup, you now should create a database and add a document to it. In your connect.js file from above, replace the code with the following. Be sure to change the connection string in `const url = ...` to your connection string like in the section above. Don't yet run your file. First, you should understand the code below.
 
