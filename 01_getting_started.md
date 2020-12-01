@@ -126,11 +126,11 @@ Finally, you run your application `run().catch(console.dir);`.
 
 ## [Exploring MongoClient Class](#exploring-mongoclient-class)
 
-The MongoClient() class is easy to use. Basically, you need to know that when you create a new instance of the MongoClient() class, pass your connection string into the class and save the result to a variable. As a result, that variable will have all the functionality of the MongoClient() class. 
+The `MongoClient()` class is easy to use. Basically, you need to know that when you create a new instance of the `MongoClient()` class, pass your connection string into the class and save the result to a variable. As a result, that variable will have all the functionality of the `MongoClient()` class. 
 
-Knowing what functionality is available from the MongoClient() is important. One place to look is the [MongoDB documentation](https://mongodb.github.io/node-mongodb-native/api-generated/mongoclient.html). 
+Knowing what functionality is available from the `MongoClient()` is important. One place to look is the [MongoDB documentation](https://mongodb.github.io/node-mongodb-native/api-generated/mongoclient.html). 
 
-Another thing you can do is print to the console all the methods of the MongoClient() class. Try it. In your connect.js file below the last line of code, paste the following code, save your file, and run `node connect.js`.
+Another thing you can do is print to the console all the methods of the `MongoClient()` class. Try it. In your `connect.js` file below the last line of code, paste the following code, save your file, and run `node connect.js`.
 
 ```node
 function getAllFuncs(toCheck) {
