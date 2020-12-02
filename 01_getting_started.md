@@ -62,7 +62,7 @@ To connect your application to MongoDB, create a project folder. Inside the proj
 const { MongoClient } = require("mongodb");
  
 // Replace the following with your Atlas connection string                                                                                                                                        
-const url = "mongodb+srv://<username>:<password>@clustername.mongodb.net/test?retryWrites=true&w=majority&useNewUrlParser=true&useUnifiedTopology=true";
+const url = "your connection string";
 const client = new MongoClient(url);
 
 async function run() {
@@ -148,9 +148,9 @@ function getAllFuncs(toCheck) {
 console.log(getAllFuncs(client));
 ```
 
-No need to understand how this block of code works. For now, just know that you have a function called `getAllFuncs` that takes in one argument. Below the function definition, you call the `getAllFuncs` function, pass into as the argument the `client` instance of the MongoDB class, and print the results to the console.
+No need to understand how this block of code works. For now, just know that you have a function called `getAllFuncs` that takes in one argument. Below the function definition, you call the `getAllFuncs` function, pass into it as the argument the `client` instance of the `MongoClient()` class, and print the results to the console.
 
-In the console, you should see all the functions available in the MongoDB class.
+In the console, you should see all the functions available in the `MongoClient()` class.
 
 ```node
 [
@@ -175,7 +175,7 @@ In the console, you should see all the functions available in the MongoDB class.
 ]
 ```
 
-In the list of functions above, notice that `connect` and `close` -- the same functions you used in the connect code sample above -- are listed as MongoDB class functions, just like you should expect.
+In the list of functions above, notice that `connect` and `close` -- the same functions you used in the connect code sample above -- are listed as `MongoClient()` class functions, just like you should expect.
 
 Try two things on your own. First, replace in your code `console.log(getAllFuncs(client));` with `console.log(getAllFuncs(client.connect()));`. Then enter `node connect.js` in your terminal. The console should print the functionality available for the `client.connect()` function.
 
@@ -200,17 +200,17 @@ Try two things on your own. First, replace in your code `console.log(getAllFuncs
 
 Second, replace in your code `console.log(getAllFuncs(client.connect()));` with `console.log(getAllFuncs(client.close()));`. Then enter `node connect.js` in your terminal. The console should print the functionality available for the `client.close()` function. It prints the same array as above for `client.connect()`.
 
-You don't need to know how to print the functionality of the MongoClient instance; however, it may help you in the future when working with packages new to you.
+You don't need to know how to print the functionality of the `MongoClient()` instance; however, it may help you in the future when working with packages new to you.
 
 ## [Adding Data To Database](#adding-data-to-database)
 
-Having completed your setup, you now should create a database and add a document to it. In your connect.js file from above, replace the code with the following. Be sure to change the connection string in `const url = ...` to your connection string like in the section above. Don't yet run your file. First, you should understand the code below.
+Having completed your setup, you now should create a database and add a document to it. In your `connect.js` file from above, replace the code with the following. 
 
 ```node
 const { MongoClient } = require("mongodb");
  
-// Replace the following with your Atlas connection string                                                                                                                                        
-const url = "mongodb+srv://<username>:<password>@clustername.mongodb.net/test?retryWrites=true&w=majority&useNewUrlParser=true&useUnifiedTopology=true";
+// Replace the following with your Atlas connection string                            
+const url = "your connection string";
 const client = new MongoClient(url);
  
  // The database to use
@@ -253,13 +253,19 @@ const client = new MongoClient(url);
 run().catch(console.dir);
 ```
 
-In the code above, the first three lines are the same as the previous example. You import the MongoClient() class definition, you set a variable equal to your connection string, and then you create an instance of the MongoClient() class using your connection string as the argument. The fourth line, however, is new `const dbName = "test";`. You created a variable named `dbName` and set it equal to a string `"test"`.
+Be sure to change the connection string in `const url = ...` to your connection string like in the section above. Don't yet run your file. First, you should understand the code above.
 
-Then comes try / catch / finally blocks. Those code blocks are similar to the example above but with some additions. First, focus on the try block. It now has a line of code that creates a database instance inside your cluster. `const db = client.db(dbName);`. You define a variable `db` and set it equal to `client.db(dbName)`. The `client` is your instance of the MongoClient() class, `.db` is a method of the class (see above for db in the list of methods for MongoClient(), and you pass into that method the database name you created.
+In the code above, the first three lines are the same as the previous example. You import the `MongoClient()` class definition, you set a variable equal to your connection string, and then you create an instance of the `MongoClient()` class using your connection string as the argument. 
+
+The fourth line, however, is new `const dbName = "test";`. You created a variable named `dbName` and set it equal to a string `"test"`.
+
+Then comes `try / catch / finally` blocks. Those code blocks are similar to the example above but with some additions. First, focus on the `try` block. It now has a line of code that creates a database instance inside your cluster `const db = client.db(dbName);`. 
+
+You define a variable `db` and set it equal to `client.db(dbName)`. The `client` is your instance of the `MongoClient()` class, `.db` is a method of the class (see above for `db` in the list of methods for `MongoClient()`, and you pass into that method the database name you created.
 
 With a database inside your cluster, next you create a collection inside your database `const col = db.collection("people");`. You create a variable named `col` and set it equal to `db.collection("people")`. The `db` is the variable you made above that represents your database named `test`. The `.collection` is a method from the `db` instance, and `"people"` is the name of the collection.
 
-Phew. Now with a collection inside of your database, you can add a document to the collection. First, you write an object with key:value pairs and save it to a variable named `personDocument`.
+Phew. Now with a collection inside of your database, you can add a document to the collection. First, you write an object with `key:value` pairs and save it to a variable named `personDocument`.
 
 ```node
 let personDocument = {
@@ -288,6 +294,6 @@ Ok, test it out. In your terminal, enter `node connect.js`. This time, in additi
 }
 ```
 
-Notice anything different? Although the `personDocumnet` object that you sent to MongoDB has only 5 key:value pairs, the returned document has 6. The additional key:value pair is `_id: 5fa2a070330b7d94c1c69182`. MongoDB added an `_id` key!
+Notice anything different? Although the `personDocumnet` object that you sent to MongoDB has only 5 `key:value` pairs, the returned document has 6. The additional `key:value` pair is `_id: 5fa2a070330b7d94c1c69182`. MongoDB added an `_id` key!
 
 In the next lesson, you will learn more about adding, reading, updating, and deleting documents from your collections.
