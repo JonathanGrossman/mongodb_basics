@@ -487,15 +487,17 @@ After console logging the returned object, the example then uses the `.findOne()
 
 ### .updateMany()
 
-Next is the `.updateMany()` method, which updates all documents that match the filter criteria. Like the `.updateOne()` method, the `.updateMany()` method accepts two required arguments (filter and update) and one optional (options) `.updateMany(filter, update, options)`. 
+Next is the `.updateMany()` method, which updates all documents that match the `filter` criteria. Like the `.updateOne()` method, the `.updateMany()` method accepts two required arguments (`filter` and `update`) and one optional (`options`), like so `.updateMany(filter, update, options)`. 
 
-The first argument is a filter. This is essentially the same for `.updateMany()` as it is for `.updateOne()`. The filter is like the query argument used for the `find` methods. You use filter to specify which documents to update. Unlike the `.updateOne()` method that updates only the first matching document, the `.updateMany()` method updates all documents matching the filter criteria. For instance, you can specify an empty object `.updateMany({})` to update all the documents in the collection. Or you can specify specific criteria, like the `first` field of a document in your `users_collection`. For instance,  `.updateMany({"first": "Jane")}, updates)` filters for all documents that have a `first` field with a value of `"Jane"`. 
+The first argument is a `filter`. This is essentially the same for `.updateMany()` as it is for `.updateOne()`. Use the `filter` argument to specify which documents to update. Unlike the `.updateOne()` method that updates only the first matching document, the `.updateMany()` method updates all documents matching the `filter` criteria. 
 
-The second argument is the update. This is essentially the same for `.updateMany()` as it is for `.updateOne()`. The update declares the updates that you want to make to the filtered documents. Use the [update operator expressions](https://docs.mongodb.com/manual/reference/operator/update/#id1) (listed above) to update the document. Like for `.updateOne()`, while all of the update operators might help you, pay special attention to the `$set` operator. It is the one you will likely use most.
+For instance, you can specify an empty object `.updateMany({})` to update all the documents in the collection. Or you can specify specific criteria, like the `first` field of a document in your `users_collection`. For instance, `.updateMany({"first": "Jane")}, updates)` returns all documents that have a `first` field with a value of `"Jane"`. 
 
-For now, don't worry about the options argument. It is optional, so you can simply just omit it when calling the method.
+The second argument is `updates`. This is essentially the same for `.updateMany()` as it is for `.updateOne()`. The `updates` argument declares the changes you want to make to the filtered documents. Use the [update operator expressions](https://docs.mongodb.com/manual/reference/operator/update/#id1) (listed above) to update the document. Like for `.updateOne()`, while all of the update operators might help you, pay special attention to the `$set` operator. It is the one you will likely use most.
 
-Here is an example of using `.updateMany()` with arguments for filter and updates. The options argument is omitted. The code example below is very similar to the code you've seen above. The lines in the code below that you should focus on are `updated_users = await users_collection.updateMany({last: "Doe",}, { $set: { first: "Joe" } });`.
+For now, don't worry about the `options` argument. It is optional, so you can simply just omit it when calling the method.
+
+Here is an example of using `.updateMany()` with arguments for `filter` and `updates` (no `options` argument). The code example below is very similar to the code you've seen above. The line in the code below that you should focus on is `updated_users = await users_collection.updateMany({last: "Doe",}, { $set: { first: "Joe" } });`.
 
 ```node
 const { MongoClient } = require("mongodb");
@@ -538,11 +540,11 @@ async function run() {
 run().catch(console.dir);
 ```
 
-The example above uses the `.updateMany()` method to update all documents having an `last` field with a value of `Doe` by changing the value of `first` to `Joe`. The code then console logs the return value `updated_users`. Look through that return value in your console. It has a lot of information about the update, some of which you may want to use to help make your application more robust. 
+The example above uses the `.updateMany()` method to update all documents having a `last` field with a value of `Doe` by changing the value of `first` to `Joe`. The code then console logs the return value `updated_users`. Look through that return value in your console. It has a lot of information about the update, some of which you may want to use to help make your application more robust. 
 
 Notice that the code filters using the `last` field. This is a non-unique field, so it's possible that more than one document has the same value for `last`. In contrast, using `.updateMany()` and filtering by `_id` does not make the most of the method because the `_id` values are unique. In theory, no documents will share the same `_id` value and therefore you cannot update more than one document when filtering by `_id` in the `.updateMany()` method.
 
-After console logging the returned update object, the example then uses the `.find()` method to get all the documents from the collection so that you can console log them and see that the updates did in fact occur. Remember that `.find()` returns a cursor, which is a collection of documents. You therefore need to loop through it to console log each individual document in the returned collection. The block of code `all_db_users.forEach((user) => {console.log(user);});` prints the following 
+After console logging the returned object, the example then uses the `.find()` method to get all the documents from the collection so that you can console log them and see that the updates did in fact occur. Remember that `.find()` returns a cursor, which is a collection of documents. You therefore need to loop through it to console log each individual document in the returned collection. The block of code `all_db_users.forEach((user) => {console.log(user);});` prints the following 
 
 ```node
 { _id: 5fa406ec3f4b71a70ae05dab, first: 'Joe', last: 'Doe' }
@@ -552,23 +554,23 @@ After console logging the returned update object, the example then uses the `.fi
 { _id: 5fa406ec3f4b71a70ae05daf, first: 'Jill', last: 'Hill' }
 ```
 
-Only those documents with a `last` of "Doe" were updated with a `first` of "Joe." Update successful!
+Only those documents with a `last` of `"Doe"` were updated with a `first` of `"Joe"`. Update successful!
 
 ### .replaceOne()
 
-Next is the `.replaceOne()` method, which replaces one document that matches the filter criteria. Like the `update` methods, the `.replaceOne()` method accepts two required arguments (filter and replacement) and one optional (options) `.replaceOne(filter, replacement, options)`. 
+Next is the `.replaceOne()` method, which replaces one document that matches the filter criteria. Like the `update` methods, the `.replaceOne()` method accepts two required arguments (`filter` and `replacement`) and one optional (`options`), like so `.replaceOne(filter, replacement, options)`. 
 
-The first argument is a filter. This is essentially the same for `.replaceOne()` as it is for the `update` methods. You use filter to specify which document to replace. The `.replaceOne()` method is like the `.updateOne` method in the sense that it operates on the first document returned. Instead of updating it, the `.replaceOne()` method replaces the document. 
+The first argument is `filter`. This is essentially the same for `.replaceOne()` as it is for the `update` methods. You use `filter` to specify which document to replace. The `.replaceOne()` method is like the `.updateOne()` method in the sense that it operates on the first document returned. Instead of updating it, the `.replaceOne()` method replaces the document. 
 
-If you can specify an empty object `.replaceOne({})`, the method replaces the first document returned in the collection. If instead of usng an empty object you use specific criteria, like the `first` field of a document in your `users_collection`, you will replace the first document that matches that criteria. For instance,  `.replaceOne({"_id": ObjectID("5fa406ec3f4b71a70ae05dab"))}, replacement)` filters for the document that has an `_id` field with a value of `ObjectID("5fa406ec3f4b71a70ae05dab")`. 
+If you specify an empty object `.replaceOne({})`, the method replaces the first document returned in the collection. If instead of usng an empty object you use specific criteria, like the `first` field of a document in your `users_collection`, you will replace the first document that matches that criteria. For instance,  `.replaceOne({"_id": ObjectID("5fa406ec3f4b71a70ae05dab"))}, replacement)` filters for the document that has an `_id` field with a value of `ObjectID("5fa406ec3f4b71a70ae05dab")`. 
 
-The second argument is the replacement document. This is similar to the updates argument for the `update` methods, but instead of specifying a subset of fields the replace, you specify the entire new document (like you do for the `insert` methods). 
+The second argument is the `replacement` object. This is similar to the `updates` argument for the `update` methods, but instead of specifying a subset of fields to replace, you specify the entire new object. Like you do for the `insert` methods, `replacement` is an object of `field:value` pairs that represents what the document will look like when updated.
 
-MongoDB will keep the same `_id` field for the revised document as for the document before it was replaced. If you include an `_id` field in the object for replacement, it needs to be the same `_id` already assigned to that document. This preservation of the `_id` value is what makes this a replacement. Aside from the `_id` field, the revised document can have different fields and values as the document before it was replaced.
+MongoDB will keep the same `_id` field for the revised document as for the document before it was replaced, but it will replace all the other `fields:values` in the document with the `fields:values` in `replacement`. If you include an `_id` field in the object for `replacement`, it needs to be the same `_id` already assigned to that document. This preservation of the `_id` value is what makes this a replacement. Aside from the `_id` field, the revised document can have different fields and values as the document before it was replaced.
 
-Also note that the `.replaceOne()` method doesn't use the operator expressions. Rather, it's an object of field:value pairs, just like what you do for the `insert` methods. For now, don't worry about the options argument. It is optional, so you can simply just omit it when calling the method.
+A few things to note. The `.replaceOne()` method doesn't use the operator expressions (like `$set`). For now, don't worry about the `options` argument. It is optional, so you can simply just omit it when calling the method.
 
-Here is an example of using `.replaceOne()` with arguments for filter and replacement. The options argument is omitted. The code example below is very similar to the code you've seen above. The lines in the code below that you should focus on are `replacement_doc = {middle: "Margaret", country: "Guatemala",};` and `replaced_user = await users_collection.replaceOne({ first: "Jill" }, replacement_doc);`
+Here is an example of using `.replaceOne()` with arguments for `filter` and `replacement` (no `options` argument). The code example below is very similar to the code you've seen above. The lines in the code below that you should focus on are `replacement_doc = {middle: "Margaret", country: "Guatemala",};` and `replaced_user = await users_collection.replaceOne({ first: "Jill" }, replacement_doc);`.
 
 ```node
 const { MongoClient } = require("mongodb");
@@ -609,9 +611,11 @@ async function run() {
 run().catch(console.dir);
 ```
 
-The example above uses the `.replaceOne()` method to filter for the first returned document having a `first` field with a value of `Jill`. The code replaces that document with `replacement_doc`, which is an object containing the field `middle` with a value of `Margaret` and the field `country` with a value of `Guatemala`. The code then console logs the return value `replaced_user`. Look through that return value in your console. It has a lot of information about the replacement similar to what you've seen in other return values, some of which you may want to use to help make your application more robust. 
+The example above uses the `.replaceOne()` method to filter for the first returned document having a `first` field with a value of `Jill`. The code replaces that document with `replacement_doc`, which is an object containing the field `middle` with a value of `Margaret` and the field `country` with a value of `Guatemala`. 
 
-After console logging the returned update object, the example then uses the `.find()` method to get all the documents from the collection so that you can console log them and see that the replacement did in fact occur. Remember that `.find()` returns a cursor, which is a collection of documents. You therefore need to loop through it to console log each individual document in the returned collection. The block of code `all_db_users.forEach((user) => {console.log(user);});` prints the following 
+The code then console logs the return value `replaced_user`. Look through that return value in your console. It has a lot of information about the `replacement` similar to what you've seen in other return values, some of which you may want to use to help make your application more robust. 
+
+After console logging the returned object, the example then uses the `.find()` method to get all the documents from the collection so that you can console log them and see that the replacement did in fact occur. Remember that `.find()` returns a cursor, which is a collection of documents. You therefore need to loop through it to console log each individual document in the returned collection. The block of code `all_db_users.forEach((user) => {console.log(user);});` prints the following: 
 
 ```node
 { _id: 5fa406ec3f4b71a70ae05dab, first: 'Joe', last: 'Doe' }
@@ -625,11 +629,11 @@ You successfully replaced the "Jill Hill" document with a document that has the 
 
 ## [Delete](#delete)
 
-Two main options exist for deleting entries in your database. You can call a method that deletes one document from a collection `.deleteOne()` or you can call a method that deletes more than one document `.deleteMany()`. For example, from your collection named `users_collection`, you can use `.deleteOne()` to delete a specific document by passing into the method details about the document you want to delete. In contrast, you can use `.deleteMany()` to delete multiple documents that match the details that you pass into the method when calling it.
+Two main options exist for deleting entries in your database. You can call a method that deletes one document from a collection `.deleteOne()` or you can call a method that deletes more than one document `.deleteMany()`. For example, from your collection named `users_collection`, you can use `.deleteMany()` to delete multiple documents that match the details that you pass into the method when calling it. In contrast, you can use `.deleteOne()` to delete a specific document by passing into the method details about the document you want to delete.  
 
 ### .deleteMany()
 
-Starting with the `.deleteMany()` method to delete multiple documents from the collection. The `.deleteMany()` method accepts one required argument and one optional argument `.deleteMany(query, options)`. The first argument is a query. The query is the filter you use to specify which documents to delete. To delete all documents in a collection, you can pass an empty document `.deleteMany({})` or leave the argument blank.  
+Starting with the `.deleteMany()` method to delete multiple documents from the collection. The `.deleteMany()` method accepts one required argument and one optional argument `.deleteMany(query, options)`. The first argument is a `query`. The `query` is the filter you use to specify which documents to delete. To delete all documents in a collection, you can pass an empty document `.deleteMany({})` or leave the argument blank.  
 
 The second argument is an object of options about the delete operation. You will omit that argument for now when calling the method. Instead, you will only pass the query argument or no argument at all.
 
@@ -668,17 +672,17 @@ run().catch(console.dir);
 
 The line `deleted_from_db = await users_collection.deleteMany();` deletes all the documents from your `users_collection`. Notice that you pass no arguments into the `.deleteMany()` method. You would get the same result if you passed an empty object into the method `deleted_from_db = await users_collection.deleteMany({});`. 
 
-The `.deleteMany()` method returns a connection object. You console log it `console.log(deleted_from_db);`. Look through that connection object to see what information is available to you. The `deletedCount` may be a field you use in your work.
+The `.deleteMany()` method returns a connection object. You console log it `console.log(deleted_from_db);`. Look through that connection object to see what information is available to you. The `.deletedCount()` may be a field you use in your work.
 
-In the next lesson, you will learn more about using the query argument when calling the method.
+In the next lesson, you will learn more about using the `query` argument when calling the method.
 
 ### .deleteOne()
 
-The `.deleteOne()` method deletes only one document from the collection. Like the `.deleteMany()` method, the `.findOne()` method accepts two optional arguments -- a query and an object of objects about the delete operation `.deleteOne(query, options)`. If more than one document matches the query, the `.deleteOne()` method deletes the first document that matches the query, which is usually the most recently inserted document that matches the query.
+The `.deleteOne()` method deletes only one document from the collection. Like the `.deleteMany()` method, the `.deleteOne()` method accepts two optional arguments -- a `query` and an object of options about the delete operation `.deleteOne(query, options)`. If more than one document matches the query, the `.deleteOne()` method deletes the first document that matches the `query`, which is usually the most recently inserted document that matches.
 
-Like for the `.deleteOne()` method, the second argument in the `.deleteOne()` method is an object of options about the delete operation. You will omit that argument for now when calling the method. Instead, you will only pass the query argument.
+Like for the `.deleteMany()` method, the second argument in the `.deleteOne()` method is an object of options about the delete operation. You will omit that argument for now when calling the method. Instead, you will only pass the query argument.
 
-Here is an example of using `.deleteOne()` for deleting a sinlge document from your `users_collection`. The code example below is very similar to the code you've seen above. The lines in the code below that you should focus on are `deleted_from_db = await users_collection.deleteOne({_id: ObjectID("5fabaef2ae39d0dca7488936"),});` and `console.log(deleted_from_db);`.
+Here is an example of using `.deleteOne()` for deleting a single document from your `users_collection`. The code example below is very similar to the code you've seen above. The lines in the code below that you should focus on are `deleted_from_db = await users_collection.deleteOne({_id: ObjectID("5fabaef2ae39d0dca7488936"),});` and `console.log(deleted_from_db);`.
 
 ```node
 const { MongoClient, ObjectID } = require("mongodb");
@@ -713,8 +717,8 @@ async function run() {
 run().catch(console.dir);
 ```
 
-The line `deleted_from_db = await users_collection.deleteOne({_id: ObjectID("5fabaef2ae39d0dca7488936"),});` deletes the document from your `users_collection` that has an `_id` of `ObjectID("5fabaef2ae39d0dca7488936")`. Notice that you pass an argument into the `.deleteOne()` method similar to what you did for `.findOne()`. It's an object containing a field:value pair. Because the `_id` field has a unique value, using it as the filter ensures you will delete the document you wanted to delete instead of some other document on accident. 
+The line `deleted_from_db = await users_collection.deleteOne({_id: ObjectID("5fabaef2ae39d0dca7488936"),});` deletes the document from your `users_collection` that has an `_id` of `ObjectID("5fabaef2ae39d0dca7488936")`. Notice that you pass an argument into the `.deleteOne()` method similar to what you did for `.findOne()`. It's an object containing a `field:value` pair. Because the `_id` field has a unique value, using it as the filter ensures you will delete the document you wanted to delete instead of some other document on accident. 
 
 Like the `.deleteMany()` method, the `.deleteOne()` method returns a connection object. You console log it `console.log(deleted_from_db);`. Look through that connection object to see what information is available to you. The `deletedCount` may be a field you use in your work.
 
-In the next lesson, you will learn more about using the query argument when calling the method.
+In the next lesson, you will learn more about using the `query` argument when calling the method.
