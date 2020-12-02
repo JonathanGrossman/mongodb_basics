@@ -2,9 +2,14 @@
 
 At this stage of the process, you should have created a MongoDB Atlas account, created a cluster within your account, and added a database to your cluster. With this setup complete, you may now start interacting with your database. 
 
-The main ways to interact with your database are using the CRUD operations. CRUD stands for create, read, update, and delete. To create is to insert one or more new entries in your database. To read is to retrieve one or more entries from your database. To update is to edit one or more entries from your database. To delete is to remove one or more entries from your database. Each entry is called a document.
+The main ways to interact with your database are using the CRUD operations. CRUD stands for **C**reate, **R**ead, **U**pdate, and **D**elete. 
 
-The syntax for the CRUD operations is fairly simple and is explained below. Despite the simplicity, a few tips and tricks will help you master these basics. Before discussing each CRUD operation, first you should have a better understanding of MongoDB documents.
+- Create: **insert** one or more new entries in your database
+- Read: **retrieve** one or more entries from your database
+- Update: **edit** one or more entries in your database 
+- Delete: **remove** one or more entries from your database. 
+
+The syntax for the CRUD operations is fairly simple and is explained below. Despite the simplicity, a few *tips and tricks* will **help you master the basics**. Before discussing each CRUD operation, first you should have a better understanding of MongoDB documents.
 
 ## [MongoDB Documents](#mongodb-documents)
 
