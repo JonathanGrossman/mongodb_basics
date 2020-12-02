@@ -411,13 +411,17 @@ If the method doesn't find a document matching the query filter, the method retu
 
 ## [Update](#update)
 
-Three main options exist for updating entries in your database. You can call a method that updates one document from a collection `.updateOne()`, you can call a method that updates more than one document `.updateMany()`, or you can call a method that replaces one document `.replaceOne()` except the `_id` field. You typically should use `.updateOne()` and `.updateMany()` when updating less than all of the values in the document(s). In contrast, you should use .`replaceOne()` when updating all the values (except the `_id`).
+Three main options exist for updating entries in your database. You can call a method that updates one document from a collection `.updateOne()`, you can call a method that updates more than one document `.updateMany()`, or you can call a method that replaces one document `.replaceOne()` (except the `_id` field). 
+
+You typically should use `.updateOne()` and `.updateMany()` when updating less than all of the values in the document(s). In contrast, you should use .`replaceOne()` when updating all the values (except the `_id`).
 
 ### .updateOne()
 
-Starting with the `.updateOne()` method to update values in one document. The `.updateOne()` method accepts two required arguments (filter and update) and one optional (options) `.updateOne(filter, update, options)`. The first argument is a filter. The filter is like the query argument used for the `find` methods. You use filter to specify which document to update. For instance, you can specify an empty object `.updateOne({})` to update the first document in the collection. Or you can specify specific criteria, like the `_id` of a document `.updateOne({_id: ObjectID("5fa406ec3f4b71a70ae05dab")})`, to target a specific document.
+Starting with the `.updateOne()` method to update values in one document. The `.updateOne()` method accepts two required arguments (`filter` and `update`) and one optional (`options`), like so `.updateOne(filter, update, options)`. 
 
-The second argument is the update. The update declares the updates that you want to make in the document. Use the [update operator expressions](https://docs.mongodb.com/manual/reference/operator/update/#id1) to update the document. While all of the update operators might help you, pay special attention to the `$set` operator. It is the one you will likely use most.
+The first argument is a `filter`. The `filter` is like the `query` argument used for the `find` methods. You use `filter` to specify which document to update. For instance, you can specify an empty object `.updateOne({})` to update the first document in the collection. Or you can specify specific criteria, like the `_id` of a document `.updateOne({_id: ObjectID("5fa406ec3f4b71a70ae05dab")})`, to target a specific document.
+
+The second argument is the `update`. The `update` declares the updates that you want to make in the document. Use the [update operator expressions](https://docs.mongodb.com/manual/reference/operator/update/#id1) to update the document. While all of the update operators might help you, pay special attention to the `$set` operator. It is the one you will likely use most.
 
 ```node
 Name	          Description
@@ -432,9 +436,9 @@ $setOnInsert	  Sets the value of a field if an update results in an insert of a 
 $unset	        Removes the specified field from a document.
 ```
 
-For now, don't worry about the options argument. It is optional, so you can simply just omit it when calling the method.
+For now, don't worry about the `options` argument. It is optional, so you can simply just omit it when calling the method.
 
-Here is an example of using `.updateOne()` with arguments for filter and updates. The options argument is omitted. The code example below is very similar to the code you've seen above. The lines in the code below that you should focus on are `updated_user = await users_collection.updateOne({_id: ObjectID("5fa406ec3f4b71a70ae05dab"),}, { $set: { first: "enaJ" } });.` 
+Here is an example of using `.updateOne()` with arguments for only `filter` and `updates` (not `options`). The code example below is very similar to the code you've seen above. The line in the code below that you should focus on is `updated_user = await users_collection.updateOne({_id: ObjectID("5fa406ec3f4b71a70ae05dab"),}, { $set: { first: "enaJ" } });`. 
 
 ```node
 const { MongoClient, ObjectID } = require("mongodb");
@@ -479,7 +483,7 @@ run().catch(console.dir);
 
 The example above uses the .`updateOne()` method to update the document having an `_id` of `ObjectID("5fa406ec3f4b71a70ae05dab")` by changing the value of `first` from `Jane` to `enaJ`. The code then console logs the return value `updated_user`. Look through that return value in your console. It has a lot of information about the update, some of which you may want to use to help make your application more robust. 
 
-After console logging the returned update object, the example then uses the `.findOne()` method to get the same document so that you can console log it and see that the update did in fact occur. The second console log (`console.log(one_db_user)`) prints `{ _id: 5fa406ec3f4b71a70ae05dab, first: 'enaJ', last: 'Doe' }`. Update successful!
+After console logging the returned object, the example then uses the `.findOne()` method to get the same document so that you can console log it and see that the update did in fact occur. The second console log (`console.log(one_db_user)`) prints `{ _id: 5fa406ec3f4b71a70ae05dab, first: 'enaJ', last: 'Doe' }`. Update successful!
 
 ### .updateMany()
 
