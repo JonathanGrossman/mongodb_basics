@@ -54,25 +54,25 @@ Using dot notation with embedded documents and arrays becomes relevant when you 
 
 ## [Create](#create)
 
-Two main options exist for adding entries to your database. You can call a method that adds one document to a collection `.insertOne()` or you can call a method that adds multiple documents to a collection `.insertMany()`. For example, if you have a collection named `users_collection`, you can use `.insertOne()` to add `userObject` to it, where `userObject` is one object. You can use `.insertMany()` to add `multipleUsersObject` to it, where `multipleUsersObject` is an array of objects. 
+Two main options exist for adding entries to your database. You can call a method that adds multiple documents to a collection `.insertMany()` in a single operation or you can call a method that adds one document to a collection `.insertOne()` in a single operation. For example, if you have a collection named `users_collection`, you can use `.insertMany()` to add `multipleUsersObject` to it, where `multipleUsersObject` is an array of objects. Or you can use `.insertOne()` to add `userObject` to it, where `userObject` is one object. 
 
 When using either `insert` method, if the collection that you're inserting into does not yet exist, MongoDB will create the collection and also add the document(s) to it. If the collection already exists in the database, MongoDB will just add the document to it.
 
 ## .insertMany()
 
-Starting with the `.insertMany()` method to create multiple documents in one operation. The `.insertMany()` method accepts one required argument and one optional argument `.insertMany(documents, options)`. 
+Starting with the `.insertMany()` method to create multiple documents in one operation. The `.insertMany()` method accepts one required argument and one optional argument `.insertMany(documents, options)`, where `documents` is required and `options` is optional.
 
-The first argument is an array of documents. Each item in the array is an object with key:value pairs. It is recommended you not include an `_id` key and value in each object. MongoDB will create those for you. If, however, you do include an `_id` key and value, each should be unique.
+The first argument is an array of objects. Each item in the array is an object with `key:value` pairs. It is recommended you not include an `_id` key and corresponding value in each object. Instead, MongoDB will create those for you. If, however, you do include an `_id` key and value, each value should be unique.
 
-The second argument is an object of options about the insert operation. You will omit that argument for now when calling the method. Instead, you will only pass the documents argument.
+The second argument is an object of `options` about the insert operation. You will omit that argument for now when calling the method. Instead, you will only pass the documents argument.
 
-To see the `.insertMany()` method in action, you can run the following script. The lines to pay special attention to are the line that defines the array of objects `multipleUsersObject` and `multiplUsersDB = await users_collection.insertMany(multipleUsersObject);`.
+To see the `.insertMany()` method in action, you can run the following script. The lines to pay special attention to are the line that defines the array of objects `multipleUsersObject` and the line that calls the `insert` method `multiplUsersDB = await users_collection.insertMany(multipleUsersObject);`.
 
 ```node
 const { MongoClient } = require("mongodb");
 
 // Replace the following with your Atlas connection string
-const url = "connection_string";
+const url = "your connection string";
 const client = new MongoClient(url);
 
 // The database to use
@@ -117,9 +117,10 @@ async function run() {
 
 run().catch(console.dir);
 ```
-In the example above, `multiplUsersDB` is an array containing four objects. Each object has a key for `first` and one for `last`. The line `multiplUsersDB = await users_collection.insertMany(multipleUsersObject);` performs the actual insert operation. In the example, you pass into it only one argument -- the array of documents.
 
-The `.insertMany()` method returns a large connection object. In the example above, you print that object to the console. Look through it to see what information is available to you. One field available in the connection object is the `insertedIds` field. The value for the `insertedIds` is an object containing `_ids` for `insertMany()`. That object looks something like this:
+In the example above, `multiplUsersObject` is an array containing four objects. Each object has a key for `first` and one for `last`. The line `multiplUsersDB = await users_collection.insertMany(multipleUsersObject);` performs the actual `insert` operation. In the example, you pass into it only one argument -- the array of documents `multipleUsersObject`.
+
+The `.insertMany()` method returns a large connection object. In the example above, you print that object to the console. Look through it to see what information is available to you. One `field` available in the connection object is the `insertedIds`. The value for the `insertedIds` is an object containing `_ids` for `insertMany()`. That object looks something like this:
 
 ```node
 {
@@ -130,7 +131,7 @@ The `.insertMany()` method returns a large connection object. In the example abo
 }
 ```
 
-Another field available in the returned connection object is the `ops` field. The `ops` field has a value of an array of objects. Each object in the array is one of the inserted documents. That array looks something like this:
+Another `field` available in the returned connection object is the `ops` field. The `ops` field has a value of an array of objects. Each object in the array is one of the inserted documents. That array looks something like this:
 
 ```node
 [
@@ -141,25 +142,24 @@ Another field available in the returned connection object is the `ops` field. Th
   ]
 ```
 
-Notice that the printed documents are the same as what you inserted except the inserted copies have an `_id` field, whereas the objects in your code doesn't. That's because MongoDB insererted the `_id` for you.
+Notice that the printed documents are the same as what you inserted except the inserted copies each have an `_id`, whereas the objects in your code don't. That's because MongoDB insererted the `_id` for you!
 
 
 ## .insertOne()
 
-Next is the the `.insertOne()` method to create one document in a single operation. Like `.insertMany()`, the `.insertOne()` method accepts one required argument and one optional argument `.insertOne(document, options)`. 
+Next is the the `.insertOne()` method to create one document in a single operation. Like `.insertMany()`, the `.insertOne()` method accepts one required and one optional argument `.insertOne(document, options)`, where `document` is required and `options` is optional.
 
-The first argument -- document -- is an object. That object should contain key:value pairs. Like for the objects in the array for `.insertMany()`, it is recommended you not include an `_id` key and value in the object you pass into `.insertOne()`. MongoDB will create that `_id` for you. If, however, you do include an `_id` key and value, each should be unique. No other document in your database should have that same `_id` value.
+The first argument -- `document` -- is an object. That object should contain `key:value` pairs. Like for the objects in the array for `.insertMany()`, it is recommended you not include an `_id` in the object you pass into `.insertOne()`. MongoDB will create that `_id` for you. If, however, you do include an `_id` key and value, each should be unique. No other document in your database should have that same `_id` value.
 
-The second argument is an object of options about the insert operation. You will omit that argument for now when calling the method. Instead, you will only pass the document argument.
+The second argument is an object of `options` about the `insert` operation. You will omit that argument for now when calling the method. Instead, you will only pass the `document` argument.
 
-To see the `.insertOne()` method in action, you can run the following script. The lines to pay special attention to are the line that defines the object `userObject` and `newUserDB = await users_collection.insertOne(userObject);
-`.
+To see the `.insertOne()` method in action, run the following script. The lines to pay special attention to are the line that defines the object `userObject` and the line that calls the `insert` method `newUserDB = await users_collection.insertOne(userObject);`.
 
 ```node
 const { MongoClient } = require("mongodb");
 
 // Replace the following with your Atlas connection string
-const url = "connection_string";
+const url = "your connection string";
 const client = new MongoClient(url);
 
 // The database to use
@@ -190,7 +190,7 @@ async function run() {
 
 run().catch(console.dir);
 ```
-In the example above, `newUserDB` is an object containing a key for `first` and one for `last`. The line `newUserDB = await users_collection.insertOne(userObject);` performs the actual insert operation. In the example, you pass into it only one argument -- the document.
+In the example above, `newUserDB` is an object containing a key for `first` and one for `last`. The line `newUserDB = await users_collection.insertOne(userObject);` performs the actual `insert` operation. In the example, you pass into it only one argument -- the document.
 
 The `.insertOne()` method returns a large connection object. In the example above, you print that object to the console. Look through it to see what information is available to you. One field available in the connection object is the `insertedId` field. The value for the `insertedId` is a string containing `_id` for the new inserted document. That string looks something like this:
 
@@ -222,7 +222,7 @@ Here is an example of using `.find()` with no arguments for retrieving all the d
 const { MongoClient } = require("mongodb");
 
 // Replace the following with your Atlas connection string
-const url = "connection_string"; // Replace with your Atlas connection string
+const url = "your connection string";
 const client = new MongoClient(url);
 
 // The database to use
@@ -299,7 +299,7 @@ Here is an example of using `findOne()` with no arguments for retrieving one doc
 const { MongoClient } = require("mongodb");
 
 // Replace the following with your Atlas connection string
-const url = "connection_string"; // Replace with your Atlas connection string
+const url = "your connection string";
 const client = new MongoClient(url);
 
 // The database to use
@@ -345,7 +345,7 @@ In MongoDB, the data type for `_id` is ObjectID (notice that `ID` has both lette
 const { MongoClient, ObjectID } = require("mongodb");
 
 // Replace the following with your Atlas connection string
-const url = "connection_string"; // Replace with your Atlas connection string
+const url = "your connection string";
 const client = new MongoClient(url);
 
 // The database to use
@@ -424,7 +424,7 @@ Here is an example of using `.updateOne()` with arguments for filter and updates
 const { MongoClient, ObjectID } = require("mongodb");
 
 // Replace the following with your Atlas connection string
-const url = "connection_string"; // Replace with your Atlas connection string
+const url = "your connection string";
 const client = new MongoClient(url);
 
 // The database to use
@@ -481,7 +481,7 @@ Here is an example of using `.updateMany()` with arguments for filter and update
 const { MongoClient } = require("mongodb");
 
 // Replace the following with your Atlas connection string
-const url = "connection_string"; // Replace with your Atlas connection string
+const url = "your connection string";
 const client = new MongoClient(url);
 
 // The database to use
@@ -554,7 +554,7 @@ Here is an example of using `.replaceOne()` with arguments for filter and replac
 const { MongoClient } = require("mongodb");
 
 // Replace the following with your Atlas connection string
-const url = "connection_string"; // Replace with your Atlas connection string
+const url = "your connection string";
 const client = new MongoClient(url);
 
 // The database to use
@@ -619,7 +619,7 @@ Here is an example of using `.deleteMany()` for deleting all the documents from 
 const { MongoClient } = require("mongodb");
 
 // Replace the following with your Atlas connection string
-const url = "connection_string"; // Replace with your Atlas connection string
+const url = "your connection string";
 const client = new MongoClient(url);
 
 // The database to use
@@ -664,7 +664,7 @@ Here is an example of using `.deleteOne()` for deleting a sinlge document from y
 const { MongoClient, ObjectID } = require("mongodb");
 
 // Replace the following with your Atlas connection string
-const url = "connection_string"; // Replace with your Atlas connection string
+const url = "your connection string";
 const client = new MongoClient(url);
 
 // The database to use
