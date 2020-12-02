@@ -9,15 +9,17 @@ The main ways to interact with your database are using the CRUD operations. CRUD
 - Update: **edit** one or more entries in your database 
 - Delete: **remove** one or more entries from your database. 
 
-The syntax for the CRUD operations is fairly simple and is explained below. Despite the simplicity, a few *tips and tricks* will **help you master the basics**. Before discussing each CRUD operation, first you should have a better understanding of MongoDB documents.
+The syntax for the CRUD operations is fairly simple and is explained below. Despite the simplicity, a few tips and tricks will **help you master the basics**. Before discussing each CRUD operation, first you should have a better understanding of MongoDB documents.
 
 ## [MongoDB Documents](#mongodb-documents)
 
-Each entry in a MongoDB database is called a document. A document is a JSON-like object called a BSON. The BSON format generally looks and acts like JSON.
+Each entry in a MongoDB collection is called a document. A document is a JSON-like object called a BSON. The BSON format generally looks and acts like JSON.
 
-One of the main JSON-like features of a MongoDB document is that the structure of each document in a collection does not have to be identical to the structure of the other documents in that collection. For instance, if you have a users collection, some users may have a first name, last name, birthday, and user_id. However, not all users are required to have all the same fields. It's okay if some users are missing one or more of first name, last name, birthday, and user_id. This is different from SQL, which requires each entry (the SQL-equivalent of a document) in a table (the SQL-equivalent of a collection) to have all the same fields as the other entries in that same table.
+One of the main JSON-like features of a MongoDB document is that the structure of each document in a collection does not have to be identical to the structure of the other documents in that collection. For instance, if you have a users collection, some users may have a `first_name`, `last_name`, `birthday`, and `user_id`. 
 
-Like the JSON format is comma-separated key:value pairs wrapped in curly braces, the BSON format has comma-separated field:value pairs wrapped in curly braces. One difference, however, is that BSON objects can store more data types than JSON. For instance, in a MongoDB document, you can store other documents and arrays of other documents. Here is an example from the [MongoDB documentation](https://docs.mongodb.com/manual/core/document/):
+Not all documents in that same collection, however, are required to have all the same fields. It's okay if some user documents are missing one or more of `first_name`, `last_name`, `birthday`, and `user_id`. This is different from SQL, which requires each entry (the SQL-equivalent of a document) in a table (the SQL-equivalent of a collection) to have all the same fields as the other entries in that same table.
+
+Like the JSON format is comma-separated `key:value` pairs wrapped in curly braces `{}`, the BSON format has comma-separated `field:value` pairs wrapped in curly braces `{}`. One difference, however, is that BSON objects can store more data types than JSON. For instance, in a MongoDB document, you can store other documents and arrays of other documents. Here is an example from the [MongoDB documentation](https://docs.mongodb.com/manual/core/document/):
 
 ```
 const mydoc = {
@@ -32,11 +34,11 @@ const mydoc = {
 
 Here is the data type for each field in the `mydoc` object: 
 
-- `_id` holds an ObjectId.
-- `name` holds an embedded document that contains the fields `first` and `last`.
-- `birth` and `death` hold values of the Date type.
-- `contribs` holds an array of strings.
-- `views` holds a value of the NumberLong type.
+- `_id` holds an `ObjectId()`
+- `name` holds an embedded document that contains the fields `first` and `last`
+- `birth` and `death` hold values of the Date type
+- `contribs` holds an array of strings
+- `views` holds a value of the `NumberLong` type for handling 64-bit integers
 
 The `_id` field is a reserved field. Unless you add it yourself by including it in your insert method, MondgoDB automatically adds a unique `_id` value to each document created. It is common practice to not add your own `_id` field but rather to let MongoDB add it for you.
 
