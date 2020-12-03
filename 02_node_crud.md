@@ -60,7 +60,7 @@ For example, if you have a collection named `users_collection`, you can use `.in
 
 When using either `insert` method, if the collection that you're inserting into does not yet exist, MongoDB will create the collection and also add the document(s) to it. If the collection already exists in the database, MongoDB will just add the document to it.
 
-## .insertMany()
+### .insertMany()
 
 Starting with the `.insertMany()` method to create multiple documents in one operation. The `.insertMany()` method accepts one required argument and one optional argument `.insertMany(documents, options)`, where `documents` is required and `options` is optional.
 
@@ -147,7 +147,7 @@ Another `field` available in the returned connection object is the `ops` field. 
 Notice that the printed documents are the same as what you inserted except the inserted copies each have an `_id`, whereas the objects in your code don't. That's because MongoDB insererted the `_id` for you!
 
 
-## .insertOne()
+### .insertOne()
 
 Next is the the `.insertOne()` method to create one document in a single operation. Like `.insertMany()`, the `.insertOne()` method accepts one required and one optional argument `.insertOne(document, options)`, where `document` is required and `options` is optional.
 
