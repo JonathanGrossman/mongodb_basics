@@ -421,7 +421,7 @@ Starting with the `.updateOne()` method to update values in one document. The `.
 
 The first argument is a `filter`. The `filter` is like the `query` argument used for the `find` methods. You use `filter` to specify which document to update. For instance, you can specify an empty object `.updateOne({})` to update the first document in the collection. Or you can specify specific criteria, like the `_id` of a document `.updateOne({_id: ObjectID("5fa406ec3f4b71a70ae05dab")})`, to target a specific document.
 
-The second argument is the `update`. The `update` declares the updates that you want to make in the document. Use the [update operator expressions](https://docs.mongodb.com/manual/reference/operator/update/#id1) to update the document. While all of the update operators might help you, pay special attention to the `$set` operator. It is the one you will likely use most.
+The second argument is the `update`. The `update` declares the updates that you want to make in the document. Use the [update operator expressions](https://docs.mongodb.com/manual/reference/operator/update/) to update the document. While all of the update operators might help you, pay special attention to the `$set` operator. It is the one you will likely use most.
 
 ```node
 Name	          Description
@@ -493,7 +493,7 @@ The first argument is a `filter`. This is essentially the same for `.updateMany(
 
 For instance, you can specify an empty object `.updateMany({})` to update all the documents in the collection. Or you can specify specific criteria, like the `first` field of a document in your `users_collection`. For instance, `.updateMany({"first": "Jane")}, updates)` returns all documents that have a `first` field with a value of `"Jane"`. 
 
-The second argument is `updates`. This is essentially the same for `.updateMany()` as it is for `.updateOne()`. The `updates` argument declares the changes you want to make to the filtered documents. Use the [update operator expressions](https://docs.mongodb.com/manual/reference/operator/update/#id1) (listed above) to update the document. Like for `.updateOne()`, while all of the update operators might help you, pay special attention to the `$set` operator. It is the one you will likely use most.
+The second argument is `updates`. This is essentially the same for `.updateMany()` as it is for `.updateOne()`. The `updates` argument declares the changes you want to make to the filtered documents. Use the [update operator expressions](https://docs.mongodb.com/manual/reference/operator/update/) (listed above) to update the document. Like for `.updateOne()`, while all of the update operators might help you, pay special attention to the `$set` operator. It is the one you will likely use most.
 
 For now, don't worry about the `options` argument. It is optional, so you can simply just omit it when calling the method.
 
