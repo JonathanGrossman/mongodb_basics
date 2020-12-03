@@ -34,7 +34,7 @@ Using comparison operators in MongoDB is similar to but different from using com
 
 Some key differences are syntax and order of operations. MongoDB uses syntax like `$gt` and `$lt`, whereas languages like JavaScript use mathematical symbols like `>` and `<`. Plus, you use comparison operators generally through your code in other languages, whereas in MongoDB they belong inside an object that serves as an argument inside a function call (e.g., `find({ score: { $eq: 10 } })`). 
 
-In addition to syntax differences, another difference between comparison operators in MongoDB and other languages is the order of operations in MongoDB is not the same as for algebra. To understand the MongoDB comparison order, visit [MongoDB's page about comparison/sort order](#https://docs.mongodb.com/manual/reference/bson-type-comparison-order/#bson-types-comparison-order). Before worrying too much about order of operations, try practicing with simple examples.
+In addition to syntax differences, another difference between comparison operators in MongoDB and other languages is the order of operations in MongoDB is not the same as for algebra. To understand the MongoDB comparison order, visit [MongoDB's page about comparison/sort order](https://docs.mongodb.com/manual/reference/bson-type-comparison-order/#bson-types-comparison-order). Before worrying too much about order of operations, try practicing with simple examples.
 
 Here is a list of MongoDB comparison operators.
 
