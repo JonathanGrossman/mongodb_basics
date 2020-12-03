@@ -83,3 +83,11 @@ This chapter is different than previous ones. Previous chapters were instruction
 - How will you know if the user was successfully added to the MongoDB database?
 - How will you let the client know whether the user was successfully added?
 - Do you need to install any extra packages?
+
+## Step 6. Think about the possibilities
+
+1. Upon receiving a response from MongoDB in your Express application for a **get** request, what information might you want to use to request more information from MongoDB (before even responding to the client)?
+2. Upon receiving a response from MongoDB in your Express application for a **post** request, what information might you want to use to request more information from MongoDB (before even responding to the client)?
+3. When storing information in a database, how will you organize your information?
+4. If in addition to a user collection, you also have a blog collection containing blog posts by each user, how will you know which user is the author for each blog post?
+5. How much search filtering should you do using MongoDB tools versus in your Express server script?
