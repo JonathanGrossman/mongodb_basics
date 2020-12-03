@@ -14,6 +14,9 @@ This chapter is different than previous ones. Previous chapters were instruction
 
 2. How can you confirm that the connection is successful?
 
+- Do you need to?
+- What are the pros and cons?
+
 ## Step 2. Get all users
 
 1. Write the boilerplate for the route
