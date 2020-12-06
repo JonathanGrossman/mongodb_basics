@@ -1,6 +1,6 @@
 # Query Operators
 
-Query operators help you find, update, and delete documents. So far, you know how to query a single document or all documents. 
+Query operators help you find, update, and delete documents. So far, you know how to query a single document or all documents. But you don't know how to get more than one document but less than all documents.
 
 For instance, to target a specific document, you can pass an object as an argumet into the `.findOne()` method that finds a specific document by its `_id`. 
 
@@ -10,17 +10,18 @@ one_db_user = await users_collection.findOne({
     });
 ```
 
-You've also seen code that passes an object (an empty object) as an argument that finds all documents. 
+To get all documents, you pass an empty object as the argument or pass no argument at all.
 
 ```node
-all_db_users = await users_collection.find({});
+all_db_users_empty = await users_collection.find({});
+all_db_users_blank = await users_collection.find();
 ```
 
-But what if you want to write more powerful search queries that allow you to do more than get a single document by its `_id` or get less than all documents? 
+But what if you want to get more than one document but less than all documents?
 
-This chapter discusses slighlty more advanced techniques for writing queries. Specifically, you will learn how to pass objects as arguments that use comparison and logical operators so that you can receive a subset of documents from your collection that match the criteria.
+Knowing how to select a subset of documents is important when when working with databases because it can make your application more efficient. It may be tempting to retrieve all documents from a collection and then filter the results in your server-side or client-side code. However, what happens when your userbase becomes so large that retrieving all users and filtering in your server code significantly slows down your application?
 
-When working with databases, it may be tempting to retrieve all documents from a collection and then filter the results in your server-side or client-side code. Although that may be an appropriate solution for some situations, you will need in other situations to filter what you get back from the database instead of filtering after. 
+In this chapter, you will learn how to retrieve a subset of documents from your collection. Specifically, you will learn how to pass objects as arguments to MongoDB methods (e.g., `.find()`, `update()`, etc) in order to specify which documents you want. In your argument objects, you will use comparison and logical operators to designate which documents you want from your collection.
 
 The follow sections explain how to use comparison operators and logical operators to craft targeted database queries.
 
