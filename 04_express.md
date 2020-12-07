@@ -94,4 +94,4 @@ This chapter is different than previous ones. Previous chapters were instruction
 6. Does MongoDB have a way to sort documents in a response?
 7. Does MongoDB have a way to count documents in a response?
 8. Does MongoDB have a way to limit documents in a response?
-8. Does MongoDB have a way to search text in documents?
+9. Does MongoDB have a way to search text in documents?
