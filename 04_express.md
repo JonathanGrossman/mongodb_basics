@@ -91,3 +91,6 @@ This chapter is different than previous ones. Previous chapters were instruction
 3. When storing information in a database, how will you organize your information?
 4. If in addition to a user collection, you also have a blog collection containing blog posts by each user, how will you know which user is the author for each blog post?
 5. How much search filtering should you do using MongoDB tools versus in your Express server script?
+6. Does MongoDB have a way to sort documents in a response?
+7. Does MongoDB have a way to count documents in a response?
+8. Does MongoDB have a way to limit documents in a response?
