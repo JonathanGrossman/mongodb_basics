@@ -42,7 +42,7 @@ It's the public IP address that you'll need for MongoDB. To find your public (ne
 
 In case you ever need to know your private IP address, know that multiple ways exist for finding your IP address. The following should help. Find your Network settings. On MacOS, you can go to System Preferences, and inside that find the Network icon. On the Network page, you should see something like `Wi-Fi is connected to name-of-your-wifi and has the IP address XXX.XXX.X.XX.` On Windows, open the start menu and right-click the Network option. Choose the properties option and then choose View Status. Then, choose Details and look for the IP address in the new window.
 
-After finding your public IP address, you should add it to your MongoDB IP access list so that you can connect to your MongoDB cluster. On the homepage for your Project 0 cluster is your Sandbox area. Inside the sandbox, you will see three buttons. One of those buttons should say Connect. Click it. 
+After finding your public IP address, you should add it to your MongoDB IP access list so that you can connect to your MongoDB cluster. On the homepage for your *Project 0* cluster is your Sandbox. Inside the Sandbox, you will see three buttons. One of those buttons should say Connect. Click it. 
 
 A prompt should open with an option to add a connection IP address. The box might be auto-filled with your public IP address. If it is, double check to make sure it's correct. If not, add your public IP address. 
 
