@@ -261,7 +261,7 @@ The fourth line, however, is new `const dbName = "test";`. You created a variabl
 
 Then comes `try / catch / finally` blocks. Those code blocks are similar to the example above but with some additions. First, focus on the `try` block. It now has a line of code that creates a database instance inside your cluster `const db = client.db(dbName);`. 
 
-You define a variable `db` and set it equal to `client.db(dbName)`. The `client` is your instance of the `MongoClient()` class, `.db` is a method of the class (see above for `db` in the list of methods for `MongoClient()`, and you pass into that method the database name you created.
+You define a variable `db` and set it equal to `client.db(dbName)`. The `client` is your instance of the `MongoClient()` class, `.db` is a method of the class (see above for `db` in the list of methods for `MongoClient()`), and you pass into that method the database name you created.
 
 With a database inside your cluster, next you create a collection inside your database `const col = db.collection("people");`. You create a variable named `col` and set it equal to `db.collection("people")`. The `db` is the variable you made above that represents your database named `test`. The `.collection` is a method from the `db` instance, and `"people"` is the name of the collection.
 
