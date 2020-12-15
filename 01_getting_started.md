@@ -110,7 +110,7 @@ Require stack:
 
 Despite the intimidating look of this error message, the answer to the error is in there. The message includes `Error: Cannot find module 'mongodb'`. This tells you that you need to install the `mongodb` package. If you look in your root folder, you don't have a `node_modules` folder, which means you don't have any packages. 
 
-Add the `mongodb` package to your project by entering the following in your terminal `npm install mongodb`. After entering the installation command, confirm that the message in the terminal says `intallation succeeded`. Also, look in your project's root folder to make sure a `node_modules` folder and `package-json.lock` file each exist.
+Add the `mongodb` package to your project by entering the following in your terminal `npm install mongodb`. After entering the installation command, confirm that the message in the terminal says `installation succeeded`. Also, look in your project's root folder to make sure a `node_modules` folder and `package-json.lock` file each exist.
 
 Enter in the terminal `node connect.js`. If you successfully connected your application, the terminal should print `Connected correctly to server.`
 
