@@ -94,4 +94,10 @@ This chapter is different than previous ones. Previous chapters were instruction
 6. Does MongoDB have a way to sort documents in a response?
 7. Does MongoDB have a way to count documents in a response?
 8. Does MongoDB have a way to limit documents in a response?
-9. Does MongoDB have a way to search text in documents?
+9. Does MongoDB have a way to sort and limit?
+10. Does MongoDB have a way to search text in documents?
+
+## Tips and Thoughts
+1. MongoDB can be used with many different programming languages. When searching online, be sure to include "Node" and "MongoDB" in your searches to help target answers. This is particularly helpful for getting the proper syntax. It can be helpful to review posts online that relate to MongoDB with languages other than NodeJS to help find the right approach. But beware that the syntax may vary some between that language and Node.  
+2. Sometimes your application will encounter an error because of a mismatch between what your code expects from the database and what your database has in it. For instance, your code may be trying to find all documents that do not have a `last_name` field and then sort them by `first_name`. If, however, the collection has no documents inside, you get an error. Another example of a mismatch is when your code retrieves all documents from a collection, loops through them, and in each document looks for if the `last_name` equals `Hill`. If a document doesn't have the `last_name` field, you will get an error. When you get this kind of error, fix your code so that it can gracefully handle the situation without crashing. Also, clean up your database so that it matches what the code expects from it.
+3. Let's find some good StackOverflow Answers
