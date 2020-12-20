@@ -106,7 +106,7 @@ This chapter is different than previous ones. Previous chapters were instruction
 
 4. MongoDB can be used with many different programming languages. When searching online to learn how to do something, be sure to include "Node" and "MongoDB" in your searches to help target answers. This is particularly helpful for getting the proper syntax. It can be helpful to review posts online that relate to MongoDB with languages other than NodeJS to help find the right approach. But beware that the syntax may vary some between that language and Node.  
 
-5. Sometimes your application will encounter an error because of a mismatch between what your code expects from the database and what your database has in it. For instance, your code may be trying to find all documents that do not have a `last_name` field and then sort them by `first_name`. If, however, the collection has no documents inside, you get an error. Another example of a mismatch is when your code retrieves all documents from a collection, loops through them, and in each document looks for if the `last_name` equals `Hill`. If a document doesn't have the `last_name` field, you will get an error. When you get this kind of error, fix your code so that it can gracefully handle the situation without crashing. Also, clean up your database so that it matches what the code expects from it.  
+5. Sometimes your application will encounter an error because of a mismatch between what your code expects from the database and what your database has in it. When you get this kind of error, fix your code so that it can gracefully handle the situation without crashing. Also, clean up your database so that it matches what the code expects from it.  
 
 6. Practice reading error messages. Don't skim them. Read them carefully and think about what they mean. When you have an error, use the relevant part of the error message to search online.  
 
@@ -114,9 +114,17 @@ This chapter is different than previous ones. Previous chapters were instruction
 
 8. Let's find some good StackOverflow Answers
 
-[Cannot find module mongodb](https://stackoverflow.com/questions/14226410/node-js-cannot-find-module-mongodb)  
-[User not allowed to do action](https://stackoverflow.com/questions/46649390/mongoerror-user-is-not-allowed-to-do-action)  
-[UnhandledPromiseRejectionWarning](https://stackoverflow.com/questions/62342929/mongodb-atlas-connection-fails-with-error-mongoserverselectionerror-connection)  
-[Can't connect mongoDB atlas to heroku](https://stackoverflow.com/questions/60921484/cant-connect-mongodb-atlas-to-heroku)  
-[Find then is not a function](https://stackoverflow.com/questions/53405674/mongo-collection-find-then-is-not-a-function?noredirect=1&lq=1)  
-[Sort failure](https://stackoverflow.com/questions/49881755/failing-to-get-results-with-sort-query-in-mgo)  
+- [Cannot find module mongodb](https://stackoverflow.com/questions/14226410/node-js-cannot-find-module-mongodb)  
+- [User not allowed to do action](https://stackoverflow.com/questions/46649390/mongoerror-user-is-not-allowed-to-do-action)  
+- [Avoid "current URL string parser is deprecated" warning](https://stackoverflow.com/questions/50448272/avoid-current-url-string-parser-is-deprecated-warning-by-setting-usenewurlpars)  
+- [UnhandledPromiseRejectionWarning](https://stackoverflow.com/questions/62342929/mongodb-atlas-connection-fails-with-error-mongoserverselectionerror-connection)  
+- [Can't connect mongoDB atlas to heroku](https://stackoverflow.com/questions/60921484/cant-connect-mongodb-atlas-to-heroku)  
+- [Find then is not a function](https://stackoverflow.com/questions/53405674/mongo-collection-find-then-is-not-a-function?noredirect=1&lq=1)  
+- [Sort failure](https://stackoverflow.com/questions/49881755/failing-to-get-results-with-sort-query-in-mgo)  
+- [Connection timed out](https://stackoverflow.com/questions/40216639/mongodb-connection-timed-out-error)  
+- [MongoDB Econnrefused](https://stackoverflow.com/questions/37576822/mongodb-mongoerror-connect-econnrefused)  
+- [Async / await in express with multiple mongodb queries](https://stackoverflow.com/questions/53805076/async-await-in-express-with-multiple-mongodb-queries)  
+- [Duplicate key error index in mongodb mongoose](https://stackoverflow.com/questions/24430220/e11000-duplicate-key-error-index-in-mongodb-mongoose)  
+- [How to sort a collection by date in MongoDB?](https://stackoverflow.com/questions/13847766/how-to-sort-a-collection-by-date-in-mongodb)  
+- [Combine two OR-queries with AND in Mongoose](https://stackoverflow.com/questions/13272824/combine-two-or-queries-with-and-in-mongoose)
+- [Find documents with array that doesn't contains a specific value](https://stackoverflow.com/questions/26481326/find-documents-with-array-that-doesnt-contains-a-specific-value)
