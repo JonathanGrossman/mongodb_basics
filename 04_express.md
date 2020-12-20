@@ -114,7 +114,9 @@ This chapter is different than previous ones. Previous chapters were instruction
 
 8. Let's find some good StackOverflow Answers
 
-[Cannot find module mongodb](https://stackoverflow.com/questions/14226410/node-js-cannot-find-module-mongodb)
-[User not allowed to do action](https://stackoverflow.com/questions/46649390/mongoerror-user-is-not-allowed-to-do-action)
-[UnhandledPromiseRejectionWarning](https://stackoverflow.com/questions/62342929/mongodb-atlas-connection-fails-with-error-mongoserverselectionerror-connection)
-[Can't connect mongoDB atlas to heroku](https://stackoverflow.com/questions/60921484/cant-connect-mongodb-atlas-to-heroku)
+[Cannot find module mongodb](https://stackoverflow.com/questions/14226410/node-js-cannot-find-module-mongodb)  
+[User not allowed to do action](https://stackoverflow.com/questions/46649390/mongoerror-user-is-not-allowed-to-do-action)  
+[UnhandledPromiseRejectionWarning](https://stackoverflow.com/questions/62342929/mongodb-atlas-connection-fails-with-error-mongoserverselectionerror-connection)  
+[Can't connect mongoDB atlas to heroku](https://stackoverflow.com/questions/60921484/cant-connect-mongodb-atlas-to-heroku)  
+[Find then is not a function](https://stackoverflow.com/questions/53405674/mongo-collection-find-then-is-not-a-function?noredirect=1&lq=1)  
+[Sort failure](https://stackoverflow.com/questions/49881755/failing-to-get-results-with-sort-query-in-mgo)  
