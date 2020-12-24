@@ -500,3 +500,143 @@ Notice that the users collection of documents as a whole has 5 documents (see th
 ### The other logical operators
 
 Look at the documentation for the logical operators to understand their syntax. For the logical operators that do not have examples in this chapter, compare their syntax to those operators that do have examples. Is the syntax more like `$and` or `$not`?
+
+### Miscellaneous but common ways to search
+
+#### Combining operators
+```node
+async function run() {
+  try {
+    await client.connect();
+    console.log("Connected correctly to server");
+    const db = client.db(dbName);
+
+    // Use the collection named "users"
+    const users_collection = db.collection("users");
+
+    filtered_db_users = await users_collection.find({
+      first: { $not: { $eq: "Jill" } },
+      $and: [{ last: "Hill" }],
+    });
+
+    filtered_db_users.forEach((user) => {
+      console.log(user);
+    });
+  } catch (err) {
+    console.log(err.stack);
+  } finally {
+    await client.close();
+  }
+}
+
+run().catch(console.dir);
+```
+
+#### Sorting and Limiting
+
+
+```node
+const { MongoClient } = require("mongodb");
+
+// Replace the following with your Atlas connection string
+const url =
+  "mongodb+srv://User1:test@cluster0.n5f5h.mongodb.net/<dbname>?retryWrites=true&w=majority";
+const client = new MongoClient(url);
+
+// The database to use
+const dbName = "test";
+async function run() {
+  try {
+    await client.connect();
+    console.log("Connected correctly to server");
+    const db = client.db(dbName);
+
+    // Use the collection named "users"
+    const users_collection = db.collection("users");
+
+    sort = { score: 1 };
+    filtered_db_users = await users_collection.find().sort(sort);
+
+    filtered_db_users.forEach((user) => {
+      console.log(user);
+    });
+  } catch (err) {
+    console.log(err.stack);
+  } finally {
+    await client.close();
+  }
+}
+
+run().catch(console.dir);
+
+const { MongoClient } = require("mongodb");
+
+// Replace the following with your Atlas connection string
+const url =
+  "mongodb+srv://User1:test@cluster0.n5f5h.mongodb.net/<dbname>?retryWrites=true&w=majority";
+const client = new MongoClient(url);
+
+// The database to use
+const dbName = "test";
+async function run() {
+  try {
+    await client.connect();
+    console.log("Connected correctly to server");
+    const db = client.db(dbName);
+
+    // Use the collection named "users"
+    const users_collection = db.collection("users");
+
+    sort = { score: 1 };
+    filtered_db_users = await users_collection.find().sort(sort).limit(2);
+
+    filtered_db_users.forEach((user) => {
+      console.log(user);
+    });
+  } catch (err) {
+    console.log(err.stack);
+  } finally {
+    await client.close();
+  }
+}
+
+run().catch(console.dir);
+```
+
+#### Exists
+
+
+```node
+const { MongoClient } = require("mongodb");
+
+// Replace the following with your Atlas connection string
+const url =
+  "mongodb+srv://User1:test@cluster0.n5f5h.mongodb.net/<dbname>?retryWrites=true&w=majority";
+const client = new MongoClient(url);
+
+// The database to use
+const dbName = "test";
+async function run() {
+  try {
+    await client.connect();
+    console.log("Connected correctly to server");
+    const db = client.db(dbName);
+
+    // Use the collection named "users"
+    const users_collection = db.collection("users");
+
+    without_field = { score: { $exists: false } };
+    filtered_db_users = await users_collection.find(without_field);
+
+    filtered_db_users.forEach((user) => {
+      console.log(user);
+    });
+  } catch (err) {
+    console.log(err.stack);
+  } finally {
+    await client.close();
+  }
+}
+
+run().catch(console.dir);
+```
