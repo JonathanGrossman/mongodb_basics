@@ -133,11 +133,11 @@ This chapter is different than previous ones. Previous chapters were instruction
 ## Step 8. Keep these resources in mind  
 
 - [MongoDB Getting Started](https://docs.atlas.mongodb.com/getting-started)
+- [MongoDB Fundamentals](https://docs.mongodb.com/drivers/node/fundamentals)
 - [Collection Methods](https://docs.mongodb.com/manual/reference/method/js-collection/)
-- [MongoDB Node Driver (NPM)](https://www.npmjs.com/package/mongodb)
-- [MongoDB Node Driver (Documentation)](https://mongodb.github.io/node-mongodb-native/api-articles/nodekoarticle1.html)
 - [Operators Homepage MongoDB](https://docs.mongodb.com/manual/reference/operator/)
 - [StackOverflow MongoDB](https://stackoverflow.com/questions/tagged/mongodb)
+- [MongoDB Node Driver (NPM)](https://www.npmjs.com/package/mongodb)
 - [MongoDB University - Free Learning](https://university.mongodb.com/)  
 - [MongoDB Instructor-Led Training](https://www.mongodb.com/products/training/instructor-led)
 - [Tutorial: Create and Query an Atlas Search Index](https://docs.atlas.mongodb.com/reference/atlas-search/tutorial)
