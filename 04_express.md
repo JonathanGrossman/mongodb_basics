@@ -97,7 +97,7 @@ This chapter is different than previous ones. Previous chapters were instruction
 9. Does MongoDB have a way to sort and limit?
 10. Does MongoDB have a way to search text in documents?
 
-## Tips and Thoughts
+## Step 7. Consider these tips and thoughts
 1. Take the time to learn how to connect your MongoDB cluster to your application. You need to know how to handle MongoDB account permissions, Cluster user permissions, connections strings, and IP addresses. It's not hard, but not knowing the ins and outs can lead to hours of looking in the wrong places to get your application working properly with MongoDB. 
 
 2. Take the time to properly learn how to hide your private MongoDB access information during development. It's tempting to cut corners when setting up your MongoDB connection by not hiding your private MongoDB information, especially when you're eager to write code and engineer your project. However, it's really important that you know how to secure your information. To hide your private information, use environment variables. For development purposes, store the environment variables in a file, add that file name to the `gitignore` file, and pull the information from your `gitignore` file into your app. This prevents your private file from saving on GitHub, yet allows you to use the private information in your application during development. Research the "node" way for doing this. 
@@ -128,3 +128,15 @@ This chapter is different than previous ones. Previous chapters were instruction
 - [How to sort a collection by date in MongoDB?](https://stackoverflow.com/questions/13847766/how-to-sort-a-collection-by-date-in-mongodb)  
 - [Combine two OR-queries with AND in Mongoose](https://stackoverflow.com/questions/13272824/combine-two-or-queries-with-and-in-mongoose)
 - [Find documents with array that doesn't contains a specific value](https://stackoverflow.com/questions/26481326/find-documents-with-array-that-doesnt-contains-a-specific-value)
+
+
+## Step 8. Keep these resources in mind  
+
+1. [MongoDB University - Free Learning](https://university.mongodb.com/)  
+2. [MongoDB Instructor-Led Training](https://www.mongodb.com/products/training/instructor-led)
+3. [Tutorials Point - MongoDB](https://www.tutorialspoint.com/mongodb/mongodb_overview.htm)
+4.
+5.
+6.
+7.
+8.
