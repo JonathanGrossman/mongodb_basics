@@ -2,7 +2,7 @@
 
 In the previous chapters, you learned the MongoDB basics. Although you worked with MongoDB code, you haven't yet connected that code to a server. In this chapter, you will build an express server and connect it to MongoDB. You also will write routes and work with the data from MongoDB inside your express app. 
 
-This chapter is different than previous ones. Previous chapters were instructional and demonstrative, whereas this chapter is more of a guided building session. In this building session, you will make an Express application that connects to MongoDB. The Express application will have routes that allow you to manages users of your application. Your routes will get all users, get a single user, and add a user.
+This chapter is different than previous ones. Previous chapters were instructional and demonstrative, whereas this chapter is more of a resources page. It provides a rough roadmap for building an express app that connects to MongoDB. The end of this chapter contains tips, thoughts, and resources to help you get started with MongoDB.
 
 ## Step 1. Setup Express
 
@@ -143,3 +143,104 @@ This chapter is different than previous ones. Previous chapters were instruction
 - [Tutorial: Create and Query an Atlas Search Index](https://docs.atlas.mongodb.com/reference/atlas-search/tutorial)
 - [Tutorials Point - MongoDB](https://www.tutorialspoint.com/mongodb/mongodb_overview.htm)
 - [W3 Schools Node-MongoDB](https://www.w3schools.com/nodejs/nodejs_mongodb.asp)
+
+## Step 9. Review this example code
+
+Here is an example of an Express App connected to MongoDB. See if you can get it running on your computer. You'll need to consider how to connect it to your MongoDB account, whether you need to install any packages, what missing files and folders you need to add to your project folder, and anything else to get it working. 
+
+```node
+// Express setup
+const express = require("express");
+const app = express();
+const bodyParser = require("body-parser");
+const port = 3000;
+
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }));
+
+// parse application/json
+app.use(bodyParser.json());
+
+let path = require("path");
+app.use(express.static(path.join(__dirname)));
+app.use("/styles", express.static(__dirname));
+
+//Mongo setup
+const { MongoClient, ObjectID } = require("mongodb");
+
+const url =
+  "your connection string";
+const client = new MongoClient(url, { useUnifiedTopology: true });
+const dbName = "your database name";
+let users_collection = "";
+
+client.connect().then((response) => {
+  if (response.topology.s.state) {
+    console.log("Status: " + response.topology.s.state);
+    const db = client.db(dbName);
+    // Use the collection named "users"
+    users_collection = db.collection("users");
+  } else {
+    console.log("Problem connecting to MongoDB");
+  }
+});
+
+// Express Routes
+app.get("/all-users", (req, res) => {
+  try {
+    // Get all users from Mongo
+    all_db_users = users_collection
+      .find()
+      .toArray()
+      .then((users) => {
+        res.send(users);
+      });
+  } catch (err) {
+    res.send(
+      `We have error: ${err.stack}. Sorry. We appreciate your patience while we work this out.`
+    );
+  }
+});
+
+app.get("/user/:id", (req, res) => {
+  try {
+    user_id = req.params.id;
+    // Get single user from Mongo
+    one_db_user = users_collection
+      .findOne({
+        _id: ObjectID(user_id),
+      })
+      .then((user_db) => {
+        res.send(user_db);
+      });
+  } catch (err) {
+    res.send(
+      `We have error: ${err.stack}. Sorry. We appreciate your patience while we work this out.`
+    );
+  }
+});
+
+
+app.get("/add-user-form", (req, res) => {
+  res.sendFile(path.join(__dirname + "/views/addUserForm.html"));
+});
+
+
+app.post("/add-user", (req, res) => {
+  try {
+    newUserDB = users_collection.insertOne(req.body);
+    newUserDB.then((response) => {
+      res.send(response.insertedId);
+    });
+  } catch (err) {
+    res.send(
+      `We have error: ${err.stack}. Sorry. We appreciate your patience while we work this out.`
+    );
+  }
+});
+
+
+app.listen(port, () => {
+  console.log(`Example app listening at http://localhost:${port}`);
+});
+```
