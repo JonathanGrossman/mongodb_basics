@@ -501,9 +501,12 @@ Notice that the users collection of documents as a whole has 5 documents (see th
 
 Look at the documentation for the logical operators to understand their syntax. For the logical operators that do not have examples in this chapter, compare their syntax to those operators that do have examples. Is the syntax more like `$and` or `$not`?
 
-### Miscellaneous but common ways to search
+## [Miscellaneous but common ways to search](#miscellaneous-but-common-ways-to-search)
 
-#### Combining operators
+### Combining operators
+
+Combining operators can make your searches very powerful. Combine logical and comparison operators with one another in addition to combining them with other search filters, like `sort`, `limit`, and `exists`.
+
 ```node
 async function run() {
   try {
@@ -532,7 +535,18 @@ async function run() {
 run().catch(console.dir);
 ```
 
-#### Sorting and Limiting
+In this example, you search for documents that have a `first` field not equal to `Jill` and also a `last` field equal to `Hill`. Notice that the item passed into the `.find()` method is an object.
+
+```node
+{
+      first: { $not: { $eq: "Jill" } },
+      $and: [{ last: "Hill" }],
+}
+ ```
+ 
+ Inside the object are comma-separated key-value pairs. Each key-value pair has a specific syntax depending upon which operator you're using. Notice at least two things. First, the `$` is used to specify that it's a MongoDB operator. This is helpful to remember when reading search queries. Second, the keys that correspond to fields in your database on not wrapped in quotes.
+
+### Sorting
 
 
 ```node
@@ -568,7 +582,15 @@ async function run() {
 }
 
 run().catch(console.dir);
+```
 
+Here's how `sort` works above. First, you declare an object having a field and value. The field is a field in your database by which you want to sort. The value is either `1` or `-1`, which correspond to ascending and descending. That object should have `$exists` as its key and a boolean as its value. Set `$exists` to `true` to get all documents with the field or `false` to get all documents that do not have the declared field.
+
+### Sorting and Limiting
+
+Sort and limit your results. When sorting and limiting together, be sure to use a *stable sort*. To stable sort, declare a field by which you are sorting, like in the examples above and below, and also include in the sort a field that contains exclusively unique values (like `_id`). This helps ensure that you get the same order returned every time regardless of whether the field your are sorting within has duplicate values.
+
+```node
 const { MongoClient } = require("mongodb");
 
 // Replace the following with your Atlas connection string
@@ -587,7 +609,7 @@ async function run() {
     // Use the collection named "users"
     const users_collection = db.collection("users");
 
-    sort = { score: 1 };
+    sort = { score: -1, _id: -1 };
     filtered_db_users = await users_collection.find().sort(sort).limit(2);
 
     filtered_db_users.forEach((user) => {
@@ -603,8 +625,11 @@ async function run() {
 run().catch(console.dir);
 ```
 
-#### Exists
+Here's how `sort` works above. First, you declare an object having a two fields, each having a value. You have two fields because one of them -- `score` -- is not guaranteed to have unique values. The other field -- `_id` -- should have only unique values. Therefore, the documents returned will be sorted by `score`, and any duplicate values with be sorted with respect to one another by `_id`. 
 
+### Exists
+
+Check whether a field exists in document and retrieve only documents that either have or do not have that field.
 
 ```node
 const { MongoClient } = require("mongodb");
@@ -640,3 +665,5 @@ async function run() {
 
 run().catch(console.dir);
 ```
+
+Here's how `$exists` works above. Declare a field (e.g., `score`) and make its value and object. That object should have `$exists` as its key and a boolean as its value. Set `$exists` to `true` to get all documents with the field and `false` to get all documents that do not have the declared field.
