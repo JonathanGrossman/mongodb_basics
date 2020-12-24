@@ -1,8 +1,8 @@
 # Using MongoDB in an Express Application
 
-In the previous chapters, you learned the MongoDB basics. Although you worked with MongoDB code, you haven't yet connected that code to a server. In this chapter, you will build an express server and connect it to MongoDB. You also will write routes and work with the data from MongoDB inside your express app. 
+In the previous chapters, you learned the MongoDB basics. Although you worked with MongoDB code, you haven't yet connected that code to a server. In this chapter, you will build an Express server and connect it to MongoDB. You also will write routes and work with the data from MongoDB inside your Express app. 
 
-This chapter is different than previous ones. Previous chapters were instructional and demonstrative, whereas this chapter is more of a resources page. It provides a rough roadmap for building an express app that connects to MongoDB. The end of this chapter contains tips, thoughts, and resources to help you get started with MongoDB, including a sample script for a basic Express-MongoDB application.
+This chapter is different than previous ones. Previous chapters were instructional and demonstrative, whereas this chapter is more of a resources page. It provides a rough roadmap for building an Express app that connects to MongoDB. The end of this chapter contains tips, thoughts, and resources to help you get started with MongoDB, including a sample script for a basic Express-MongoDB application.
 
 ## Step 1. Setup Express
 
@@ -13,7 +13,7 @@ This chapter is different than previous ones. Previous chapters were instruction
 
 ## Step 2. Connect Express to MongoDB
 
-1. What are the steps for connecting your express app to MongoDB Atlas?
+1. What are the steps for connecting your Express app to MongoDB Atlas?
 
 - Do you need to install or import any software?
 - Do you have a MongoDB connection string?
@@ -30,7 +30,7 @@ This chapter is different than previous ones. Previous chapters were instruction
 1. Write the boilerplate for the route
 
 - Which http method should you use?
-- For whichever http method you use, how many arguments does that express method accept?
+- For whichever http method you use, how many arguments does that Express method accept?
 - What are the data types those arguments?
 - How will you handle errors inside your route function?
 
@@ -47,7 +47,7 @@ This chapter is different than previous ones. Previous chapters were instruction
 1. Write the boilerplate for the route
 
 - Which http method should you use?
-- For whichever http method you use, how many arguments does that express method accept?
+- For whichever http method you use, how many arguments does that Express method accept?
 - What are the data types of those arguments?
 - How will you handle errors inside your route function?
 - When you send the request from the client, what information should you send to tell the server which user you want?
