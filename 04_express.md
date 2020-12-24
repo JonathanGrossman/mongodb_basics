@@ -2,7 +2,7 @@
 
 In the previous chapters, you learned the MongoDB basics. Although you worked with MongoDB code, you haven't yet connected that code to a server. In this chapter, you will build an express server and connect it to MongoDB. You also will write routes and work with the data from MongoDB inside your express app. 
 
-This chapter is different than previous ones. Previous chapters were instructional and demonstrative, whereas this chapter is more of a resources page. It provides a rough roadmap for building an express app that connects to MongoDB. The end of this chapter contains tips, thoughts, and resources to help you get started with MongoDB.
+This chapter is different than previous ones. Previous chapters were instructional and demonstrative, whereas this chapter is more of a resources page. It provides a rough roadmap for building an express app that connects to MongoDB. The end of this chapter contains tips, thoughts, and resources to help you get started with MongoDB, including a sample script for a basic Express-MongoDB application.
 
 ## Step 1. Setup Express
 
@@ -48,7 +48,7 @@ This chapter is different than previous ones. Previous chapters were instruction
 
 - Which http method should you use?
 - For whichever http method you use, how many arguments does that express method accept?
-- What are the data types those arguments?
+- What are the data types of those arguments?
 - How will you handle errors inside your route function?
 - When you send the request from the client, what information should you send to tell the server which user you want?
 - How will you send the information from the client to the server?
@@ -69,7 +69,7 @@ This chapter is different than previous ones. Previous chapters were instruction
 
 - Which http method should you use?
 - For whichever http method you use, how many arguments does that express method accept?
-- What are the data types those arguments?
+- What are the data types of those arguments?
 - How will you handle errors inside your route function?
 - What information do you need to send from the client to the server?
 - How will you send that information?
@@ -96,6 +96,7 @@ This chapter is different than previous ones. Previous chapters were instruction
 8. Does MongoDB have a way to limit documents in a response?
 9. Does MongoDB have a way to sort and limit?
 10. Does MongoDB have a way to search text in documents?
+11. Does MongoDB have a way to check whether a document has a certain field?
 
 ## Step 7. Consider these tips and thoughts
 1. Take the time to learn how to connect your MongoDB cluster to your application. You need to know how to handle MongoDB account permissions, Cluster user permissions, connection strings, and IP addresses. It's not hard, but not knowing the ins and outs can lead to hours of looking in the wrong places to get your application working properly with MongoDB. When running your application, if you see an error like `MongoNetworkError: failed to connect to server [cluster.yours] on first connect [MongoNetworkError: connection 5 to cluster-yours closed`, then something is wrong with your permissions, connection string, or IP address.
@@ -144,7 +145,7 @@ This chapter is different than previous ones. Previous chapters were instruction
 - [Tutorials Point - MongoDB](https://www.tutorialspoint.com/mongodb/mongodb_overview.htm)
 - [W3 Schools Node-MongoDB](https://www.w3schools.com/nodejs/nodejs_mongodb.asp)
 
-## Step 9. Review this example code
+## Step 9. Review this example code and get it working
 
 Here is an example of an Express App connected to MongoDB. See if you can get it running on your computer. You'll need to consider how to connect it to your MongoDB account, whether you need to install any packages, what missing files and folders you need to add to your project folder, and anything else to get it working. 
 
