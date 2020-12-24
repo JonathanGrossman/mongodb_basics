@@ -132,11 +132,14 @@ This chapter is different than previous ones. Previous chapters were instruction
 
 ## Step 8. Keep these resources in mind  
 
-1. [MongoDB University - Free Learning](https://university.mongodb.com/)  
-2. [MongoDB Instructor-Led Training](https://www.mongodb.com/products/training/instructor-led)
-3. [Tutorials Point - MongoDB](https://www.tutorialspoint.com/mongodb/mongodb_overview.htm)
-4.
-5.
-6.
-7.
-8.
+- [MongoDB Getting Started](https://docs.atlas.mongodb.com/getting-started)
+- [Collection Methods](https://docs.mongodb.com/manual/reference/method/js-collection/)
+- [MongoDB Node Driver (NPM)](https://www.npmjs.com/package/mongodb)
+- [MongoDB Node Driver (Documentation)](https://mongodb.github.io/node-mongodb-native/api-articles/nodekoarticle1.html)
+- [Operators Homepage MongoDB](https://docs.mongodb.com/manual/reference/operator/)
+- [StackOverflow MongoDB](https://stackoverflow.com/questions/tagged/mongodb)
+- [MongoDB University - Free Learning](https://university.mongodb.com/)  
+- [MongoDB Instructor-Led Training](https://www.mongodb.com/products/training/instructor-led)
+- [Tutorial: Create and Query an Atlas Search Index](https://docs.atlas.mongodb.com/reference/atlas-search/tutorial)
+- [Tutorials Point - MongoDB](https://www.tutorialspoint.com/mongodb/mongodb_overview.htm)
+- [W3 Schools Node-MongoDB](https://www.w3schools.com/nodejs/nodejs_mongodb.asp)
