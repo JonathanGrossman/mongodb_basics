@@ -263,7 +263,7 @@ run().catch(console.dir);
 
 The line `all_db_users = await users_collection.find();` retrieves all the documents from your `users_collection`. Notice that you pass no arguments into the `.find()` method. You would get the same result if you passed an empty object into the method `all_db_users = await users_collection.find({});`. 
  
-The find method returns a cursor, which is a collection of documents. Console log the cursor (here it is named `all_db_users`) and look at the output, which is a long object that won't be of much use to you now. 
+The find method returns a cursor object. Console log the cursor (here it is named `all_db_users`) and look at the output, which is a long object that won't be of much use to you now. 
 
 Instead, what is of use to you now, you can iterate through the cursor to access each document in the cursor collection. Here's how to: `all_db_users.forEach((user) => console.log(user));`. This line of code should output something like the following in your console (your values for `_id` will differ from the ones below):
 
