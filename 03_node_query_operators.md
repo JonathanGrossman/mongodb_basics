@@ -667,3 +667,45 @@ run().catch(console.dir);
 ```
 
 Here's how `$exists` works above. Declare a field (e.g., `score`) and make its value and object. That object should have `$exists` as its key and a boolean as its value. Set `$exists` to `true` to get all documents with the field and `false` to get all documents that do not have the declared field.
+
+### Return only certain fields
+
+You can tell MongoDB to return only certain fields in the documents. To do so, pass an argument into the MongoDB method's [projection parameter](https://docs.mongodb.com/manual/tutorial/project-fields-from-query-results/). The projection is an optional argument that restricts the fields returned from a MongoDB query. It is the second argument. 
+
+Pass this arugment as an object that contains comma-separated key:value pairs where the key is the field and value is either '`1` or `0`. See below for a note about Node syntax. 
+
+Here is an example of retrieving all documents from a collection and telling MongoDB which fields to include for each document:
+
+```node
+users_collection.find({}, {first: 1, last: 1} )
+```
+
+The example above returns all documents, and for each document it returns only the `first`, `last`, and `_id` fields. You explicitly included the `first` and `last` fields, and by default MongoDB includes the `_id` field. 
+ 
+As you can see from above, if a key has a value of `1`, it means to include this field. You are explicitly telling MongoDB which fields to return. It therefore will return only those fields plus, by default, it also returns the `_id` field. If you do not want the `_id` field, you can explicitly exclude it by giving it a value of `0`. 
+
+Here is an example that returns only the `first` field:  
+
+```node
+users_collection.find({}, { { first: 1, _id: 0 } })
+```
+
+In this example, you explicitly include only the `first` field and you explicitly exclude the `_id` field. Therefore, for each document, MongoDB returns to you only the `first` field.
+
+Instead of choosing which fields by explicit inclusion, you can choose which fields MongoDB returns by using explicit exclusion. If a key in your projection object has a value of `0`, it means to exclude this field. MongoDB therefore will return all the fields except those that are explicitly excluded. You are explicitly telling MongoDB which fields to *not* return. 
+
+Here is an example where you ask MongoDB to return all documents with all their fields except the `first` and `last` fields:
+
+```node
+users_collection.find({}, {first: 0, last: 0} )
+```
+
+In the example above, you excplicitly exclude the `first` and `last` fields, so MongoDB returns for each document all fields except those two.
+
+When using the [MongoDB projection argument in an Express application](https://poopcode.com/how-to-return-only-specific-fields-from-a-mongodb-query/), consider using the following syntax where the projection object has a key of `projection` and a value of an object. That object should have the key:value pairs by which you declare which fields to include or exclude. Here is an example:
+
+```node
+users_collection.find({}, { projection: { first: 1, _id: 0 } })
+```
+
+Finally, if your projection object excplicitly excludes some values and also explicitly includes other values (i.e., one or more keys with a `0` value *and* one or more other keys with a `1` value), MongoDB will return only the fields with the `1` value and also the `_id` field unless you explicitly exclude the `_id` field.
