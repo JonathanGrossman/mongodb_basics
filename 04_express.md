@@ -124,6 +124,7 @@ This chapter is different than previous ones. Previous chapters were instruction
 - [Sort failure](https://stackoverflow.com/questions/49881755/failing-to-get-results-with-sort-query-in-mgo)  
 - [Connection timed out](https://stackoverflow.com/questions/40216639/mongodb-connection-timed-out-error)  
 - [How can I use a cursor.forEach() in MongoDB using Node.js?](https://stackoverflow.com/questions/25507866/how-can-i-use-a-cursor-foreach-in-mongodb-using-node-js)
+- [db.collection is not a function](https://stackoverflow.com/a/50774639)
 - [MongoDB Econnrefused](https://stackoverflow.com/questions/37576822/mongodb-mongoerror-connect-econnrefused)  
 - [Async / await in express with multiple mongodb queries](https://stackoverflow.com/questions/53805076/async-await-in-express-with-multiple-mongodb-queries)  
 - [Duplicate key error index in mongodb mongoose](https://stackoverflow.com/questions/24430220/e11000-duplicate-key-error-index-in-mongodb-mongoose)  
