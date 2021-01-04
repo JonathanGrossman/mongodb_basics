@@ -146,6 +146,7 @@ This chapter is different than previous ones. Previous chapters were instruction
 - [Tutorial: Create and Query an Atlas Search Index](https://docs.atlas.mongodb.com/reference/atlas-search/tutorial)
 - [Tutorials Point - MongoDB](https://www.tutorialspoint.com/mongodb/mongodb_overview.htm)
 - [W3 Schools Node-MongoDB](https://www.w3schools.com/nodejs/nodejs_mongodb.asp)
+- [How to return only specific fields from a MongoDB query](https://poopcode.com/how-to-return-only-specific-fields-from-a-mongodb-query/)
 
 ## Step 9. Review this example code and get it working
 
