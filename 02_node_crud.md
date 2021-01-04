@@ -265,7 +265,7 @@ The line `all_db_users = await users_collection.find();` retrieves all the docum
  
 The find method returns a cursor object. Console log the cursor (here it is named `all_db_users`) and look at the output, which is a long object that won't be of much use to you now. 
 
-Instead, what is of use to you now, you can iterate through the cursor to access each document in the cursor collection. Here's how to: `all_db_users.forEach((user) => console.log(user));`. This line of code should output something like the following in your console (your values for `_id` will differ from the ones below):
+Instead, what is of use to you now, you can iterate the cursor to access each document in the cursor. The MongoDB documentation explains several ways to [iterate a cursor](https://docs.mongodb.com/manual/tutorial/iterate-a-cursor/). Here's one way to iterate a cursor: `all_db_users.forEach((user) => console.log(user));`. This line of code should output something like the following in your console (your values for `_id` will differ from the ones below):
 
 ```node
 { _id: 5fa406ec3f4b71a70ae05dab, first: 'Jane', last: 'Doe' }
@@ -295,6 +295,8 @@ object
 object
 object
 ```
+
+Instead of iterating the cursor with `.forEach()`, you can use the `.toArray()` method to convert the documents into an array. According to [MongoDB's documentation](https://docs.mongodb.com/manual/reference/method/cursor.toArray/#cursor.toArray), `.toArray()` returns an array "that contains all the documents from a cursor."
 
 ### .findOne()
 
