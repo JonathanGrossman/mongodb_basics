@@ -122,6 +122,8 @@ Following instantiation of the `MongoClient()` class is a block of asynchronous 
 
 Inside the `catch` block, you print to the console any errors `console.log(err.stack)`, and then inside the `finally` block, you close the connection between your application and MongoDB Atlas `await client.close();`. Like the `.connect()` method of the `MongoClient()` class instance, the `.close()` method comes from the `client` instance of the `MongoClient()` class.
 
+Although the `.close()` function appears in this basic MongoDB example, you should be thoughtful about how you use it in your application because [connecting to the database is time-consuming and expends resources](https://stackoverflow.com/questions/14495975/why-is-it-recommended-not-to-close-a-mongodb-connection-anywhere-in-node-js-code). Therefore, you shouldn't close a connection if you're just going to have to reconnect again. Instead, consider closing the connection only when your application closes or [not using `.close()` at all](https://stackoverflow.com/questions/52067945/when-to-close-a-mongodb-connection)!
+
 Finally, you run your application `run().catch(console.dir);`.
 
 ## [Exploring MongoClient Class](#exploring-mongoclient-class)
@@ -277,7 +279,7 @@ let personDocument = {
          }
 ```
 
-Next is a line that takes the `personDocument` from your code and sends it to MongoDB `const p = await col.insertOne(personDocument);`. The `await` exists because the `instertOne` method for the collection instance returns a promise. 
+Next is a line that takes the `personDocument` from your code and sends it to MongoDB `const p = await col.insertOne(personDocument);`. The `await` exists because the `insertOne` method for the collection instance returns a promise. 
 
 One way to test whether you successfully added the `personDocument` to the `people` collection in your `test` database is to retrieve that document. That's what the next line of code does `const myDoc = await col.findOne();`. Using the `findOne` method of your collection instance, you retrieve the document and then print it to the console `console.log(myDoc);`.
 
