@@ -46,7 +46,7 @@ After finding your public IP address, you should add it to your MongoDB IP acces
 
 A prompt should open with an option to add a connection IP address. The box might be auto-filled with your public IP address. If it is, double check to make sure it's correct. If not, add your public IP address. 
 
-Be sure to click the button for Add IP Address. You may need to add multiple IP addresses. For instance, if you work on your project from your home and at school, you should add your home IP address and also your school's IP address. If you don't have all the IP addressess now, you can add them later.
+Be sure to click the button for Add IP Address. You may need to add multiple IP addresses. For instance, if you work on your project from your home and at school, you should add your home IP address and also your school's IP address. If you don't have all the IP addresses now, you can add them later.
 
 In the same prompt that asks for your IP address, MongoDB asks you to create a database user. This is important for managing and accessing your MongoBD Atlas databases. As the prompt says, remember your username and password because you will need it later. After you add the user, click the button in the prompt that says "Choose a connection method".
 
@@ -294,6 +294,6 @@ Ok, test it out. In your terminal, enter `node connect.js`. This time, in additi
 }
 ```
 
-Notice anything different? Although the `personDocumnet` object that you sent to MongoDB has only 5 `key:value` pairs, the returned document has 6. The additional `key:value` pair is `_id: 5fa2a070330b7d94c1c69182`. MongoDB added an `_id` key!
+Notice anything different? Although the `personDocument` object that you sent to MongoDB has only 5 `key:value` pairs, the returned document has 6. The additional `key:value` pair is `_id: 5fa2a070330b7d94c1c69182`. MongoDB added an `_id` key!
 
 In the next lesson, you will learn more about adding, reading, updating, and deleting documents from your collections.
