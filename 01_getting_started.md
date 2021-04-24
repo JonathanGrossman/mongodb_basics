@@ -63,7 +63,7 @@ const { MongoClient } = require("mongodb");
  
 // Replace the following with your Atlas connection string                                                                                                                                        
 const url = "your connection string";
-const client = new MongoClient(url);
+const client = new MongoClient(url, { useUnifiedTopology: true });
 
 async function run() {
     try {
@@ -116,7 +116,7 @@ Enter in the terminal `node connect.js`. If you successfully connected your appl
 
 Let's discuss the code above. The first line `const { MongoClient } = require("mongodb")`, imports the the `MongoClient()` class into your `connect.js` file. The next line `const url = . . .` defines the connection string for your MongoDB cluster. It's critical for connecting your project folder to your MongoDB account. 
 
-The next line in your code `const client = new MongoClient(url);` creates an instance of the `MongoClient()` class using the connection string (`url`) as the argument. The variable `client` is now a MongoClient object customized with the connection string for your MongoDB Atlas cluster.
+The next line in your code `const client = new MongoClient(url, { useUnifiedTopology: true });` creates an instance of the `MongoClient()` class using the connection string (`url`) as the argument. You need the `{ useUnifiedTopology: true }` to use the new Server Discover and Monitoring engine. The variable `client` is now a MongoClient object customized with the connection string for your MongoDB Atlas cluster.
 
 Following instantiation of the `MongoClient()` class is a block of asynchronous code with `try / catch / finally` blocks nested within. In the `try` block is a line that connects your application to MongoDB Atlas `await client.connect();`. Remember, `client` is your instance of the MongoDB class customized with your MongoDB connection string. That means `.connect()` is a method of the instance of that class. This method does what its name suggests -- it connects your project folder to your MongodDB Atlas cluster.
 
@@ -213,7 +213,7 @@ const { MongoClient } = require("mongodb");
  
 // Replace the following with your Atlas connection string                            
 const url = "your connection string";
-const client = new MongoClient(url);
+const client = new MongoClient(url, { useUnifiedTopology: true });
  
  // The database to use
  const dbName = "test";
