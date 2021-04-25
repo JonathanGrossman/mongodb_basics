@@ -68,7 +68,7 @@ The first argument is an array of objects. Each item in the array is an object w
 
 The second argument is an object of `options` about the insert operation. You will omit that argument for now when calling the method. Instead, you will only pass the documents argument.
 
-To see the `.insertMany()` method in action, you can run the following script. The lines to pay special attention to are the line that defines the array of objects `multipleUsersObject` and the line that calls the `insert` method `multiplUsersDB = await users_collection.insertMany(multipleUsersObject);`.
+To see the `.insertMany()` method in action, you can run the following script. The lines to pay special attention to are the line that defines the array of objects `multipleUsersObject` and the line that calls the `insert` method `multipleUsersDB = await users_collection.insertMany(multipleUsersObject);`.
 
 ```node
 const { MongoClient } = require("mongodb");
@@ -108,8 +108,8 @@ async function run() {
       },
     ];
 
-    multiplUsersDB = await users_collection.insertMany(multipleUsersObject);
-    console.log(multiplUsersDB);    
+    multipleUsersDB = await users_collection.insertMany(multipleUsersObject);
+    console.log(multipleUsersDB);    
   } catch (err) {
     console.log(err.stack);
   } finally {
@@ -120,7 +120,7 @@ async function run() {
 run().catch(console.dir);
 ```
 
-In the example above, `multiplUsersObject` is an array containing four objects. Each object has a key for `first` and one for `last`. The line `multiplUsersDB = await users_collection.insertMany(multipleUsersObject);` performs the actual `insert` operation. In the example, you pass into it only one argument -- the array of documents `multipleUsersObject`.
+In the example above, `multipleUsersObject` is an array containing four objects. Each object has a key for `first` and one for `last`. The line `multipleUsersDB = await users_collection.insertMany(multipleUsersObject);` performs the actual `insert` operation. In the example, you pass into it only one argument -- the array of documents `multipleUsersObject`.
 
 The `.insertMany()` method returns a large connection object. In the example above, you print that object to the console. Look through it to see what information is available to you. One `field` available in the connection object is the `insertedIds`. The value for the `insertedIds` is an object containing `_ids` for `insertMany()`. That object looks something like this:
 
@@ -200,7 +200,7 @@ The `.insertOne()` method returns a large connection object. In the example abov
 5fa406ec3f4b71a70ae05dab
 ```
 
-Another field available in the returned connection object is the `ops` field. The `ops` field has a value of an array containing one object, which is the document insterted into the database. Even though the data type is an array, it contains only one object because you inserted only one document. That array looks something like this:
+Another field available in the returned connection object is the `ops` field. The `ops` field has a value of an array containing one object, which is the document inserted into the database. Even though the data type is an array, it contains only one object because you inserted only one document. That array looks something like this:
 
 ```node
 [{ first: 'Jane', last: 'Doe', _id: 5fa406ec3f4b71a70ae05dab }]
@@ -224,7 +224,7 @@ The second argument is the `projection`. The `projection` declares the fields to
 
 In later chapters, you will practice using the `query` and `projection` parameters. For now, however, you should focus on using `.find()` with no arguments. 
 
-Here is an example of using `.find()` with no arguments for retrieving all the documents from your `users_collection`. The code example below is very similar to the code you've seen above. The lines in the code below that you should focus on are `all_db_users = await users_collection.find();` and ` all_db_users.forEach((user) => console.log(user));`.
+Here is an example of using `.find()` with no arguments for retrieving all the documents from your `users_collection`. The code example below is very similar to the code you've seen above. The lines in the code below that you should focus on are `all_db_users = await users_collection.find();` and `all_db_users.forEach((user) => console.log(user));`.
 
 ```node
 const { MongoClient } = require("mongodb");
@@ -348,7 +348,7 @@ Like you did for the `.find()` method above, you can console log a specific valu
 
 Although you may at times want to get only the most recently inserted document, it is just as (if not more) likely that you will want to get a document based on other criteria. The next chapter goes into more detail about how to get a document based on certain criteria.
 
-For now, however, it might be helpful to see a simple example of using the `query` argument. A very common occurrence in web applications is to get from your databse a user (or other specific item) by it's unique `_id`. Using the `.findOne()` method is a great way to do this. Although later you will learn about this in more detail, below is an example of using the `query` argument in `.findOne()` to get a document that has a specific `_id`.
+For now, however, it might be helpful to see a simple example of using the `query` argument. A very common occurrence in web applications is to get from your database a user (or other specific item) by it's unique `_id`. Using the `.findOne()` method is a great way to do this. Although later you will learn about this in more detail, below is an example of using the `query` argument in `.findOne()` to get a document that has a specific `_id`.
 
 Before showing you the example, know that you need to pay attention to at least one nuance when searching for a document by its `_id`. Knowing this nuance will help you avoid confusing errors for what seems to be a simple action. That nuance is using the `ObjectID` class. In MongoDB, the data type for `_id` is `ObjectID` (notice that `ID` has both letters capitalized; it's not `Id`). 
 
@@ -546,7 +546,7 @@ The example above uses the `.updateMany()` method to update all documents having
 
 Notice that the code filters using the `last` field. This is a non-unique field, so it's possible that more than one document has the same value for `last`. In contrast, using `.updateMany()` and filtering by `_id` does not make the most of the method because the `_id` values are unique. In theory, no documents will share the same `_id` value and therefore you cannot update more than one document when filtering by `_id` in the `.updateMany()` method.
 
-After console logging the returned object, the example then uses the `.find()` method to get all the documents from the collection so that you can console log them and see that the updates did in fact occur. Remember that `.find()` returns a cursor, which is a collection of documents. You therefore need to loop through it to console log each individual document in the returned collection. The block of code `all_db_users.forEach((user) => {console.log(user);});` prints the following 
+After console logging the returned object, the example then uses the `.find()` method to get all the documents from the collection so that you can console log them and see that the updates did in fact occur. Remember that `.find()` returns a cursor, which is a collection of documents. You therefore need to loop through it to console log each individual document in the returned collection. The block of code `all_db_users.forEach((user) => {console.log(user);});` prints the following: 
 
 ```node
 { _id: 5fa406ec3f4b71a70ae05dab, first: 'Joe', last: 'Doe' }
@@ -627,7 +627,7 @@ After console logging the returned object, the example then uses the `.find()` m
 { _id: 5fa406ec3f4b71a70ae05daf, middle: 'Margaret', country: 'Guatemala'}
 ```
 
-You successfully replaced the "Jill Hill" document with a document that has the `middle` and `country` fields and corresponding values. Notice that the `_id` of `5fa406ec3f4b71a70ae05daf` is the same value that the document had before being replaced.  Replacement successful!
+You successfully replaced the "Jill Hill" document with a document that has the `middle` and `country` fields and corresponding values. Notice that the `_id` of `5fa406ec3f4b71a70ae05daf` is the same value that the document had before being replaced. Replacement successful!
 
 ## [Delete](#delete)
 
