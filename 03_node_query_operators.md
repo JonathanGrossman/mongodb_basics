@@ -19,11 +19,11 @@ all_db_users_blank = await users_collection.find();
 
 But what if you want to get more than one document but less than all documents?
 
-Knowing how to select a subset of documents is important when when working with databases because it can make your application more efficient. It may be tempting to retrieve all documents from a collection and then filter the results in your server-side or client-side code. However, what happens when your userbase becomes so large that retrieving all users and filtering in your server code significantly slows down your application?
+Knowing how to select a subset of documents is important when working with databases because it can make your application more efficient. It may be tempting to retrieve all documents from a collection and then filter the results in your server-side or client-side code. However, what happens when your userbase becomes so large that retrieving all users and filtering in your server code significantly slows down your application?
 
-In this chapter, you will learn how to retrieve a subset of documents from your collection. Specifically, you will learn how to pass objects as arguments to MongoDB methods (e.g., `.find()`, `update()`, etc) in order to specify which documents you want. In your argument objects, you will use comparison and logical operators to designate which documents you want from your collection.
+In this chapter, you will learn how to retrieve a subset of documents from your collection. Specifically, you will learn how to pass objects as arguments to MongoDB methods (e.g., `.find()`, `update()`, etc.) in order to specify which documents you want. In your argument objects, you will use comparison and logical operators to designate which documents you want from your collection.
 
-The follow sections explain how to use comparison operators and logical operators to craft targeted database queries.
+The following sections explain how to use comparison operators and logical operators to craft targeted database queries.
 
 ## [List of comparison operators](#list-of-comparison-operators)
 
@@ -33,7 +33,7 @@ MongoDB comparison operators allow you to get a subset of documents based on a c
 
 Using comparison operators in MongoDB is similar to but different from using comparison operators in other programming languages. The similarities are conceptual. For instance, greater than is greater than. Less than is less than. 
 
-Some key differences are syntax and order of operations. MongoDB uses syntax like `$gt` and `$lt`, whereas languages like JavaScript use mathematical symbols like `>` and `<`. Plus, you use comparison operators generally through your code in other languages, whereas in MongoDB they belong inside an object that serves as an argument inside a function call (e.g., `find({ score: { $eq: 10 } })`). 
+Some key differences are syntax and order of operations. MongoDB uses syntax like `$gt` and `$lt`, whereas languages like JavaScript use mathematical symbols like `>` and `<`. Plus, you use comparison operators generally throughout your code in other languages, whereas in MongoDB they belong inside an object that serves as an argument inside a function call (e.g., `find({ score: { $eq: 10 } })`). 
 
 In addition to syntax differences, another difference between comparison operators in MongoDB and other languages is the order of operations. In MongoDB, unlike many programming languages, the order of operations is not the same as for algebra. To understand the MongoDB comparison order, visit [MongoDB's page about comparison/sort order](https://docs.mongodb.com/manual/reference/bson-type-comparison-order/). Before worrying too much about order of operations, try practicing with simple examples.
 
