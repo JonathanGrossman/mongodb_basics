@@ -300,7 +300,7 @@ Instead of iterating the cursor with `.forEach()`, you can use the `.toArray()` 
 
 ### .findOne()
 
-The `.findOne()` method finds only one document from the collection. Like the `.find()` method, the `.findOne()` method accepts two optional arguments -- a `query` and a `projection`, like so `.findOne(query, projection)`. If more than one document matches the `query`, the `.findOne()` method returns the first matching document, which is usually the most recently inserted document that matches the `query`.
+The `.findOne()` method finds only one document from the collection. Like the `.find()` method, the `.findOne()` method accepts two optional arguments -- a `query` and a `projection`, like so `.findOne(query, projection)`. If more than one document matches the `query`, the `.findOne()` method returns the first matching document in the collection.
 
 Although the `.find()` and `.findOne()` methods have the same parameters (optional `query` and optional `projection`), they return different things. As you saw above, the `.find()` method returns a cursor, which is a collection of documents. In contrast, the `.findOne()` method returns a single document (not a collection of them). 
 
