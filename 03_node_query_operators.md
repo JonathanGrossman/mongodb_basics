@@ -281,11 +281,10 @@ async function run() {
     console.log(err.stack);
   } finally {
     await client.close();
-  }
+  } 
 }
 
 run().catch(console.dir);
-
 ```
 
 In the example above, the line `filtered_db_users = await users_collection.find({first: { $ne: "Jane" }});` searches for documents that have a `first` field not equal to `'Jane'`. Inside of the `.find()` method, the example passes an object as an argument. That object is `{ first: { $ne: "Jane" } }`. 
@@ -325,7 +324,7 @@ Notice that the users collection of documents as a whole has 5 documents (see th
 
 Logical operators allow you to use simple logic to craft powerful searches. The MongoDB logical operators are `and`, `not`, `or`, and `nor`. You should be familiar with logical operators from other programming languages. 
 
-Like comparison operators, MongoDB logical operators allow you to get a subset of documents from a collection. Intead of using comparisons, you use logic. For instance, you can get from a collection a subset of documents that meet one condition `and` another condition. To give a specific example, you can retrieve only the documents that have both a field named `score` with a value greater than `10` **`and`** also a field named `first_name` with a value of `'Jane'`.  
+Like comparison operators, MongoDB logical operators allow you to get a subset of documents from a collection. Instead of using comparisons, you use logic. For instance, you can get from a collection a subset of documents that meet one condition `and` another condition. To give a specific example, you can retrieve only the documents that have both a field named `score` with a value greater than `10` **`and`** also a field named `first_name` with a value of `'Jane'`.  
 
 Or you can get a subset of documents that meet one condition `or` a different condition. For instance, you can retrieve only the documents that have either a field named `score` with a value greater than `10` **`or`** a field named `first_name` with a value of `'Jane'`.  
 
@@ -544,10 +543,10 @@ In this example, you search for documents that have a `first` field not equal to
 }
  ```
  
- Inside the object are comma-separated key-value pairs. Each key-value pair has a specific syntax depending upon which operator you're using. Notice at least two things. First, the `$` is used to specify that it's a MongoDB operator. This is helpful to remember when reading search queries. Second, the keys that correspond to fields in your database on not wrapped in quotes.
+Inside the object are comma-separated key-value pairs. Each key-value pair has a specific syntax depending upon which operator you're using. Notice at least two things. First, the `$` is used to specify that it's a MongoDB operator. This is helpful to remember when reading search queries. Second, the keys that correspond to fields in your database are not wrapped in quotes.
+
 
 ### Sorting
-
 
 ```node
 const { MongoClient } = require("mongodb");
@@ -666,7 +665,7 @@ async function run() {
 run().catch(console.dir);
 ```
 
-Here's how `$exists` works above. Declare a field (e.g., `score`) and make its value and object. That object should have `$exists` as its key and a boolean as its value. Set `$exists` to `true` to get all documents with the field and `false` to get all documents that do not have the declared field.
+Here's how `$exists` works above. Declare a field (e.g., `score`) and make its value an object. That object should have `$exists` as its key and a boolean as its value. Set `$exists` to `true` to get all documents with the field and `false` to get all documents that do not have the declared field.
 
 ### Return only certain fields
 
@@ -708,4 +707,4 @@ When using the [MongoDB projection argument in an Express application](https://p
 users_collection.find({}, { projection: { first: 1, _id: 0 } })
 ```
 
-Finally, if your projection object excplicitly excludes some values and also explicitly includes other values (i.e., one or more keys with a `0` value *and* one or more other keys with a `1` value), MongoDB will return only the fields with the `1` value and also the `_id` field unless you explicitly exclude the `_id` field.
+Finally, if your projection object explicitly excludes some values and also explicitly includes other values (i.e., one or more keys with a `0` value *and* one or more other keys with a `1` value), MongoDB will return only the fields with the `1` value and also the `_id` field unless you explicitly exclude the `_id` field.
